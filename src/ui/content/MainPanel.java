@@ -2,6 +2,8 @@ package ui.content;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
+
+import java.awt.Color;
 import java.awt.Dimension;
 
 /**
@@ -20,7 +22,9 @@ public class MainPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JPanel topPanel = new TopPanel();
-		topPanel.setMaximumSize(new Dimension(32767, 250));
+		topPanel.setMaximumSize(new Dimension(32767, 150));
+		topPanel.setMinimumSize(new Dimension(50,100));
+		topPanel.setPreferredSize(new Dimension(800,150));
 		add(topPanel);
 		
 		JPanel contentPanel = new JPanel();

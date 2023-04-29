@@ -57,7 +57,7 @@ public class LoginPanel extends ImagePanel {
 		
 		
 		loginData = new LoginData();
-		loginData.setPreferredSize(new Dimension(300, 239));
+		loginData.setPreferredSize(new Dimension(350, 239));
 		loginData.setOpaque(false);
 		rightSupportPanel.add(loginData);
 		

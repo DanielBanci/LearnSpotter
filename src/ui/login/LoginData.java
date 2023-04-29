@@ -25,12 +25,15 @@ import javax.swing.JFrame;
 
 import java.awt.Color;
 import javax.swing.JPasswordField;
+import javax.swing.JCheckBox;
+import java.awt.Component;
 
 public class LoginData extends RoundPanel {
 	
 	private JTextField tFEmail;					//the Email input  
 	private JPasswordField passwordField;		//the password input
 	private JButton btnLogin;					//button to log in  
+	private JCheckBox checkBox;		//check box to show/hide password
 
 	/**
 	 * Create the panel.
@@ -47,9 +50,26 @@ public class LoginData extends RoundPanel {
 		
 		JPanel passwordPanel = new JPanel();
 		passwordPanel.setOpaque(false);
-		passwordPanel.setBorder(new EmptyBorder(25, 25, 25, 25));
+		passwordPanel.setBorder(new EmptyBorder(25, 25, 0, 25));
 		passwordPanel.setLayout(new BoxLayout(passwordPanel, BoxLayout.X_AXIS));
 		add(passwordPanel);
+		
+		JPanel checkButtonPanel = new JPanel();
+		checkButtonPanel.setOpaque(false);
+		add(checkButtonPanel);
+		checkButtonPanel.setLayout(new BoxLayout(checkButtonPanel, BoxLayout.X_AXIS));
+		
+		checkBox = new JCheckBox("Show password");
+		checkBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+		checkBox.setOpaque(false);
+		checkBox.addActionListener(checkBoxActionListener());
+		checkButtonPanel.add(checkBox);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setMinimumSize(new Dimension(40, 13));
+		lblNewLabel_1.setMaximumSize(new Dimension(40, 13));
+		lblNewLabel_1.setPreferredSize(new Dimension(40, 13));
+		checkButtonPanel.add(lblNewLabel_1);
 		
 		JPanel loginButtonPanel = new JPanel();
 		loginButtonPanel.setOpaque(false);
@@ -112,5 +132,20 @@ public class LoginData extends RoundPanel {
 
         return act;
     }
+	
+	private ActionListener checkBoxActionListener() {
+		ActionListener act = new ActionListener() {
+            //@Override
+            public void actionPerformed(ActionEvent e) {                        
+            	if (checkBox.isSelected()) {
+                    passwordField.setEchoChar((char) 0); // Show password
+                } else {
+                    passwordField.setEchoChar('•'); // Hide password
+                }
+            }
+        };
+
+        return act;
+	}
 
 }

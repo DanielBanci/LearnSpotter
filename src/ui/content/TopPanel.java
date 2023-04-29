@@ -34,7 +34,7 @@ public class TopPanel extends JPanel {
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		setMaximumSize(new Dimension(32767, 400));
+		setMaximumSize(new Dimension(32767, 500));
 		setMinimumSize(new Dimension(100,200));
 		
 		//logo
