@@ -2,8 +2,6 @@ package ui.content;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
-
-import java.awt.Color;
 import java.awt.Dimension;
 
 /**
@@ -28,6 +26,7 @@ public class MainPanel extends JPanel {
 		add(topPanel);
 		
 		JPanel contentPanel = new JPanel();
+		//contentPanel.add(new CoursePost());
 		add(contentPanel);
 
 	}

@@ -19,6 +19,16 @@ public class ImagePanel extends JPanel {
     private Dimension maximumSize;
 
     /**
+     * Default constructor.
+     */
+    public ImagePanel(Dimension max) {
+    	maximumSize = max;
+    }
+    
+    public void setImage(Image img) {
+    	this.img = img;
+    }
+    /**
      *Constructs a new ImagePanel with an image loaded from the given file path.
      *The image is scaled to fit the preferred size of the panel.
      *@param path the path of the image file to load.
