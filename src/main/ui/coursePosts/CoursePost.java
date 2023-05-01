@@ -1,16 +1,16 @@
-package ui.content;
+package main.ui.coursePosts;
 
 import javax.swing.JPanel;
-
-import ui.customComponents.RoundButton;
-import ui.customComponents.RoundPanel;
-import ui.ratingBar.StarRatingBar;
-
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import main.ui.customComponents.RoundButton;
+import main.ui.customComponents.RoundPanel;
+import main.ui.ratingBar.StarRatingBar;
+
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
 import java.awt.Component;

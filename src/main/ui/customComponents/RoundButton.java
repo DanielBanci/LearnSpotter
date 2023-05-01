@@ -1,22 +1,31 @@
-package ui.customComponents;
+package main.ui.customComponents;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
 /**
- * Class that represent a round password field.
+ * This class is a round button.
  * @author Daniel
  * @version 1.0
  */
-public class RoundPasswordField extends JPasswordField {
+public class RoundButton extends JButton {
     private Shape shape;
 
     /**
-     * Constructs a new RoundPasswordField object with opaque set to false.
+     * Constructs a new RoundButton object with opaque set to false.
      */
-    public RoundPasswordField() {
+    public RoundButton() {
         super();
+        setOpaque(false);
+    }
+    /**
+     * Constructs a new RoundButton object with a name
+     * Opaque is set to false.
+     * @param name the name of the button
+     */
+    public RoundButton(String name) {
+        super(name);
         setOpaque(false);
     }
     /**

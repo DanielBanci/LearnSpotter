@@ -1,18 +1,24 @@
-package ui.customComponents;
+package main.ui.customComponents;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-public class RoundPanel extends JPanel {
+/**
+ * Class that represents a round menu bar.
+ * @author Daniel
+ * @version 1.0
+ */
+public class RoundMenuBar extends JMenuBar {
     private Shape shape;
-    private int arcWidth = 40;
-    private int arcHeight = 40;
+    //round corners values
+    private final int arcWidth = 40;
+    private final int arcHeight = 40;
 
     /**
-     * Constructs a new RoundPanel object with opaque set to false.
+     * Constructs a new RoundMenuBar object with opaque set to false.
      */
-    public RoundPanel() {
+    public RoundMenuBar() {
         super();
         setOpaque(false);
     }
@@ -25,7 +31,6 @@ public class RoundPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         g.setColor(getBackground());
-        g.setColor(Color.LIGHT_GRAY);
         g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, arcWidth, arcHeight);
         super.paintComponent(g);
     }
@@ -37,7 +42,6 @@ public class RoundPanel extends JPanel {
     @Override
     protected void paintBorder(Graphics g) {
         g.setColor(getForeground());
-        g.setColor(getBackground());
         g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, arcWidth, arcHeight);
     }
     /**

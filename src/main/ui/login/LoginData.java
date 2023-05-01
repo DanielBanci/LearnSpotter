@@ -1,17 +1,15 @@
-package ui.login;
+package main.ui.login;
 
 import javax.swing.JPanel;
-
-import ui.content.MainPanel;
-import ui.customComponents.RoundButton;
-import ui.customComponents.RoundPanel;
-import ui.customComponents.RoundPasswordField;
-import ui.customComponents.RoundTextField;
-
 import javax.swing.BoxLayout;
 import javax.swing.border.EmptyBorder;
 
-import app.App;
+import main.app.App;
+import main.ui.content.MainPanel;
+import main.ui.customComponents.RoundButton;
+import main.ui.customComponents.RoundPanel;
+import main.ui.customComponents.RoundPasswordField;
+import main.ui.customComponents.RoundTextField;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;

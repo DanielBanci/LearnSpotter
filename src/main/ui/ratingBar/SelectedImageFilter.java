@@ -1,4 +1,4 @@
-package ui.ratingBar;
+package main.ui.ratingBar;
 
 import java.awt.image.RGBImageFilter;
 
