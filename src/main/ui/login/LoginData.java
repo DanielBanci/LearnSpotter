@@ -123,8 +123,7 @@ public class LoginData extends RoundPanel {
             	App.getInstance().getFrame().setContentPane(new MainPanel());
             	
             	//update the frame
-            	App.getInstance().getFrame().pack();
-            	App.getInstance().getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+            	App.getInstance().getFrame().invalidate();
             }
         };
 

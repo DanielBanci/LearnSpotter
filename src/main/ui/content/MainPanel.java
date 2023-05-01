@@ -1,12 +1,19 @@
 package main.ui.content;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 
 import main.ui.coursePosts.CoursePostDetails;
+import main.ui.coursePosts.CoursePostScrollPane;
 import main.ui.customComponents.RoundImagePanel;
 
 import javax.swing.BoxLayout;
+
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 /**
  * The main panel of the app.
@@ -31,10 +38,8 @@ public class MainPanel extends JPanel {
 		
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel,BoxLayout.Y_AXIS));
-		contentPanel.add(new CoursePostDetails(true));
-		/*JPanel p = new RoundImagePanel("res/login_background.png",new Dimension(100,100));
-		p.setOpaque(false);
-		contentPanel.add(p);*/
+		
+		contentPanel.add(new CoursePostScrollPane());
 		add(contentPanel);
 
 	}

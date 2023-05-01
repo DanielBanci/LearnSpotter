@@ -1,66 +1,87 @@
 package main.ui.coursePosts;
 
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.Timer;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
 import main.app.App;
 import main.ui.customComponents.RoundButton;
+import main.utility.ImageLoader;
 
 import java.awt.Component;
 
-import javax.imageio.ImageIO;
 import javax.swing.Box;
 
 /**
- * A panel that countains the course name and a button the let the user to see the course,
+ * A panel that countains the course name and a button that let the user to see the course,
  * if the course was bought.
  * @author Daniel
  * @version 1.0
  */
 public class CourseFilePanel extends JPanel {
 	
-	private ImageIcon iconButtonLocked;				//relatede TO DO: change icons after the payed was made
-	private ImageIcon iconButtonUnlocked;
-	private ImageIcon pdfFileIcon;
-	private JPanel pdfViewPanel;
+	private ImageIcon iconButtonLocked;			//icon before payment
+	private ImageIcon iconButtonUnlocked;		//related TODO: change icons after the payed was made
+	private ImageIcon pdfFileIcon;				//pdf file icon
+	private JPanel pdfViewPanel;				//the panel that disply the pdf			
+	private JPanel courseDetailsParent;			//the panel with the course details
 	
+	//for action listeners
+	private JButton btnViewCourse;				//the button the show the pdf
+	private Boolean payed = false;				//indicate whatever the course was bought or not
+	private Boolean displayed = false;			//indicate whatever the pdf is displayed or not
 
+	/**
+	 * Sets the payed status.
+	 * @param payed new payed status.
+	 */
+	public void setPayed(Boolean payed) {
+		this.payed = payed;
+	}
+
+	/**
+	 * @return the button that display the course
+	 */
+	public JButton getBtnViewCourse() {
+		return btnViewCourse;
+	}
+
+	/**
+	 * Loads the images used by class.
+	 */
 	private void loadButtonsImageIcon() {
-		Image img = null;
-		iconButtonLocked = null;
-		iconButtonUnlocked = null;
-		pdfFileIcon = null;
-		//down
-		try {
-            img = ImageIO.read(new File("res/locked_icon.png"));
-            iconButtonLocked = new ImageIcon(img);
-            
-            img = ImageIO.read(new File("res/unlocked_icon.png"));
-            iconButtonUnlocked = new ImageIcon(img);
-            
-            img = ImageIO.read(new File("res/pdf_icon.png"));
-            pdfFileIcon = new ImageIcon(img);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+		iconButtonLocked = new ImageIcon(ImageLoader.getInstance().getLockedIcon());
+		iconButtonUnlocked = new ImageIcon(ImageLoader.getInstance().getUnlockedIcon());
+		pdfFileIcon = new ImageIcon(ImageLoader.getInstance().getPdfIcon());
 		
 	}
 	
 	/**
+	 * Parametes contructor. It will fill the data with the proper values.		//TODO: fill missing data
+	 * @param pane -?
+	 */
+	public CourseFilePanel(JPanel courseDetailsP) {
+		this();
+		courseDetailsParent = courseDetailsP;
+		btnViewCourse.addActionListener(btnViewCourseActionListener());
+	}
+	
+	/**
 	 * Create the panel.
+	 * UI components.
 	 */
 	public CourseFilePanel() {
 		loadButtonsImageIcon();
@@ -92,11 +113,7 @@ public class CourseFilePanel extends JPanel {
 		horizontalStrut_1.setMaximumSize(new Dimension(20000, 10));
 		courseFilePanel.add(horizontalStrut_1);
 		
-		Component horizontalStrut = Box.createHorizontalStrut(20);
-		horizontalStrut.setMaximumSize(new Dimension(20, 10));
-		courseFilePanel.add(horizontalStrut);
-		
-		JButton btnViewCourse = new RoundButton("View course");
+		btnViewCourse = new RoundButton("View course");
 		btnViewCourse.setForeground(Color.BLACK);
 		btnViewCourse.setBackground(Color.GRAY);
 		btnViewCourse.setPreferredSize(new Dimension(200, 30));
@@ -106,33 +123,70 @@ public class CourseFilePanel extends JPanel {
 		courseFilePanel.add(btnViewCourse);
 		btnViewCourse.setIcon(iconButtonLocked);
 		CourseFilePanel p = this;
-		btnViewCourse.addActionListener(new ActionListener() { 			//put this in a function
-			private Boolean first = true;
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//condition
-				if(first) {
-				p.remove(pdfViewPanel);
-				pdfViewPanel = new PDFViewPanel();
-				btnViewCourse.setIcon(iconButtonUnlocked);
-				p.add(pdfViewPanel,1);
-				//p.repaint();
-				App.getInstance().getFrame().pack();
-				first = false;
-				}else {
-					p.remove(pdfViewPanel);
-					btnViewCourse.setIcon(iconButtonLocked);
-					first = true;
-					App.getInstance().getFrame().pack();
-				}
-			}
-			
-		});
 		
-		pdfViewPanel = /*new PDFViewPanel();*/new JPanel();
+		
+		pdfViewPanel = new JPanel();
 		pdfViewPanel.setOpaque(false);
 		add(pdfViewPanel);
 
+	}
+
+	/**
+	 * Action for view course button.
+	 * It check if the payments was made and display or hide the pdf(depending on whatever the pdf is displayed or not)
+	 * @return action listener for view course button
+	 */
+	private ActionListener btnViewCourseActionListener() {
+		CourseFilePanel p = this;
+		ActionListener act = new ActionListener() { 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(payed) { 																			//action if the payment was made
+					if(!displayed) {																	//need to display the pdf
+						p.remove(pdfViewPanel);															//make and add the new pdf
+						pdfViewPanel = new PDFViewPanel();
+						btnViewCourse.setIcon(iconButtonUnlocked);										//set image icon as unlockde after the
+						p.add(pdfViewPanel,1);															//payed was made
+						btnViewCourse.setText("Hide course");
+						courseDetailsParent.getComponent(0).setMaximumSize(new Dimension(1300,30000));	//reset size of panel
+						App.getInstance().getFrame().invalidate();										//update ui
+						displayed = true;
+					}else {																				//need to hide the pdf
+						p.remove(pdfViewPanel);															//remove pdf
+						courseDetailsParent.getComponent(0).setMaximumSize(new Dimension(800,30000));	//reset size of panel
+						btnViewCourse.setText("View course");											//reset button message
+						displayed = false;
+						App.getInstance().getFrame().invalidate();										//update ui
+					}
+				}else {	//display a popUp to inform the user that the course needs to be bought for this action
+						//set it visible for 3 seconds
+					JPopupMenu popupMenu = new JPopupMenu();
+					popupMenu.setOpaque(false);
+					popupMenu.setBorder(new EmptyBorder(0,0,0,0));
+					
+					JLabel mes = new JLabel("You need to buy the course to perform this action!");
+					mes.setForeground(Color.red);
+					mes.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			        popupMenu.add(mes);
+			        
+			        //get the position to display the popup menu
+			        int xPos = 0;
+			        int yPos = - btnViewCourse.getHeight();										//disply on top
+			        popupMenu.show(btnViewCourse,xPos ,yPos );
+			        
+			        Timer timer = new Timer(3000, new ActionListener() {						//visible for 3 sec
+	                    @Override
+	                    public void actionPerformed(ActionEvent evt) {
+	                        popupMenu.setVisible(false);
+	                    }
+	                });
+	                timer.setRepeats(false);
+	                timer.start();
+				}
+			}
+		};
+
+		return act;
 	}
 
 }

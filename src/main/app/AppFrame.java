@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import main.ui.login.LoginPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 /**
  * The frame of the app.
@@ -24,6 +25,7 @@ public class AppFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 450, 300);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setMaximumSize(new Dimension(1500,870));
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0,0, 0, 0));
 

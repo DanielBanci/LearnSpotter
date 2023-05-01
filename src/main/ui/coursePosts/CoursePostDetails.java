@@ -2,22 +2,36 @@ package main.ui.coursePosts;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Component;
+import java.awt.Container;
 
 import javax.swing.Box;
 import javax.swing.border.EmptyBorder;
 
+import main.app.App;
+import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
 import main.ui.customComponents.RoundPanel;
 import main.ui.ratingBar.StarRatingBar;
+import main.utility.ImageLoader;
 
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+
+import java.awt.Color;
+import java.awt.FlowLayout;
 
 /**
  * The class represents a panel that display all the informations related to a course before buying it.
@@ -27,41 +41,103 @@ import java.awt.GridLayout;
  */
 public class CoursePostDetails extends RoundPanel {
 
-	private JPanel profilePicPanel;		//profile pic
-	private JLabel lblName;				//name of the author
-	private JLabel lblCourseName;		//course title
-	private JPanel ratingBarPanel;		//rating bar
-	private JLabel lblNoViews;			//people number that rate this
-	private JLabel lblPrice;			//the price of the course
-	private JTextArea tAFullDescription;//full description of the course
-	private JPanel filePanel;			//the panel with course file and pay/download button
-	private JPanel feedbackPanel;		//feddback panel
+	private JPanel profilePicPanel;			//profile pic
+	private JLabel lblName;					//name of the author
+	private JLabel lblCourseName;			//course title
+	private StarRatingBar ratingBarPanel;	//rating bar
+	private JLabel lblNoViews;				//people number that rate this
+	private JLabel lblPrice;				//the price of the course
+	private JTextArea tAFullDescription;	//full description of the course
+	private JPanel filePanel;				//the panel with course file and pay/download button
+	private JPanel feedbackPanel;			//feddback panel
+	private JButton btnBuyCourse;			//button to buy the course
+	private JLabel lblPriceBuy;				//lbl to display the price near buy button
+	
+	/**
+	 * Method that search for a panel index inside this panel.
+	 * @param target the panel in interest
+	 * @return the index of the panel, -1 if not found
+	 */
+	public int findComponentIndex(Container container,Object target) {
+	    Component[] components = container.getComponents();
+	    for (int i = 0; i < components.length; i++) {
+	        if (components[i].equals(target)) {
+	            return i;
+	        }
+	    }
+	    return -1; // Component not found
+	}
 
-	public CoursePostDetails(Boolean ToDo) {	//TO DO: constructor with parameters that fill the area with the properly information
+	/**
+	 * Constructor that fills the files with related data.
+	 * @param ToDo params the need to be given
+	 * @param suportPanel the panel with the pdf renderer -?
+	 */
+	public CoursePostDetails(Boolean ToDo, JPanel courseDetailsParent) {	//TODO: constructor with parameters that fill the area with the properly information
 		this();
-		profilePicPanel.add(new RoundImagePanel("res/need_delete.jpg",new Dimension(200,220)),BorderLayout.CENTER);
+		//profile image
+		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(100,120)));
 		
+		//name, couse title and description							//TODO: set the proper informations
 		lblName.setText("Ana Popescu");
 		lblCourseName.setText("Software Engineering");
+		lblPrice.setText("FirstName LastName");
 		tAFullDescription.setText("ceva descriere cum o fi sa fie doar sa fie sa vedem cum e ca de ce nu dor asa");
 		
-		setMinimumSize(new Dimension(600,600));
-		repaint();
-		/*
-		profilePicPanel =
-		lblName =
-		lblCourseName =
-		ratingBarPanel =
-		lblNoViews =
-		lblPrice =
-		tAFullDescription =
-		filePanel =
-		feedbackPanel =
-		 */
+		//overall feedback data
+		Container parent = ratingBarPanel.getParent();
+		int index = findComponentIndex(parent,ratingBarPanel);
+		parent.remove(ratingBarPanel);
+		//ratingBarPanel = new StarRatingBar(ratingValue,1);		//TODO: give the proper rating value
+		parent.add(ratingBarPanel,index);
+
+		//update the pdf renderer
+		index = findComponentIndex(this,filePanel);
+		this.remove(filePanel);
+		filePanel = new CourseFilePanel(courseDetailsParent);
+		this.add(filePanel,index);
+		
+		//display the feedback
+		feedbackPanel.add(new FeedbackPanel(true));
+		feedbackPanel.add(new FeedbackPanel(true));
+		
+		//action for buy button
+		btnBuyCourse.addActionListener(btnBuyActionListener());
+		
+		//update panel
+		setMaximumSize(new Dimension(800,100000));
+		App.getInstance().getFrame().getContentPane().revalidate();
+	}
+	
+	/**
+	 * Acrion listener for buy course button.
+	 * It handle the payment							(TODO)
+	 * and if the payment was usccesfully made it will give access to the user to open the course 
+	 * by pressing the view course button from CourseFilePanel (here filePanel)
+	 * @return action listener for buy course button.
+	 */
+	private ActionListener btnBuyActionListener() {
+		ActionListener act = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {			//TODO: implement of payment action
+				//implement action here
+				
+				//after the payments was successfully made			//TODO: check if the payment was succesfully
+				
+				//notify the view course button the the payment was successfully made
+				((CourseFilePanel)filePanel).setPayed(true);
+				//change icon of viewCourse button to unlock
+				JButton btn = ((CourseFilePanel)filePanel).getBtnViewCourse();
+				btn.setIcon(new ImageIcon(ImageLoader.getInstance().getUnlockedIcon()));
+			}
+		};
+		return act;
 	}
 
 	/**
 	 * Create the panel.
+	 * UI with an default example input
 	 */
 	public CoursePostDetails() {
 		setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -83,20 +159,20 @@ public class CoursePostDetails extends RoundPanel {
 		profilePicPanel.setPreferredSize(new Dimension(100, 100));
 		profilePicPanel.setMinimumSize(new Dimension(100, 100));
 		profilePicPanel.setOpaque(false);
-		profilePicPanel.setMaximumSize(new Dimension(200, 200));
+		profilePicPanel.setMaximumSize(new Dimension(100, 100));
 		panel_1.add(profilePicPanel);
 		profilePicPanel.setLayout(new BorderLayout(0, 0));
 		
 		Component horizontalStrut_4 = Box.createHorizontalStrut(20);
-		horizontalStrut_4.setPreferredSize(new Dimension(200, 0));
-		horizontalStrut_4.setMinimumSize(new Dimension(200, 0));
-		horizontalStrut_4.setMaximumSize(new Dimension(200, 32767));
+		horizontalStrut_4.setPreferredSize(new Dimension(100, 0));
+		horizontalStrut_4.setMinimumSize(new Dimension(100, 0));
+		horizontalStrut_4.setMaximumSize(new Dimension(100, 32767));
 		profilePicPanel.add(horizontalStrut_4, BorderLayout.NORTH);
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
-		verticalStrut.setPreferredSize(new Dimension(0, 200));
-		verticalStrut.setMinimumSize(new Dimension(2, 200));
-		verticalStrut.setMaximumSize(new Dimension(32767, 200));
+		verticalStrut.setPreferredSize(new Dimension(0, 100));
+		verticalStrut.setMinimumSize(new Dimension(2, 100));
+		verticalStrut.setMaximumSize(new Dimension(32767, 100));
 		profilePicPanel.add(verticalStrut, BorderLayout.WEST);
 		
 		JPanel panel_8 = new JPanel();
@@ -106,6 +182,7 @@ public class CoursePostDetails extends RoundPanel {
 		panel_8.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		lblName = new JLabel("FirstName LastName");
+		lblName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblName.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_8.add(lblName);
@@ -116,9 +193,10 @@ public class CoursePostDetails extends RoundPanel {
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 
 		JPanel panel_3 = new JPanel();
+		panel_3.setMaximumSize(new Dimension(32767, 50));
 		panel_3.setOpaque(false);
 		panel_2.add(panel_3);
-		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
+		panel_3.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
 		JLabel lblNewLabel = new JLabel("Course title: ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -128,16 +206,14 @@ public class CoursePostDetails extends RoundPanel {
 		lblCourseName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_3.add(lblCourseName);
 
-		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
-		horizontalStrut_1.setMaximumSize(new Dimension(2000, 5));
-		panel_3.add(horizontalStrut_1);
-
 		JPanel panel_4 = new JPanel();
+		panel_4.setMaximumSize(new Dimension(32767, 50));
 		panel_4.setOpaque(false);
 		panel_2.add(panel_4);
-		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.X_AXIS));
+		panel_4.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
 		ratingBarPanel = new StarRatingBar(3,1);
+		ratingBarPanel.setPreferredSize(new Dimension(150, 30));
 		ratingBarPanel.setMinimumSize(new Dimension(130, 30));
 		ratingBarPanel.setMaximumSize(new Dimension(200, 30));
 		ratingBarPanel.setOpaque(false);
@@ -150,14 +226,10 @@ public class CoursePostDetails extends RoundPanel {
 		lblNoViews.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_4.add(lblNoViews);
 
-		Component horizontalStrut = Box.createHorizontalStrut(20);
-		horizontalStrut.setMaximumSize(new Dimension(900, 5));
-		panel_4.add(horizontalStrut);
-
 		JPanel panel_5 = new JPanel();
 		panel_5.setOpaque(false);
 		panel_2.add(panel_5);
-		panel_5.setLayout(new BoxLayout(panel_5, BoxLayout.X_AXIS));
+		panel_5.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
 		JLabel lblNewLabel_2 = new JLabel("Price: ");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -168,10 +240,6 @@ public class CoursePostDetails extends RoundPanel {
 		lblPrice.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_5.add(lblPrice);
 
-		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
-		horizontalStrut_2.setMaximumSize(new Dimension(2000, 5));
-		panel_5.add(horizontalStrut_2);
-
 		JPanel panel_6 = new JPanel();
 		panel_6.setOpaque(false);
 		add(panel_6);
@@ -180,15 +248,11 @@ public class CoursePostDetails extends RoundPanel {
 		JPanel panel_7 = new JPanel();
 		panel_7.setOpaque(false);
 		panel_6.add(panel_7);
-		panel_7.setLayout(new BoxLayout(panel_7, BoxLayout.X_AXIS));
+		panel_7.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
 		JLabel lblNewLabel_1 = new JLabel("Full description: ");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_7.add(lblNewLabel_1);
-
-		Component horizontalStrut_3 = Box.createHorizontalStrut(20);
-		horizontalStrut_3.setMaximumSize(new Dimension(2000, 10));
-		panel_7.add(horizontalStrut_3);
 
 		tAFullDescription = new JTextArea();
 		tAFullDescription.setOpaque(false);
@@ -198,13 +262,52 @@ public class CoursePostDetails extends RoundPanel {
 		tAFullDescription.setLineWrap(true);
 		panel_6.add(tAFullDescription);
 
-		filePanel = new CourseFilePanel();//new JPanel();
+		filePanel = new JPanel();
 		filePanel.setOpaque(false);
 		add(filePanel);
+		
+		JPanel panel_9 = new JPanel();
+		panel_9.setBorder(new EmptyBorder(10, 10, 10, 30));
+		panel_9.setOpaque(false);
+		add(panel_9);
+		panel_9.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+		
+		lblPriceBuy = new JLabel("( 299 RON ) ");
+		lblPriceBuy.setMaximumSize(new Dimension(400, 13));
+		lblPriceBuy.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPriceBuy.setHorizontalTextPosition(SwingConstants.RIGHT);
+		lblPriceBuy.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_9.add(lblPriceBuy);
+		
+		//image icon
+		Image img = ImageLoader.getInstance().getDollarIcon();
+		
+		btnBuyCourse = new RoundButton("New button");
+		btnBuyCourse.setText("Buy course");
+		btnBuyCourse.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnBuyCourse.setBackground(Color.GRAY);
+		btnBuyCourse.setOpaque(false);
+		btnBuyCourse.setMinimumSize(new Dimension(100, 30));
+		btnBuyCourse.setPreferredSize(new Dimension(200, 30));
+		btnBuyCourse.setMaximumSize(new Dimension(200, 30));
+		btnBuyCourse.setIcon(new ImageIcon(img));
+		panel_9.add(btnBuyCourse);
 
 		feedbackPanel = new JPanel();
 		feedbackPanel.setOpaque(false);
 		add(feedbackPanel);
+		feedbackPanel.setLayout(new BoxLayout(feedbackPanel, BoxLayout.Y_AXIS));
+		
+		JPanel panel_10 = new JPanel();
+		panel_10.setMinimumSize(new Dimension(100, 100));
+		panel_10.setOpaque(false);
+		FlowLayout flowLayout = (FlowLayout) panel_10.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		feedbackPanel.add(panel_10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Feedback: ");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 16));
+		panel_10.add(lblNewLabel_3);
 
 	}
 

@@ -71,7 +71,7 @@ public class StarRatingBar extends JPanel{
 				add(l);
 			}
 		});
-		setPreferredSize(new Dimension(100,30));
+		setPreferredSize(new Dimension(150,30));
 		setOpaque(false);
 	}
 
@@ -113,7 +113,7 @@ public class StarRatingBar extends JPanel{
 			}
 		});
 
-		setPreferredSize(new Dimension(100,30));
+		setPreferredSize(new Dimension(150,30));
 		setOpaque(false);
 
 	}
@@ -207,7 +207,6 @@ public class StarRatingBar extends JPanel{
 				if(editable) {
 					clicked = getSelectedIconIndex(e.getPoint());	//clicked represents the rating value - 1;
 					//rating value is clicked + 1
-					System.out.println("Rating: " + (clicked + 1));
 				}
 			}
 
@@ -230,14 +229,14 @@ public class StarRatingBar extends JPanel{
 		repaintIcon(clicked);
 	}
 
-	/**
+	/**									Method does not work properly, create an instance with a default rating value instead :)
 	 * Set rating level to l.
 	 * @param l the rating value.
 	 */
-	public void setLevel(int l) {
+	/*public void setLevel(int l) {
 		clicked = l-1;
 		repaintIcon(clicked);
-	}
+	}*/
 
 	/**
 	 * This method takes a Point object representing the location of a JLabel and returns the index of the selected icon.
@@ -261,8 +260,6 @@ public class StarRatingBar extends JPanel{
 	 */
 	protected void repaintIcon(int index) {
 		for (int i = 0; i < labelList.size(); i++) {
-			System.out.println("RepaintIcon");
-			System.out.println(index);
 			labelList.get(i).setIcon(i <= index ? iconList.get(i) : defaultIcon);
 			labelList.get(i).invalidate();
 		}
