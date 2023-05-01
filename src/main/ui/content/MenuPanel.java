@@ -1,4 +1,4 @@
-package ui.content;
+package main.ui.content;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -9,9 +9,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-
-import ui.customComponents.RoundMenuBar;
 import javax.swing.border.EmptyBorder;
+
+import main.ui.customComponents.RoundMenuBar;
 
 /**
  * This panel contains the menu bar.

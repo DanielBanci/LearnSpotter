@@ -1,9 +1,11 @@
-package ui.content;
+package main.ui.content;
 
 import javax.swing.JPanel;
-import javax.swing.BoxLayout;
 
-import java.awt.Color;
+import main.ui.coursePosts.CoursePostDetails;
+import main.ui.customComponents.RoundImagePanel;
+
+import javax.swing.BoxLayout;
 import java.awt.Dimension;
 
 /**
@@ -28,6 +30,11 @@ public class MainPanel extends JPanel {
 		add(topPanel);
 		
 		JPanel contentPanel = new JPanel();
+		contentPanel.setLayout(new BoxLayout(contentPanel,BoxLayout.Y_AXIS));
+		contentPanel.add(new CoursePostDetails(true));
+		/*JPanel p = new RoundImagePanel("res/login_background.png",new Dimension(100,100));
+		p.setOpaque(false);
+		contentPanel.add(p);*/
 		add(contentPanel);
 
 	}

@@ -1,15 +1,14 @@
-package ui.content;
+package main.ui.content;
 
 import javax.swing.JPanel;
-
-import ui.customComponents.ImagePanel;
-import ui.customComponents.RoundPanel;
-import ui.customComponents.RoundTextField;
-
 import javax.swing.BoxLayout;
 import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import main.ui.customComponents.ImagePanel;
+import main.ui.customComponents.RoundPanel;
+import main.ui.customComponents.RoundTextField;
 
 /**
  * The class represents a search bar.

@@ -1,10 +1,10 @@
-package app;
+package main.app;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import ui.login.LoginPanel;
+import main.ui.login.LoginPanel;
 
 import java.awt.BorderLayout;
 

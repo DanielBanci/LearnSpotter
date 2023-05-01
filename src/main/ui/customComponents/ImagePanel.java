@@ -1,4 +1,4 @@
-package ui.customComponents;
+package main.ui.customComponents;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,6 +18,16 @@ public class ImagePanel extends JPanel {
     private Dimension preferedSize;
     private Dimension maximumSize;
 
+    /**
+     * Default constructor.
+     */
+    public ImagePanel(Dimension max) {
+    	maximumSize = max;
+    }
+    
+    public void setImage(Image img) {
+    	this.img = img;
+    }
     /**
      *Constructs a new ImagePanel with an image loaded from the given file path.
      *The image is scaled to fit the preferred size of the panel.

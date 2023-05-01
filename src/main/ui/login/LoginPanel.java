@@ -1,15 +1,14 @@
-package ui.login;
+package main.ui.login;
 
 import javax.swing.JPanel;
-
-import ui.customComponents.ImagePanel;
-
 import javax.swing.BoxLayout;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.border.EmptyBorder;
+
+import main.ui.customComponents.ImagePanel;
 
 /**
  * The class represents the login content.

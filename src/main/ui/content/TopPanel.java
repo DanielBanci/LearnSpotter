@@ -1,4 +1,4 @@
-package ui.content;
+package main.ui.content;
 
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
@@ -9,7 +9,8 @@ import java.awt.Dimension;
 
 import javax.swing.border.EmptyBorder;
 
-import ui.customComponents.ImagePanel;
+import main.ui.customComponents.ImagePanel;
+
 import javax.swing.BoxLayout;
 
 /**
