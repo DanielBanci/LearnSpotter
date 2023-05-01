@@ -15,13 +15,15 @@ import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
 
-public class PDFViewPanel extends JPanel {
+public class PDFViewPanel extends JPanel { //BETA version
 
 	/**
 	 * Create the panel.
 	 */
 	public PDFViewPanel() {
 		setLayout(new BorderLayout());
+		
+		//file to be displayed
 		File file = new File("res/Analiza Sistemului.pdf");
         FileInputStream fis;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
