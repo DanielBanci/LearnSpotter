@@ -1,3 +1,4 @@
+package test;
 
 
 import static org.junit.Assert.*;
@@ -9,7 +10,7 @@ import java.util.Collection;
 
 import org.junit.Test;
 
-import classes.MentoringProgram;
+import src.main.classes.MentoringProgram;
 
 public class MentoringProgramTest {
 

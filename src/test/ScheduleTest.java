@@ -1,10 +1,11 @@
+package test;
 
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import classes.Schedule;
+import src.main.classes.Schedule;
 
 public class ScheduleTest {
 

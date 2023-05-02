@@ -1,15 +1,16 @@
+package test;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import classes.Course;
+import src.main.classes.Course;
 
 
 public class CourseTest {
 	
 	@Test
 	public void defaultConstructorTest() {
-		Course course = new Course();
+		src.main.classes.Course course = new Course();
 		
 		int id = course.getId();
 		String name = course.getName();

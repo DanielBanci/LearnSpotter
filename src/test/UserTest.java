@@ -1,8 +1,9 @@
+package test;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import classes.User;
+import src.main.classes.User;
 
 public class UserTest {
 

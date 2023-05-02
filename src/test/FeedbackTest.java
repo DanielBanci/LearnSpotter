@@ -1,10 +1,11 @@
+package test;
 
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import classes.Feedback;
+import src.main.classes.Feedback;
 
 public class FeedbackTest {
 
