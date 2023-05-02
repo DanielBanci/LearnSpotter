@@ -52,6 +52,7 @@ public class CoursePostDetails extends RoundPanel {
 	private JPanel feedbackPanel;			//feddback panel
 	private JButton btnBuyCourse;			//button to buy the course
 	private JLabel lblPriceBuy;				//lbl to display the price near buy button
+	private JLabel lblLastUpdate;
 	
 	/**
 	 * Method that search for a panel index inside this panel.
@@ -78,11 +79,12 @@ public class CoursePostDetails extends RoundPanel {
 		//profile image
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(100,120)));
 		
-		//name, couse title and description							//TODO: set the proper informations
+		//name, couse title, last update and description							//TODO: set the proper informations
 		lblName.setText("Ana Popescu");
 		lblCourseName.setText("Software Engineering");
-		lblPrice.setText("FirstName LastName");
+		lblPrice.setText("(299) RON");
 		tAFullDescription.setText("ceva descriere cum o fi sa fie doar sa fie sa vedem cum e ca de ce nu dor asa");
+		lblLastUpdate.setText("09/12/2021");
 		
 		//overall feedback data
 		Container parent = ratingBarPanel.getParent();
@@ -156,6 +158,7 @@ public class CoursePostDetails extends RoundPanel {
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 
 		profilePicPanel = new JPanel();
+		profilePicPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		profilePicPanel.setPreferredSize(new Dimension(100, 100));
 		profilePicPanel.setMinimumSize(new Dimension(100, 100));
 		profilePicPanel.setOpaque(false);
@@ -182,12 +185,14 @@ public class CoursePostDetails extends RoundPanel {
 		panel_8.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		lblName = new JLabel("FirstName LastName");
+		lblName.setBorder(new EmptyBorder(20, 0, 0, 0));
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblName.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_8.add(lblName);
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new EmptyBorder(0, 20, 0, 0));
 		panel_2.setOpaque(false);
 		panel.add(panel_2);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
@@ -227,18 +232,44 @@ public class CoursePostDetails extends RoundPanel {
 		panel_4.add(lblNoViews);
 
 		JPanel panel_5 = new JPanel();
+		panel_5.setMaximumSize(new Dimension(32767, 50));
 		panel_5.setOpaque(false);
 		panel_2.add(panel_5);
-		panel_5.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-
-		JLabel lblNewLabel_2 = new JLabel("Price: ");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 16));
-		panel_5.add(lblNewLabel_2);
-
-		lblPrice = new JLabel("299 RON");
-		lblPrice.setBorder(new EmptyBorder(0, 5, 0, 5));
-		lblPrice.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_5.add(lblPrice);
+		panel_5.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JPanel panel_11 = new JPanel();
+		panel_11.setOpaque(false);
+		FlowLayout flowLayout_1 = (FlowLayout) panel_11.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		panel_5.add(panel_11);
+		
+				JLabel lblNewLabel_2 = new JLabel("Price: ");
+				panel_11.add(lblNewLabel_2);
+				lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 16));
+				
+						lblPrice = new JLabel("299 RON");
+						panel_11.add(lblPrice);
+						lblPrice.setBorder(new EmptyBorder(0, 5, 0, 5));
+						lblPrice.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		JPanel panel_12 = new JPanel();
+		panel_12.setOpaque(false);
+		FlowLayout flowLayout_2 = (FlowLayout) panel_12.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.RIGHT);
+		panel_5.add(panel_12);
+		
+		JLabel lblNewLabel_4 = new JLabel("Last update: ");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 16));
+		panel_12.add(lblNewLabel_4);
+		
+		lblLastUpdate = new JLabel("16/09/2021");
+		lblLastUpdate.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_12.add(lblLastUpdate);
+		
+		JPanel panel_13 = new JPanel();
+		panel_13.setMaximumSize(new Dimension(32767, 100));
+		panel_13.setOpaque(false);
+		panel_2.add(panel_13);
 
 		JPanel panel_6 = new JPanel();
 		panel_6.setOpaque(false);

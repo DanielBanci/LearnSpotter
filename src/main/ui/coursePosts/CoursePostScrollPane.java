@@ -1,11 +1,17 @@
 package main.ui.coursePosts;
 
 import java.awt.Dimension;
+import java.awt.Point;
 
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+
+import main.app.App;
 
 /**
  * Scroll panel that holds all the details related to a course.
@@ -34,8 +40,13 @@ public class CoursePostScrollPane extends JScrollPane {
 		setBorder(new EmptyBorder(0, 10, 0, 10));
 		getVerticalScrollBar().setUnitIncrement(16);
 		getHorizontalScrollBar().setUnitIncrement(16);
+		
 		setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		
+		//set viewport position to top after display
+		SwingUtilities.invokeLater(() -> {
+		        getVerticalScrollBar().setValue(0);
+		    });
 	}
-
 }

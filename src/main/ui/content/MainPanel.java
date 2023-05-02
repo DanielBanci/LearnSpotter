@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Point;
 
 /**
  * The main panel of the app.
@@ -23,7 +24,6 @@ import java.awt.GridLayout;
  * @version 1.0
  */
 public class MainPanel extends JPanel {
-
 	/**
 	 * Create the panel.
 	 */
@@ -39,7 +39,8 @@ public class MainPanel extends JPanel {
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel,BoxLayout.Y_AXIS));
 		
-		contentPanel.add(new CoursePostScrollPane());
+		CoursePostScrollPane p = new CoursePostScrollPane();
+		contentPanel.add(p);
 		add(contentPanel);
 
 	}

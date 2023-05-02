@@ -99,10 +99,9 @@ public class FeedbackPanel extends JPanel {
 		panel_4.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
 		ratingBarPanel = new StarRatingBar(3, 1);
-		ratingBarPanel.setPreferredSize(new Dimension(130, 30));
 		ratingBarPanel.setOpaque(false);
-		ratingBarPanel.setMinimumSize(new Dimension(130, 30));
-		ratingBarPanel.setMaximumSize(new Dimension(130, 30));
+		ratingBarPanel.setMinimumSize(new Dimension(150, 30));
+		ratingBarPanel.setMaximumSize(new Dimension(150, 30));
 		panel_4.add(ratingBarPanel);
 		
 		RoundPanel panel_2 = new RoundPanel();
