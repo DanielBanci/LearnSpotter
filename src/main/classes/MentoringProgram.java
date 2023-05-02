@@ -1,4 +1,4 @@
-package src.main.classes;
+package main.classes;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

@@ -3,14 +3,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import src.main.classes.Course;
+import main.classes.Course;
 
 
 public class CourseTest {
 	
 	@Test
 	public void defaultConstructorTest() {
-		src.main.classes.Course course = new Course();
+		main.classes.Course course = new Course();
 		
 		int id = course.getId();
 		String name = course.getName();

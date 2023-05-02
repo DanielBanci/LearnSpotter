@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import src.main.classes.Feedback;
+import main.classes.Feedback;
 
 public class FeedbackTest {
 

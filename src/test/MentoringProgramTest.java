@@ -10,7 +10,7 @@ import java.util.Collection;
 
 import org.junit.Test;
 
-import src.main.classes.MentoringProgram;
+import main.classes.MentoringProgram;
 
 public class MentoringProgramTest {
 

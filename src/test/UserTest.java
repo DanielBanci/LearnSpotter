@@ -3,7 +3,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import src.main.classes.User;
+import main.classes.User;
 
 public class UserTest {
 

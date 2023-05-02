@@ -1,4 +1,4 @@
-package src.main.classes;
+package main.classes;
 
 /**
  * A class that holds the data related to the student.

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import src.main.classes.Schedule;
+import main.classes.Schedule;
 
 public class ScheduleTest {
 
