@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 
 import java.awt.Dimension;
 import java.awt.Color;
@@ -18,9 +19,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
 import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
 
+import main.ui.coursePosts.CourseFilePanel;
+import main.ui.coursePosts.CoursePostDetails;
 import main.ui.customComponents.ImagePanel;
 import main.ui.customComponents.RoundButton;
 import main.utility.ImageLoader;
@@ -48,15 +53,6 @@ public class PaymentPanel extends JPanel {
 		//set the sum on the button
 		totalSum = Math.round(totalSum*100)/100.0;
 		btnCompletePayment.setText("Complete payment (Total $" + totalSum + ")");
-		/*btnCompletePayment.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});*/
 		
 		//load card icon
 		ImagePanel img = new ImagePanel(ImageLoader.getInstance().getCardIcon(),new Dimension(250,120));
@@ -65,6 +61,41 @@ public class PaymentPanel extends JPanel {
 		//set combo models
 		cBMM.setModel(mMComboModel());
 		cBYY.setModel(yYComboModel());
+		
+		//set action to the payment button atfer it was added to a comoponent
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				btnCompletePayment.addActionListener(paymentButtonActionListener());
+			}
+		});
+	}
+	
+	/**
+	 * Action listener for complete payment button.
+	 * It handles the payment process and if succed it hide the payment panel and enable the view course button.
+	 * @return complete payment action.
+	 */
+	private ActionListener paymentButtonActionListener() {
+		CoursePostDetails aux = (CoursePostDetails)this.getParent();
+		ActionListener act = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// implement here																TODO implement payment
+				
+				////after the payments was successfully made			//TODO: check if the payment was succesfully
+				//notify the view course button the the payment was successfully made
+				((CourseFilePanel)aux.getFilePanel()).setPayed(true);
+				//change icon of viewCourse button to unlock
+				JButton btn = ((CourseFilePanel)aux.getFilePanel()).getBtnViewCourse();
+				btn.setIcon(new ImageIcon(ImageLoader.getInstance().getUnlockedIcon()));
+				aux.remove(aux.getPaymentPanel());
+				aux.revalidate();
+			}
+			
+		};
+		return act;
 	}
 	
 	public DefaultComboBoxModel<String> yYComboModel() {

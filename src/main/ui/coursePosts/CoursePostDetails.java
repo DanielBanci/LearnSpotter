@@ -61,6 +61,16 @@ public class CoursePostDetails extends RoundPanel {
 	private JLabel lblLastUpdate;			//last date the course was updated
 	private PaymentPanel paymentPanel;
 
+	public PaymentPanel getPaymentPanel() {
+		return paymentPanel;
+	}
+
+
+	public JPanel getFilePanel() {
+		return filePanel;
+	}
+
+
 	/**
 	 * Method that search for a panel index inside the container.
 	 * @param target the panel in interest
@@ -141,10 +151,6 @@ public class CoursePostDetails extends RoundPanel {
 					int parentIndex = findComponentIndex(aux, btnBuyCourse.getParent());
 					aux.add(paymentPanel,parentIndex+1);
 					
-					//get the payment button and set the action
-					JButton paymentButton = paymentPanel.getBtnCompletePayment();
-					paymentButton.addActionListener(paymentButtonActionListener());
-					
 					//update panel
 					aux.revalidate();
 					
@@ -178,33 +184,6 @@ public class CoursePostDetails extends RoundPanel {
 	                timer.start();
 				}
 			}
-		};
-		return act;
-	}
-	
-	/**
-	 * Action listener for complete payment button.
-	 * It handles the payment process and if succed it hide the payment panel and enable the view course button.
-	 * @return complete payment action.
-	 */
-	private ActionListener paymentButtonActionListener() {
-		CoursePostDetails aux = this;
-		ActionListener act = new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// implement here																TODO implement payment
-				
-				////after the payments was successfully made			//TODO: check if the payment was succesfully
-				//notify the view course button the the payment was successfully made
-				((CourseFilePanel)filePanel).setPayed(true);
-				//change icon of viewCourse button to unlock
-				JButton btn = ((CourseFilePanel)filePanel).getBtnViewCourse();
-				btn.setIcon(new ImageIcon(ImageLoader.getInstance().getUnlockedIcon()));
-				aux.remove(paymentPanel);
-				aux.revalidate();
-			}
-			
 		};
 		return act;
 	}
