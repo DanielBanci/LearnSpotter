@@ -42,6 +42,10 @@ public class CourseFilePanel extends JPanel {
 	//for action listeners
 	private JButton btnViewCourse;				//the button the show the pdf
 	private Boolean payed = false;				//indicate whatever the course was bought or not
+	public Boolean getPayed() {
+		return payed;
+	}
+
 	private Boolean displayed = false;			//indicate whatever the pdf is displayed or not
 
 	/**
@@ -114,6 +118,7 @@ public class CourseFilePanel extends JPanel {
 		courseFilePanel.add(horizontalStrut_1);
 		
 		btnViewCourse = new RoundButton("View course");
+		btnViewCourse.setFocusable(false);
 		btnViewCourse.setForeground(Color.BLACK);
 		btnViewCourse.setBackground(Color.GRAY);
 		btnViewCourse.setPreferredSize(new Dimension(200, 30));

@@ -45,6 +45,9 @@ public class ImageLoader {
             //user_icon
             img = ImageIO.read(new File("res/user_icon.png"));
             images.put("user_icon", img);
+            //card_icon
+            img = ImageIO.read(new File("res/card_icon.png"));
+            images.put("card_icon", img);
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -55,5 +58,6 @@ public class ImageLoader {
 	public Image getUnlockedIcon() {return images.get("unlocked_icon");}
 	public Image getPdfIcon() {return images.get("pdf_icon");}
 	public Image getUserIcon() {return images.get("user_icon");}
+	public Image getCardIcon() {return images.get("card_icon");}
 	
 }

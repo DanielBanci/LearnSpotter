@@ -42,6 +42,7 @@ public class ImagePanel extends JPanel {
         }
         preferedSize = new Dimension(50,50);
         maximumSize = dim;
+        setOpaque(false);
     }
 
     /**
@@ -54,6 +55,7 @@ public class ImagePanel extends JPanel {
         this.img = img;
         this.preferedSize = new Dimension(50,50);
         this.maximumSize = dim;
+        setOpaque(false);
     }
 
     /**

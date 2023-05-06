@@ -153,7 +153,6 @@ public class StarRatingBar extends JPanel{
 	 */
 	private static Image makeMissingImage() {
 		Icon missingIcon = UIManager.getIcon("html.missingImage");
-		System.out.println("missingImage");
 		int iw = missingIcon.getIconWidth();
 		int ih = missingIcon.getIconHeight();
 		BufferedImage bi = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);

@@ -4,9 +4,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import main.app.App;
+import main.ui.calendar.SchedulePanel;
+import main.ui.coursePosts.CoursePost;
 import main.ui.coursePosts.CoursePostDetails;
 import main.ui.coursePosts.CoursePostScrollPane;
 import main.ui.customComponents.RoundImagePanel;
+import main.ui.mentors.MentorPost;
 
 import javax.swing.BoxLayout;
 
@@ -38,10 +42,20 @@ public class MainPanel extends JPanel {
 		
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel,BoxLayout.Y_AXIS));
+		//contentPanel.setLayout(new FlowLayout());
 		
 		CoursePostScrollPane p = new CoursePostScrollPane();
-		contentPanel.add(p);
+		//contentPanel.add(p);
+		contentPanel.add(new CoursePostScrollPane());
+		//contentPanel.add(new MentorPost(true));
+		
 		add(contentPanel);
+		/*revalidate();
+		invalidate();
+		repaint();
+		validate();
+		App.getInstance().getFrame().getContentPane().invalidate();
+		App.getInstance().getFrame().getContentPane().revalidate();*/
 
 	}
 

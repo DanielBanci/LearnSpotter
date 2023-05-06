@@ -147,6 +147,7 @@ public class CoursePost extends RoundPanel {
 		panel_1.add(horizontalStrut_1);
 		
 		btnDetails = new RoundButton("Details");
+		btnDetails.setFocusable(false);
 		btnDetails.setForeground(Color.WHITE);
 		btnDetails.setBackground(new Color(0, 113, 20));
 		btnDetails.setBorder(null);
