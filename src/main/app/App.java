@@ -1,8 +1,10 @@
 package main.app;
 
 import java.awt.EventQueue;
+import java.sql.Connection;
 
 import javax.swing.JFrame;
+import main.db.*;
 
 /**
  * A singleton class that contains the app frame.
@@ -27,6 +29,9 @@ public class App {
 				try {
 					App app = App.getInstance();
 					app.frame.setVisible(true);
+					
+					DbConnection dbConnection = new DbConnection();
+					Connection conn = dbConnection.getConnection();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -10,6 +10,7 @@ import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customComponents.RoundPasswordField;
 import main.ui.customComponents.RoundTextField;
+import main.db.*;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -17,6 +18,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -115,15 +120,39 @@ public class LoginData extends RoundPanel {
 	private ActionListener loginButtonActionListener(){
         ActionListener act = new ActionListener() {
             //@Override
-            public void actionPerformed(ActionEvent e) {                        //TO DO: check input and login the users
+            @SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {                        //TO DO: check input and login the users
                 //complete code here
-
-                //Open the app for the user
-            	App.getInstance().getFrame().getContentPane().removeAll();
-            	App.getInstance().getFrame().setContentPane(new MainPanel());
-            	
-            	//update the frame
-            	App.getInstance().getFrame().invalidate();
+            	try {
+					DbConnection dbConnection = new DbConnection();
+					Connection conn = dbConnection.getConnection();
+					
+					String query = "SELECT * FROM users WHERE email=? AND password=?";
+					
+					PreparedStatement statement = conn.prepareStatement(query);
+					
+					statement.setString(1, tFEmail.getText());
+		            statement.setString(2, passwordField.getText());
+		            
+					ResultSet resultSet = statement.executeQuery();
+		            
+		            if (resultSet.next()) {
+		                System.out.println("Login success");
+		                
+		                //Open the app for the user
+		            	App.getInstance().getFrame().getContentPane().removeAll();
+		            	App.getInstance().getFrame().setContentPane(new MainPanel());
+		            	
+		            	//update the frame
+		            	App.getInstance().getFrame().invalidate();
+		            } else {
+		                System.out.println("Login failed");
+		            }
+		            
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         };
 
@@ -137,7 +166,7 @@ public class LoginData extends RoundPanel {
             	if (checkBox.isSelected()) {
                     passwordField.setEchoChar((char) 0); // Show password
                 } else {
-                    passwordField.setEchoChar('•'); // Hide password
+                    passwordField.setEchoChar('ï¿½'); // Hide password
                 }
             }
         };
