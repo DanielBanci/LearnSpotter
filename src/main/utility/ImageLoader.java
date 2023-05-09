@@ -1,12 +1,16 @@
 package main.utility;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.UIManager;
 
 /**
  * Class that load all the images we'll use in the project(only from res folder).
@@ -48,8 +52,24 @@ public class ImageLoader {
             //card_icon
             img = ImageIO.read(new File("res/card_icon.png"));
             images.put("card_icon", img);
+            //location_icon
+            img = ImageIO.read(new File("res/location_icon.png"));
+            images.put("location_icon", img);
+            //study_icon
+            img = ImageIO.read(new File("res/study_icon.png"));
+            images.put("study_icon", img);
+            //programs_number_icon
+            img = ImageIO.read(new File("res/programs_number_icon.png"));
+            images.put("programs_number_icon", img);
+            //money_icon
+            img = ImageIO.read(new File("res/money_icon.png"));
+            images.put("money_icon", img);
+            //logo
+            img = ImageIO.read(new File("res/logo.png"));
+            images.put("logo", img);
         }catch(IOException e){
-            e.printStackTrace();
+            e.printStackTrace();makeMissingImage();
+            
         }
 	}
 	
@@ -59,5 +79,24 @@ public class ImageLoader {
 	public Image getPdfIcon() {return images.get("pdf_icon");}
 	public Image getUserIcon() {return images.get("user_icon");}
 	public Image getCardIcon() {return images.get("card_icon");}
+	public Image getLocationIcon() {return images.get("location_icon");}
+	public Image getStudyIcon() {return images.get("study_icon");}
+	public Image getProgramsNumberIcon() {return images.get("programs_number_icon");}
+	public Image getMoneyIcon() {return images.get("money_icon");}
+	public Image getLogo() {return images.get("logo");}
 	
+	/**
+	 * Handle the missing icon.
+	 * @return an icon to use in case of error to the firs try
+	 */
+	private static Image makeMissingImage() {
+		Image missingIcon = (Image) UIManager.getIcon("html.missingImage");
+		/*int iw = missingIcon.getWidth();
+		int ih = missingIcon.getHeight();
+		BufferedImage bi = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = bi.createGraphics();
+		missingIcon.paintIcon(null, g2, (16 - iw) / 2, (16 - ih) / 2);
+		g2.dispose();*/
+		return missingIcon;
+	}
 }

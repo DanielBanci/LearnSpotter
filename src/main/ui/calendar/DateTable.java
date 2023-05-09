@@ -71,7 +71,8 @@ public class DateTable extends JScrollPane{
 			//get current date
 			cal.setTime(new Date());
 			int firstDayIndex = getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK));
-			today = new Point(0,firstDayIndex,cal.get(Calendar.MONTH),cal.get(Calendar.YEAR));
+			int firstDayWeekIndex = cal.get(Calendar.WEEK_OF_MONTH)-1;
+			today = new Point(firstDayWeekIndex,firstDayIndex,cal.get(Calendar.MONTH),cal.get(Calendar.YEAR));
 			datesOfInterest = new ArrayList<>();
 			// Create the table model with 6 rows and 7 columns
 			DefaultTableModel model = new DefaultTableModel();

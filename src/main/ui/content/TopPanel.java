@@ -47,7 +47,7 @@ public class TopPanel extends JPanel {
 		gbc_logoPanel.gridy = 0;
 		add(logoPanel, gbc_logoPanel);
 		logoPanel.setLayout(new BorderLayout(0, 0));
-		logoPanel.add(new ImagePanel("res/logo.png",new Dimension(400,200)),BorderLayout.CENTER);
+		//logoPanel.add(new ImagePanel("res/logo.png",new Dimension(400,200)),BorderLayout.CENTER);
 		logoPanel.setMaximumSize(new Dimension(500,200));
 		
 		//search bar

@@ -64,7 +64,7 @@ public class MentorPost extends RoundPanel {
 	public MentorPost(Boolean TODO) {
 		this();
 		//profile pic
-		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(100,120)));
+		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
 		
 		//rating bar
 		Container parent = ratingBarPanel.getParent();
@@ -113,9 +113,9 @@ public class MentorPost extends RoundPanel {
 
 		profilePicPanel = new JPanel();
 		profilePicPanel.setOpaque(false);
-		profilePicPanel.setPreferredSize(new Dimension(100, 100));
+		profilePicPanel.setPreferredSize(new Dimension(150, 150));
 		profilePicPanel.setMinimumSize(new Dimension(100, 100));
-		profilePicPanel.setMaximumSize(new Dimension(100, 100));
+		profilePicPanel.setMaximumSize(new Dimension(150, 150));
 		panel.add(profilePicPanel);
 		profilePicPanel.setLayout(new BorderLayout(0, 0));
 

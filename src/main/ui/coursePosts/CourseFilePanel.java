@@ -36,11 +36,13 @@ public class CourseFilePanel extends JPanel {
 	private ImageIcon iconButtonLocked;			//icon before payment
 	private ImageIcon iconButtonUnlocked;		//related TODO: change icons after the payed was made
 	private ImageIcon pdfFileIcon;				//pdf file icon
-	private JPanel pdfViewPanel;				//the panel that disply the pdf			
+	protected JPanel courseFilePanel;
+	protected JPanel pdfViewPanel;				//the panel that disply the pdf			
 	private JPanel courseDetailsParent;			//the panel with the course details
+	private JLabel lblIconPdfFile;
 	
 	//for action listeners
-	private JButton btnViewCourse;				//the button the show the pdf
+	protected JButton btnViewCourse;				//the button the show the pdf
 	private Boolean payed = false;				//indicate whatever the course was bought or not
 	public Boolean getPayed() {
 		return payed;
@@ -79,8 +81,12 @@ public class CourseFilePanel extends JPanel {
 	 */
 	public CourseFilePanel(JPanel courseDetailsP) {
 		this();
+		loadButtonsImageIcon();
 		courseDetailsParent = courseDetailsP;
 		btnViewCourse.addActionListener(btnViewCourseActionListener());
+		lblIconPdfFile.setIcon(pdfFileIcon);
+		btnViewCourse.setIcon(iconButtonLocked);
+		
 	}
 	
 	/**
@@ -88,24 +94,24 @@ public class CourseFilePanel extends JPanel {
 	 * UI components.
 	 */
 	public CourseFilePanel() {
-		loadButtonsImageIcon();
+		
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		setBackground(Color.LIGHT_GRAY);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		JPanel courseFilePanel = new JPanel();
+		courseFilePanel = new JPanel();
 		courseFilePanel.setOpaque(false);
 		courseFilePanel.setBorder(new EmptyBorder(10, 10, 20, 20));
 		add(courseFilePanel);
 		courseFilePanel.setLayout(new BoxLayout(courseFilePanel, BoxLayout.X_AXIS));
 		
-		JLabel lblIconPdfFile = new JLabel("");
+		lblIconPdfFile = new JLabel("");
 		lblIconPdfFile.setBorder(new EmptyBorder(3, 3, 3, 3));
 		lblIconPdfFile.setPreferredSize(new Dimension(32, 32));
 		lblIconPdfFile.setMinimumSize(new Dimension(32, 32));
 		lblIconPdfFile.setMaximumSize(new Dimension(32, 32));
 		
-		lblIconPdfFile.setIcon(pdfFileIcon);
+		//lblIconPdfFile.setIcon(pdfFileIcon);
 		
 		courseFilePanel.add(lblIconPdfFile);
 		
@@ -126,7 +132,7 @@ public class CourseFilePanel extends JPanel {
 		btnViewCourse.setMinimumSize(new Dimension(100, 30));
 		btnViewCourse.setMaximumSize(new Dimension(200, 30));
 		courseFilePanel.add(btnViewCourse);
-		btnViewCourse.setIcon(iconButtonLocked);
+		//btnViewCourse.setIcon(iconButtonLocked);
 		CourseFilePanel p = this;
 		
 		

@@ -41,24 +41,24 @@ public class SchedulePanel extends RoundPanel {
 		setForeground(getBackground());													//hide the border of the panel
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 53, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[] {10, 255, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JPanel panel = new JPanel();
-		panel.setMaximumSize(new Dimension(32767, 200));
+		panel.setMaximumSize(new Dimension(32767, 50));
 		panel.setOpaque(false);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.insets = new Insets(0, 0, 5, 0);
-		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 1;
+		gbc_panel.gridy = 0;
 		add(panel, gbc_panel);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setMaximumSize(new Dimension(700, 200));
+		panel_1.setMaximumSize(new Dimension(700, 50));
 		panel_1.setOpaque(false);
 		panel.add(panel_1);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -79,7 +79,7 @@ public class SchedulePanel extends RoundPanel {
 		panel.add(lblMonthYear);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setMaximumSize(new Dimension(32767, 200));
+		panel_2.setMaximumSize(new Dimension(32767, 50));
 		panel_2.setOpaque(false);
 		panel.add(panel_2);
 		
@@ -92,10 +92,12 @@ public class SchedulePanel extends RoundPanel {
 		panel_2.add(btnNext);
 		
 		DateTable calendarPanel = new DateTable(49,70);
+		calendarPanel.setMaximumSize(new Dimension(490, 160));
+		calendarPanel.setPreferredSize(new Dimension(490, 160));
 		GridBagConstraints gbc_calendarPanel = new GridBagConstraints();
 		gbc_calendarPanel.fill = GridBagConstraints.BOTH;
 		gbc_calendarPanel.gridx = 0;
-		gbc_calendarPanel.gridy = 3;
+		gbc_calendarPanel.gridy = 1;
 		add(calendarPanel, gbc_calendarPanel);
 		
 		//set current month
