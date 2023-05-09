@@ -5,6 +5,8 @@ import java.sql.Connection;
 
 import javax.swing.JFrame;
 import main.db.*;
+import main.utility.*;
+import javax.net.ssl.SSLContext;
 
 /**
  * A singleton class that contains the app frame.
