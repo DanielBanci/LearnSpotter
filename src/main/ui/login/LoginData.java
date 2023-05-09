@@ -37,6 +37,8 @@ public class LoginData extends RoundPanel {
 	private JPasswordField passwordField;		//the password input
 	private JButton btnLogin;					//button to log in  
 	private JCheckBox checkBox;		//check box to show/hide password
+	
+	public static String emailIfLoginSucceded;
 
 	/**
 	 * Create the panel.
@@ -138,6 +140,8 @@ public class LoginData extends RoundPanel {
 		            
 		            if (resultSet.next()) {
 		                System.out.println("Login success");
+		                
+		                emailIfLoginSucceded = tFEmail.getText();
 		                
 		                //Open the app for the user
 		            	App.getInstance().getFrame().getContentPane().removeAll();

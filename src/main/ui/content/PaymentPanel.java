@@ -1,6 +1,7 @@
 package main.ui.content;
 
 import javax.swing.JPanel;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -17,6 +18,10 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -28,7 +33,9 @@ import main.ui.coursePosts.CourseFilePanel;
 import main.ui.coursePosts.CoursePostDetails;
 import main.ui.customComponents.ImagePanel;
 import main.ui.customComponents.RoundButton;
-import main.utility.ImageLoader;
+import main.utility.*;
+import main.ui.login.LoginData;
+import main.db.*;
 
 import java.awt.GridLayout;
 import javax.swing.JComboBox;
@@ -62,7 +69,7 @@ public class PaymentPanel extends JPanel {
 		cBMM.setModel(mMComboModel());
 		cBYY.setModel(yYComboModel());
 		
-		//set action to the payment button atfer it was added to a comoponent
+		//set action to the payment button after it was added to a component
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -79,19 +86,45 @@ public class PaymentPanel extends JPanel {
 	private ActionListener paymentButtonActionListener() {
 		CoursePostDetails aux = (CoursePostDetails)this.getParent();
 		ActionListener act = new ActionListener() {
+			String message = "";
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// implement here																TODO implement payment
-				
-				////after the payments was successfully made			//TODO: check if the payment was succesfully
-				//notify the view course button the the payment was successfully made
-				((CourseFilePanel)aux.getFilePanel()).setPayed(true);
-				//change icon of viewCourse button to unlock
-				JButton btn = ((CourseFilePanel)aux.getFilePanel()).getBtnViewCourse();
-				btn.setIcon(new ImageIcon(ImageLoader.getInstance().getUnlockedIcon()));
-				aux.remove(aux.getPaymentPanel());
-				aux.revalidate();
+				// implement here	
+				if(tFCardNumber.getText().length() == 16) 
+				{
+					if(tFCvcCvv.getText().length() == 3)
+					{
+						if(Integer.parseInt(cBMM.getSelectedItem().toString()) >= 6)
+						{
+							if(Integer.parseInt(cBYY.getSelectedItem().toString()) >= 2023)
+							{
+								////after the payments was successfully made			//TODO: check if the payment was succesfully
+								//notify the view course button the the payment was successfully made
+								((CourseFilePanel)aux.getFilePanel()).setPayed(true);
+								//change icon of viewCourse button to unlock
+								JButton btn = ((CourseFilePanel)aux.getFilePanel()).getBtnViewCourse();
+								
+								btn.setIcon(new ImageIcon(ImageLoader.getInstance().getUnlockedIcon()));
+								aux.remove(aux.getPaymentPanel());
+								aux.revalidate();
+								
+								EmailSender emailSender = new EmailSender();
+								emailSender.sendToAsync(LoginData.emailIfLoginSucceded);
+								
+								return;
+							} else {
+								message = "The year must be greater or equal than 2023";
+							}
+						} else {
+							message = "The month must be greater or equal than 6";
+						}
+					} else {
+						message = "The cvv must have 3 digits";
+					}
+				} else {
+					message = "Card number must have 16 digits";
+				}
 			}
 			
 		};
@@ -101,12 +134,8 @@ public class PaymentPanel extends JPanel {
 	public DefaultComboBoxModel<String> yYComboModel() {
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel();
 		Integer year;
-		for(year = 0;year < 100;year++) {
-			if(year<10) {
-				model.addElement("0" + year);
-			}else {
-				model.addElement(year.toString());
-			}
+		for(year = 2023;year < 2030;year++) {
+			model.addElement(year.toString());
 		}
 		
 		return model;
