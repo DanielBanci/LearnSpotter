@@ -2,6 +2,9 @@ package main.ui.mentoringProgram;
 
 import javax.swing.JPanel;
 
+import main.ui.content.MainPanel;
+import main.ui.coursePosts.CoursePostDetails;
+import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customComponents.TextAreaWithPreview;
@@ -17,8 +20,13 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.FlowLayout;
 import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.Component;
+import javax.swing.Box;
 
 /**
  * Panel for displaying a mentoring program with basic information.
@@ -39,6 +47,10 @@ public class MentoringProgramPost extends RoundPanel {
 	protected JPanel panelTextArea;
 	protected JPanel panelAboutLbl;
 	private JLabel lblDifficulty;
+	private RoundButton btnDetails;
+	
+	//aux
+	private JPanel panel_4;
 	
 	public MentoringProgramPost(Boolean TODO,Boolean shortContent) {
 		this();
@@ -61,16 +73,37 @@ public class MentoringProgramPost extends RoundPanel {
 		tADescription = new TextAreaWithPreview();
 		panelTextArea.add(tADescription, BorderLayout.CENTER);
 		
+		
 		if(shortContent) {
 			makeShortContent();
 		}
+	}
+	
+	private ActionListener detailsActionListener() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.getInstance().getContent().removeAll();
+				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.Y_AXIS));
+				MainPanel.getInstance().getContent().add(new MentoringProgramDetails(false,false));
+				MainPanel.getInstance().getContent().revalidate();
+			}
+			
+		};
 	}
 	
 	public void makeShortContent() {
 		add(panelAboutLbl);
 		add(panelTextArea);
 		
-		
+		btnDetails = new RoundButton("New button");
+		btnDetails.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnDetails.setText("Details");
+		btnDetails.setPreferredSize(new Dimension(100, 30));
+		btnDetails.setBackground(new Color(128, 128, 128));
+		panel_4.add(btnDetails);
+		btnDetails.addActionListener(detailsActionListener());
 	}
 	/**
 	 * Create the panel.
@@ -80,6 +113,7 @@ public class MentoringProgramPost extends RoundPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JPanel panel = new JPanel();
+		panel.setMaximumSize(new Dimension(32767, 220));
 		panel.setOpaque(false);
 		add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -109,10 +143,10 @@ public class MentoringProgramPost extends RoundPanel {
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setOpaque(false);
-		panel_3.setMaximumSize(new Dimension(32767, 700));
+		panel_3.setMaximumSize(new Dimension(32767, 220));
 		panel.add(panel_3);
 		GridBagLayout gbl_panel_3 = new GridBagLayout();
-		gbl_panel_3.columnWidths = new int[]{0, 0};
+		gbl_panel_3.columnWidths = new int[] {400, 0};
 		gbl_panel_3.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gbl_panel_3.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_panel_3.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
@@ -212,7 +246,7 @@ public class MentoringProgramPost extends RoundPanel {
 		lblDuration.setBorder(new EmptyBorder(0, 0, 0, 5));
 		lblDuration.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		JPanel panel_4 = new JPanel();
+		panel_4 = new JPanel();
 		panel_4.setOpaque(false);
 		FlowLayout flowLayout_5 = (FlowLayout) panel_4.getLayout();
 		flowLayout_5.setAlignment(FlowLayout.LEFT);
@@ -230,6 +264,13 @@ public class MentoringProgramPost extends RoundPanel {
 		panel_4.add(lblPrice);
 		lblPrice.setBorder(new EmptyBorder(0, 0, 0, 5));
 		lblPrice.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		horizontalStrut.setPreferredSize(new Dimension(150, 0));
+		horizontalStrut.setMaximumSize(new Dimension(200, 10));
+		panel_4.add(horizontalStrut);
+		
+		
 		
 		
 

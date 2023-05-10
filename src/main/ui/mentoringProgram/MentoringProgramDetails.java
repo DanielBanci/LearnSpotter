@@ -20,26 +20,24 @@ public class MentoringProgramDetails extends MentoringProgramPost {
 	public JPanel getContentPanel() {
 		return contentPanel;
 	}
-	public MentoringProgramDetails(Boolean TODO) {
-		super(TODO,true);
+	public MentoringProgramDetails(Boolean TODO,Boolean shortPanel) {
+		super(TODO,shortPanel);
 		
-		/*JPanel panel = new JPanel();								///edit
+		JPanel panel = new JPanel();
+		panel.setMaximumSize(new Dimension(32767, 50));
 		panel.setOpaque(false);
-		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel.setBorder(new EmptyBorder(10, 0, 0, 0));
 		add(panel);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel = new JLabel("Schedule: ");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		panel.add(lblNewLabel);
+		JMenuBar menuBar = new MenuBar(this);
+		panel.add(menuBar);
 		
-		JPanel panel_1 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.RIGHT);
-		panel_1.setOpaque(false);
-		add(panel_1);*/
-		
+		contentPanel = new JPanel();
+		contentPanel.setOpaque(false);
+		add(contentPanel);
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+		setMaximumSize(new Dimension(1000,10000));
 		
 	}
 	/**
@@ -58,6 +56,7 @@ public class MentoringProgramDetails extends MentoringProgramPost {
 		panel.add(menuBar);
 		
 		contentPanel = new JPanel();
+		contentPanel.setOpaque(false);
 		add(contentPanel);
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		

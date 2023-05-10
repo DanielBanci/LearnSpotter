@@ -64,7 +64,7 @@ public class HomePanel extends JPanel {
 		mentoringProgramP.setLayout(new FlowLayout(FlowLayout.LEFT, 40, 10));
 		
 		for(int i = 0;i<5;i++) {
-			coursesP.add(new CoursePost());
+			coursesP.add(new CoursePost(true));
 		}
 		for(int i = 0;i<5;i++) {
 			mentorsP.add(new MentorPost(true));

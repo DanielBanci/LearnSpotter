@@ -13,6 +13,8 @@ import java.awt.GridBagLayout;
 import java.awt.FlowLayout;
 import java.awt.Component;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
@@ -115,15 +117,19 @@ public class PaymentPanel extends JPanel {
 								return;
 							} else {
 								message = "The year must be greater or equal than 2023";
+								JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
 							}
 						} else {
 							message = "The month must be greater or equal than 6";
+							JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
 						}
 					} else {
 						message = "The cvv must have 3 digits";
+						JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
 					message = "Card number must have 16 digits";
+					JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 			

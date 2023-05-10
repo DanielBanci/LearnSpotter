@@ -7,6 +7,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import main.ui.content.MainPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customComponents.TextAreaWithPreview;
@@ -34,6 +35,21 @@ public class CoursePost extends RoundPanel {
 	private JButton btnDetails;				//the button for opening the course panel
 	
 
+	public CoursePost(Boolean TODO) {										//TODO
+		this();
+		btnDetails.addActionListener(makeDetailsActionListener());
+	}
+	
+	private ActionListener makeDetailsActionListener() {
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.getInstance().getContent().removeAll();
+				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.Y_AXIS));
+				MainPanel.getInstance().getContent().add(new CoursePostDetails(true,MainPanel.getInstance().getContent()));
+				MainPanel.getInstance().getContent().revalidate();
+			}
+		};
+	}
 	/**
 	 * Create the panel(ui components)
 	 */
@@ -158,10 +174,7 @@ public class CoursePost extends RoundPanel {
 		btnDetails.setForeground(Color.WHITE);
 		btnDetails.setBackground(new Color(0, 113, 20));
 		btnDetails.setBorder(null);
-		btnDetails.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		
 		btnDetails.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnDetails.setPreferredSize(new Dimension(150, 30));
 		btnDetails.setMinimumSize(new Dimension(100, 30));
@@ -170,5 +183,5 @@ public class CoursePost extends RoundPanel {
 		
 
 	}
-
+	
 }

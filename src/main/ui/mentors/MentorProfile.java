@@ -48,6 +48,7 @@ public class MentorProfile extends RoundPanel {
 		
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(250,250)));
 		
+		setMaximumSize(new Dimension(1000,100000));
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override

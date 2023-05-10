@@ -3,6 +3,7 @@ package main.ui.mentors;
 import javax.swing.JPanel;
 
 import main.app.App;
+import main.ui.content.MainPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
 import main.ui.customComponents.RoundPanel;
@@ -25,6 +26,8 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Panel that display the main details of a mentor as a small post.
@@ -92,11 +95,26 @@ public class MentorPost extends RoundPanel {
                 + "vitae porttitor sapien bibendum. Vivamus mollis purus in justo finibus, "
                 + "vel ultricies velit vestibulum. Duis pretium auctor ipsum, a commodo libero consectetur eget.");
 		
-		//btnDetails						//button action
-
+		btnDetails.addActionListener(detailsActionListener());						//button action
+		
 		SwingUtilities.invokeLater(() -> {								//for all the components to be displayed properly
 			App.getInstance().getFrame().getContentPane().revalidate();
 	    });
+	}
+	
+	private ActionListener detailsActionListener() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.getInstance().getContent().removeAll();
+				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.Y_AXIS));
+				MainPanel.getInstance().getContent().add(new MentorProfile(true));
+				MainPanel.getInstance().getContent().revalidate();
+				
+			}
+			
+		};
 	}
 
 	/**

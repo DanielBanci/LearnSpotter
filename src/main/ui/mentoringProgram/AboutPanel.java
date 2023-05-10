@@ -19,7 +19,8 @@ public class AboutPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public AboutPanel() {
+	public AboutPanel(Boolean t) {
+		setOpaque(false);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		panelTextArea = new RoundPanel();
 		panelTextArea.setBorder(new EmptyBorder(10, 10, 10, 10));

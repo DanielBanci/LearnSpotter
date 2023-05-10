@@ -69,6 +69,7 @@ public class MainPanel extends JScrollPane {
 		setColumnHeaderView(topPanel);
 		
 		content.add(new HomePanel(true));
+		//content.add(new MentoringProgramDetails());
 	}
 	
 	/**

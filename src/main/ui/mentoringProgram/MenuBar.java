@@ -28,7 +28,7 @@ public class MenuBar extends JMenuBar {
 		mentorProgramDetails = m;
 
 		//create the panels with the required data 							TODO
-		aboutPanel = new AboutPanel();
+		aboutPanel = new AboutPanel(true);
 		reviewsPanel = new ReviewsPanel();
 		coursesPanel = new CoursesPanel();
 		schedulePanel = new SchedulePanelMentoringPrograms();
