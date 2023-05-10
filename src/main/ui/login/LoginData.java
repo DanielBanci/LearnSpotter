@@ -125,7 +125,7 @@ public class LoginData extends RoundPanel {
             @SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {                        //TO DO: check input and login the users
                 //complete code here
-            	try {
+            	/*try {
 					DbConnection dbConnection = new DbConnection();
 					Connection conn = dbConnection.getConnection();
 					
@@ -141,22 +141,23 @@ public class LoginData extends RoundPanel {
 		            if (resultSet.next()) {
 		                System.out.println("Login success");
 		                
-		                emailIfLoginSucceded = tFEmail.getText();
+		                emailIfLoginSucceded = tFEmail.getText();*/
 		                
 		                //Open the app for the user
 		            	App.getInstance().getFrame().getContentPane().removeAll();
-		            	App.getInstance().getFrame().setContentPane(new MainPanel());
+		            	App.getInstance().getFrame().setContentPane(MainPanel.getInstance());
 		            	
 		            	//update the frame
 		            	App.getInstance().getFrame().invalidate();
-		            } else {
+		            	App.getInstance().getFrame().revalidate();
+		           /* } else {
 		                System.out.println("Login failed");
 		            }
 		            
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				}*/
             }
         };
 
@@ -170,7 +171,7 @@ public class LoginData extends RoundPanel {
             	if (checkBox.isSelected()) {
                     passwordField.setEchoChar((char) 0); // Show password
                 } else {
-                    passwordField.setEchoChar('ï¿½'); // Hide password
+                    passwordField.setEchoChar('•'); // Hide password
                 }
             }
         };
