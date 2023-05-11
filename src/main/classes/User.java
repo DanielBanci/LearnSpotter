@@ -1,5 +1,7 @@
 package main.classes;
 
+import java.util.Objects;
+
 /**
  * A class that holds the data related to the user.
  * @author Cătălin
@@ -83,5 +85,22 @@ public class User {
 	}
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) {
+	        return true;
+	    }
+	    if (obj == null || getClass() != obj.getClass()) {
+	        return false;
+	    }
+	    User otherUser = (User) obj;
+	    return (this.id == otherUser.id) 
+	           && Objects.equals(this.firstName, otherUser.firstName) 
+	           && Objects.equals(this.lastName, otherUser.lastName) 
+	           && Objects.equals(this.email, otherUser.email) 
+	           && Objects.equals(this.password, otherUser.password) 
+	           && Objects.equals(this.phoneNumber, otherUser.phoneNumber);
 	}
 }
