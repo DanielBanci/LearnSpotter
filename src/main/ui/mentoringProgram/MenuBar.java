@@ -42,7 +42,7 @@ public class MenuBar extends JMenuBar {
 		menuItemAbout.setHorizontalAlignment(SwingConstants.CENTER);
 		menuItemAbout.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 
-		menuItemMentoringPrograms = new JMenuItem("Mentoring programs");
+		menuItemMentoringPrograms = new JMenuItem("Schedule");
 		menuItemMentoringPrograms.setHorizontalAlignment(SwingConstants.CENTER);
 		menuItemMentoringPrograms.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		add(menuItemMentoringPrograms);

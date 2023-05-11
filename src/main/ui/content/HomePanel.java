@@ -16,6 +16,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Component;
 
 public class HomePanel extends JPanel {
 	private JScrollPane coursesPanel;
@@ -30,7 +31,13 @@ public class HomePanel extends JPanel {
 
 			@Override
 			public void run() {
-				MainPanel.getInstance().setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				//MainPanel.getInstance().setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				MainPanel.getInstance().getContent().setMaximumSize(new Dimension(1300,9000000));
+				MainPanel.getInstance().getContent().validate();
+				coursesPanel.getHorizontalScrollBar().setValue(0);
+				mentorsPanel.getHorizontalScrollBar().setValue(0);
+				mentoringProgramPanel.getHorizontalScrollBar().setValue(0);
+				
 			}
 			
 		});
@@ -40,8 +47,8 @@ public class HomePanel extends JPanel {
 	 * Create the panel.
 	 */
 	public HomePanel() {
+		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		
 		JPanel coursesP = new JPanel();
 		coursesP.setBorder(new EmptyBorder(10, 10, 10, 10));
 		coursesPanel = new ScrollPane();

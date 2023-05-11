@@ -67,6 +67,9 @@ public class ImageLoader {
             //logo
             img = ImageIO.read(new File("res/logo.png"));
             images.put("logo", img);
+            //delete_icon_red
+            img = ImageIO.read(new File("res/delete_icon_red.png"));
+            images.put("delete_icon_red", img);
         }catch(IOException e){
             e.printStackTrace();makeMissingImage();
             
@@ -84,6 +87,7 @@ public class ImageLoader {
 	public Image getProgramsNumberIcon() {return images.get("programs_number_icon");}
 	public Image getMoneyIcon() {return images.get("money_icon");}
 	public Image getLogo() {return images.get("logo");}
+	public Image getDeleteIconRed() {return images.get("delete_icon_red");}
 	
 	/**
 	 * Handle the missing icon.

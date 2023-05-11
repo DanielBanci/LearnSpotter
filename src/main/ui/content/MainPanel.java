@@ -11,9 +11,13 @@ import main.ui.coursePosts.CoursePostDetails;
 import main.ui.coursePosts.CoursePostScrollPane;
 import main.ui.customComponents.ImagePanel;
 import main.ui.customComponents.RoundImagePanel;
+import main.ui.displayContent.DisplayCoursesPanel;
+import main.ui.displayContent.DisplayMentoringProgramsPanel;
+import main.ui.displayContent.DisplayMentorsPanel;
 import main.ui.mentoringProgram.MentoringProgramDetails;
 import main.ui.mentors.MentorPost;
 import main.ui.mentors.MentorProfile;
+import main.ui.newContent.NewCoursePost;
 import main.utility.ImageLoader;
 
 import javax.swing.BoxLayout;
@@ -68,8 +72,13 @@ public class MainPanel extends JScrollPane {
 		topPanel.setPreferredSize(new Dimension(10, 100));
 		setColumnHeaderView(topPanel);
 		
-		content.add(new HomePanel(true));
-		//content.add(new MentoringProgramDetails());
+		//content.add(new HomePanel(true));
+		//content.add(new DisplayMentoringProgramsPanel());
+		//content.setLayout(new FlowLayout(FlowLayout.CENTER));
+		JPanel p = new JPanel();
+		p.setLayout(new FlowLayout(FlowLayout.CENTER));
+		p.add(new NewCoursePost());
+		content.add(new NewCoursePost());
 	}
 	
 	/**
@@ -98,7 +107,7 @@ public class MainPanel extends JScrollPane {
 		topPanel.setPreferredSize(new Dimension(10, 100));
 		setColumnHeaderView(topPanel);
 		
-		leftPanel = new JPanel();
+		leftPanel = new LeftPanel(true);
 		leftPanel.setBackground(new Color(128, 128, 128));
 		leftPanel.setPreferredSize(new Dimension(250, 10));
 		setRowHeaderView(leftPanel);
