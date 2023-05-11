@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import main.app.App;
+import main.classes.Course;
 
 /**
  * Scroll panel that holds all the details related to a course.
@@ -33,7 +34,7 @@ public class CoursePostScrollPane extends JScrollPane {
 		support = new JPanel();
 		support.setLayout(new BoxLayout(support,BoxLayout.Y_AXIS));
 		support.setMaximumSize(new Dimension(2000,30000));
-		support.add(new CoursePostDetails(true,support)); 			//needs support to resize on action listener
+		support.add(new CoursePostDetails(Course.createMockup(),support)); 			//needs support to resize on action listener
 		scrollView.add(support);
 		
 		setViewportView(scrollView);

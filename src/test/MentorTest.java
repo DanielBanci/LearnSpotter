@@ -8,48 +8,89 @@ import org.junit.Test;
 import main.classes.Mentor;
 
 public class MentorTest {
-
 	@Test
 	public void defaultConstructorTest() {
 		Mentor mentor = new Mentor();
 		
 		int id = mentor.getId();
-		int idUser = mentor.getIdUser();
+		String firstName = mentor.getFirstName();
+		String lastName = mentor.getLastName();
+		String email = mentor.getEmail();
+		String password = mentor.getPassword();
+		String phoneNumber = mentor.getPhoneNumber();
 		String description = mentor.getDescription();
+		String field = mentor.getField();
+		int programsNumber = mentor.getProgramsNumber();
 		
 		assertEquals(0, id);
-		assertEquals(0, idUser);
+		assertEquals(null, firstName);
+		assertEquals(null, lastName);
+		assertEquals(null, email);
+		assertEquals(null, password);
+		assertEquals(null, phoneNumber);
 		assertEquals(null, description);
+		assertEquals(null, field);
+		assertEquals(0, programsNumber);
 	}
 	
 	@Test
 	public void fullConstructorTest() {
-		Mentor mentor = new Mentor(1, 2, "success");
+		Mentor mentor = new Mentor(1, "success", "success2", "success3", "success4", "success5", "success6", "success7", 3);
 		
 		int id = mentor.getId();
-		int idUser = mentor.getIdUser();
+		String firstName = mentor.getFirstName();
+		String lastName = mentor.getLastName();
+		String email = mentor.getEmail();
+		String password = mentor.getPassword();
+		String phoneNumber = mentor.getPhoneNumber();
 		String description = mentor.getDescription();
+		String field = mentor.getField();
+		int programsNumber = mentor.getProgramsNumber();
 		
 		assertEquals(1, id);
-		assertEquals(2, idUser);
-		assertEquals("success", description);
+		assertEquals("success", firstName);
+		assertEquals("success2", lastName);
+		assertEquals("success3", email);
+		assertEquals("success4", password);
+		assertEquals("success5", phoneNumber);
+		assertEquals("success6", description);
+		assertEquals("success7", field);
+		assertEquals(3, programsNumber);
 	}
 	
 	@Test
 	public void settersAndGettersTest() {
-		Mentor mentor = new Mentor(-1, -2, "fail");
+		Mentor mentor = new Mentor(-1, "fail", "fail2", "fail3", "fail4", "fail5", "fail6", "fail7", -2);
 		
 		mentor.setId(1);
-		mentor.setIdUser(2);
-		mentor.setDescription("success");
+		mentor.setFirstName("success");
+		mentor.setLastName("success2");
+		mentor.setEmail("success3");
+		mentor.setPassword("success4");
+		mentor.setPhoneNumber("success5");
+		mentor.setDescription("success6");
+		mentor.setField("success7");
+		mentor.setProgramsNumber(2);
 		
 		int id = mentor.getId();
-		int idUser = mentor.getIdUser();
+		String firstName = mentor.getFirstName();
+		String lastName = mentor.getLastName();
+		String email = mentor.getEmail();
+		String password = mentor.getPassword();
+		String phoneNumber = mentor.getPhoneNumber();
 		String description = mentor.getDescription();
+		String field = mentor.getField();
+		int programsNumber = mentor.getProgramsNumber();
 		
 		assertEquals(1, id);
-		assertEquals(2, idUser);
-		assertEquals("success", description);
+		assertEquals("success", firstName);
+		assertEquals("success2", lastName);
+		assertEquals("success3", email);
+		assertEquals("success4", password);
+		assertEquals("success5", phoneNumber);
+		assertEquals("success6", description);
+		assertEquals("success7", field);
+		assertEquals(2, programsNumber);
 	}
 
 }

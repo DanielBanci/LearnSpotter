@@ -25,6 +25,8 @@ public class MentoringProgramTest {
 		String description = mentoringProgram.getDescription();
 		String location = mentoringProgram.getLocation();
 		Collection<java.sql.Timestamp> schedule = mentoringProgram.getSchedule();
+		int duration = mentoringProgram.getDuration();
+		int price = mentoringProgram.getPrice();
 		
 		assertEquals(0, id);
 		assertEquals(0, idMentor);
@@ -33,11 +35,13 @@ public class MentoringProgramTest {
 		assertEquals(null, description);
 		assertEquals(null, location);
 		assertEquals(new ArrayList<java.sql.Timestamp>(), schedule);
+		assertEquals(0, duration);
+		assertEquals(0, price);
 	}
 	
 	@Test
 	public void fullConstructorTest() {
-		MentoringProgram mentoringProgram = new MentoringProgram(1, 2, "success", "success2", "success3", "success4", new ArrayList<java.sql.Timestamp>(Arrays.asList(new Timestamp(3))));
+		MentoringProgram mentoringProgram = new MentoringProgram(1, 2, "success", "success2", "success3", "success4", new ArrayList<java.sql.Timestamp>(Arrays.asList(new Timestamp(3))), 4, 5);
 		
 		int id = mentoringProgram.getId();
 		int idMentor = mentoringProgram.getIdMentor();
@@ -46,6 +50,8 @@ public class MentoringProgramTest {
 		String description = mentoringProgram.getDescription();
 		String location = mentoringProgram.getLocation();
 		Collection<java.sql.Timestamp> schedule = mentoringProgram.getSchedule();
+		int duration = mentoringProgram.getDuration();
+		int price = mentoringProgram.getPrice();
 		
 		assertEquals(1, id);
 		assertEquals(2, idMentor);
@@ -54,11 +60,13 @@ public class MentoringProgramTest {
 		assertEquals("success3", description);
 		assertEquals("success4", location);
 		assertEquals(new ArrayList<java.sql.Timestamp>(Arrays.asList(new Timestamp(3))), schedule);
+		assertEquals(4, duration);
+		assertEquals(5, price);
 	}
 	
 	@Test
 	public void gettersAndSettersTest() {
-		MentoringProgram mentoringProgram = new MentoringProgram(-1, -2, "fail", "fail2", "fail3", "fail4", new ArrayList<java.sql.Timestamp>(Arrays.asList(new Timestamp(-3))));
+		MentoringProgram mentoringProgram = new MentoringProgram(-1, -2, "fail", "fail2", "fail3", "fail4", new ArrayList<java.sql.Timestamp>(Arrays.asList(new Timestamp(-3))), -4, -5);
 		
 		mentoringProgram.setId(1);
 		mentoringProgram.setIdMentor(2);
@@ -67,6 +75,8 @@ public class MentoringProgramTest {
 		mentoringProgram.setDescription("success3");
 		mentoringProgram.setLocation("success4");
 		mentoringProgram.setSchedule(new ArrayList<java.sql.Timestamp>(Arrays.asList(new Timestamp(3))));
+		mentoringProgram.setDuration(4);
+		mentoringProgram.setPrice(5);
 		
 		int id = mentoringProgram.getId();
 		int idMentor = mentoringProgram.getIdMentor();
@@ -75,6 +85,8 @@ public class MentoringProgramTest {
 		String description = mentoringProgram.getDescription();
 		String location = mentoringProgram.getLocation();
 		Collection<java.sql.Timestamp> schedule = mentoringProgram.getSchedule();
+		int duration = mentoringProgram.getDuration();
+		int price = mentoringProgram.getPrice();
 		
 		assertEquals(1, id);
 		assertEquals(2, idMentor);
@@ -83,6 +95,8 @@ public class MentoringProgramTest {
 		assertEquals("success3", description);
 		assertEquals("success4", location);
 		assertEquals(new ArrayList<java.sql.Timestamp>(Arrays.asList(new Timestamp(3))), schedule);
+		assertEquals(4, duration);
+		assertEquals(5, price);
 	}
 
 }

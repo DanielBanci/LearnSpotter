@@ -17,6 +17,8 @@ public class MentoringProgram {
 	private String description;
 	private String location;
 	private Collection<java.sql.Timestamp> schedule;
+	private int duration; //in weeks
+	private int price;
 	
 	/**
 	 * Creates a new instance of the MentoringProgram class with the specified parameters.
@@ -29,6 +31,8 @@ public class MentoringProgram {
 		description = null;
 		location = null;
 		schedule = new ArrayList<java.sql.Timestamp>();
+		duration = 0;
+		price = 0;
 	}
 	
 	/**
@@ -40,8 +44,10 @@ public class MentoringProgram {
 	 * @param description
 	 * @param location
 	 * @param schedule
+	 * @param duration
+	 * @param price
 	 */
-	public MentoringProgram(int id, int idMentor, String name, String difficultyLevel, String description, String location, Collection<java.sql.Timestamp> schedule) {
+	public MentoringProgram(int id, int idMentor, String name, String difficultyLevel, String description, String location, Collection<java.sql.Timestamp> schedule, int duration, int price) {
 		this.id = id;
 		this.idMentor = idMentor;
 		this.name = name;
@@ -49,6 +55,8 @@ public class MentoringProgram {
 		this.description = description;
 		this.location = location;
 		this.schedule = schedule;
+		this.duration = duration;
+		this.price = price;
 	}
 	
 	public int getId() {
@@ -98,5 +106,19 @@ public class MentoringProgram {
 	}
 	public void setSchedule(Collection<java.sql.Timestamp> schedule) {
 		this.schedule = schedule;
+	}
+	
+	public int getDuration() {
+		return duration;
+	}
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+	
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
 	}
 }

@@ -7,6 +7,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import main.classes.Course;
 import main.ui.content.MainPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
@@ -35,17 +36,17 @@ public class CoursePost extends RoundPanel {
 	private JButton btnDetails;				//the button for opening the course panel
 	
 
-	public CoursePost(Boolean TODO) {										//TODO
+	public CoursePost(Course course) {
 		this();
-		btnDetails.addActionListener(makeDetailsActionListener());
+		btnDetails.addActionListener(makeDetailsActionListener(course));
 	}
 	
-	private ActionListener makeDetailsActionListener() {
+	private ActionListener makeDetailsActionListener(Course course) {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.Y_AXIS));
-				MainPanel.getInstance().getContent().add(new CoursePostDetails(true,MainPanel.getInstance().getContent()));
+				MainPanel.getInstance().getContent().add(new CoursePostDetails(course, MainPanel.getInstance().getContent()));
 				MainPanel.getInstance().getContent().revalidate();
 			}
 		};

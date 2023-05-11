@@ -2,6 +2,7 @@ package main.ui.coursePosts;
 
 import javax.swing.JPanel;
 
+import main.classes.Feedback;
 import main.ui.customComponents.RoundImagePanel;
 import main.ui.customComponents.RoundPanel;
 import main.ui.ratingBar.StarRatingBar;
@@ -33,14 +34,13 @@ public class FeedbackPanel extends JPanel {
 	
 	/**
 	 * Constructor with parameters. It create the panel and fill the related data.
-	 * @param TODO
+	 * @param feedback
 	 */
-	public FeedbackPanel(Boolean TODO) {
+	public FeedbackPanel(Feedback feedback) {
 		this();
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
-		lblName.setName("Ana Popescu");
-		tAFeedbackMessage.setText("A really nice and easy to understand course! The course was well-organized and easy to navigate, "
-				+ "and the content was presented in a clear and concise manner.Thank you for your hard work and dedication to your students' learning.");
+		lblName.setName(feedback.getUser().getFirstName() + " " + feedback.getUser().getLastName());
+		tAFeedbackMessage.setText(feedback.getText());
 	}
 
 	/**

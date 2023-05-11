@@ -17,6 +17,8 @@ import javax.swing.border.EmptyBorder;
 import org.icepdf.core.pobjects.acroform.AdditionalActionsDictionary;
 
 import main.app.App;
+import main.classes.Course;
+import main.classes.Feedback;
 import main.ui.content.PaymentPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
@@ -33,6 +35,10 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.JButton;
 
@@ -88,26 +94,26 @@ public class CoursePostDetails extends RoundPanel {
 
 	/**
 	 * Constructor that fills the files with related data.
-	 * @param ToDo params the need to be given
+	 * @param course params the need to be given
 	 * @param suportPanel the panel with the pdf renderer -?
 	 */
-	public CoursePostDetails(Boolean ToDo, JPanel courseDetailsParent) {	//TODO: constructor with parameters that fill the area with the properly information
+	public CoursePostDetails(Course course, JPanel courseDetailsParent) {	//TODO: constructor with parameters that fill the area with the properly information
 		this();
 		//profile image
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(100,120)));
 
-		//name, couse title, last update and description							//TODO: set the proper informations
+		//name, couse title, last update and description
 		lblName.setText("Ana Popescu");
-		lblCourseName.setText("Software Engineering");
-		lblPrice.setText("(299) RON");
-		tAFullDescription.setText("ceva descriere cum o fi sa fie doar sa fie sa vedem cum e ca de ce nu dor asa");
-		lblLastUpdate.setText("09/12/2021");
+		lblCourseName.setText(course.getName());
+		lblPrice.setText(String.format("(%.2f) RON", course.getPrice()));
+		tAFullDescription.setText(course.getDescription());
+		lblLastUpdate.setText(course.getLastUpdate().toString());
 
 		//overall feedback data
 		Container parent = ratingBarPanel.getParent();
 		int index = findComponentIndex(parent,ratingBarPanel);
 		parent.remove(ratingBarPanel);
-		//ratingBarPanel = new StarRatingBar(ratingValue,1);		//TODO: give the proper rating value
+		ratingBarPanel = new StarRatingBar(course.getRating(), 1);
 		parent.add(ratingBarPanel,index);
 
 		//update the pdf renderer
@@ -117,8 +123,8 @@ public class CoursePostDetails extends RoundPanel {
 		this.add(filePanel,index);
 
 		//display the feedback
-		feedbackPanel.add(new FeedbackPanel(true));
-		feedbackPanel.add(new FeedbackPanel(true));
+		feedbackPanel.add(new FeedbackPanel(Feedback.createMockup()));
+		feedbackPanel.add(new FeedbackPanel(Feedback.createMockup()));
 
 		//action for buy button
 		btnBuyCourse.addActionListener(btnBuyActionListener());

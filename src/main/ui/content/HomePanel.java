@@ -5,6 +5,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 
+import main.classes.Course;
+import main.classes.Mentor;
 import main.ui.coursePosts.CoursePost;
 import main.ui.mentoringProgram.MentoringProgramPost;
 import main.ui.mentors.MentorPost;
@@ -71,10 +73,10 @@ public class HomePanel extends JPanel {
 		mentoringProgramP.setLayout(new FlowLayout(FlowLayout.LEFT, 40, 10));
 		
 		for(int i = 0;i<5;i++) {
-			coursesP.add(new CoursePost(true));
+			coursesP.add(new CoursePost(Course.createMockup()));
 		}
 		for(int i = 0;i<5;i++) {
-			mentorsP.add(new MentorPost(true));
+			mentorsP.add(new MentorPost(Mentor.createMockup()));
 		}
 		for(int i = 0;i<5;i++) {
 			mentoringProgramP.add(new MentoringProgramPost(true, true));

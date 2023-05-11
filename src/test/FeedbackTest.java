@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import main.classes.Feedback;
+import main.classes.User;
 
 public class FeedbackTest {
 
@@ -14,49 +15,49 @@ public class FeedbackTest {
 		Feedback feedback = new Feedback();
 		
 		int id = feedback.getId();
-		int idUser = feedback.getIdUser();
+		User user = feedback.getUser();
 		String text = feedback.getText();
 		int rating = feedback.getRating();
 		
 		assertEquals(0, id);
-		assertEquals(0, idUser);
+		assertEquals(new User(), user);
 		assertEquals(null, text);
 		assertEquals(0, rating);
 	}
 	
 	@Test
 	public void fullConstructorTest() {
-		Feedback feedback = new Feedback(1, 2, "success", 3);
+		Feedback feedback = new Feedback(1, new User(1, "success", "success2", "success3", "succes4", "success5"), "success", 2);
 		
 		int id = feedback.getId();
-		int idUser = feedback.getIdUser();
+		User user = feedback.getUser();
 		String text = feedback.getText();
 		int rating = feedback.getRating();
 
 		assertEquals(1, id);
-		assertEquals(2, idUser);
+		assertEquals(new User(1, "success", "success2", "success3", "succes4", "success5"), user);
 		assertEquals("success", text);
-		assertEquals(3, rating);
+		assertEquals(2, rating);
 	}
 	
 	@Test
 	public void settersAndGettersTest() {
-		Feedback feedback = new Feedback(-1, -2, "fail", -3);
+		Feedback feedback = new Feedback(-1, new User(-1, "fail", "fail2", "fail3", "fail4", "fail5"), "fail", -2);
 		
 		feedback.setId(1);
-		feedback.setIdUser(2);
+		feedback.setUser(new User(1, "success", "success2", "success3", "succes4", "success5"));
 		feedback.setText("success");
-		feedback.setRating(3);
+		feedback.setRating(2);
 		
 		int id = feedback.getId();
-		int idUser = feedback.getIdUser();
+		User user = feedback.getUser();
 		String text = feedback.getText();
 		int rating = feedback.getRating();
 		
 		assertEquals(1, id);
-		assertEquals(2, idUser);
+		assertEquals(new User(1, "success", "success2", "success3", "succes4", "success5"), user);
 		assertEquals("success", text);
-		assertEquals(3, rating);
+		assertEquals(2, rating);
 	}
 
 }

@@ -3,6 +3,7 @@ package main.ui.mentors;
 import javax.swing.JPanel;
 
 import main.app.App;
+import main.classes.Mentor;
 import main.ui.content.MainPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
@@ -64,7 +65,7 @@ public class MentorPost extends RoundPanel {
 	 * Construct the panel and fill the proper data in the fields.		//TODO: fill the data properly
 	 * @param TODO
 	 */
-	public MentorPost(Boolean TODO) {
+	public MentorPost(Mentor mentor) {
 		this();
 		//profile pic
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
@@ -76,24 +77,15 @@ public class MentorPost extends RoundPanel {
 		//ratingBarPanel = new StarRatingBar(4,1);		  				//TODO: give the proper rating value
 		parent.add(ratingBarPanel,index);
 
-		//lblName.setText();				//name
+		lblName.setText(mentor.getFirstName() + " " + mentor.getLastName());				//name
 		
-		//lblNoReviews.setText();			//no of reviews
+		lblNoReviews.setText(mentor.getNoReviews() + "");			//no of reviews
 		
-		//lblFieldName.setText();			//filed name
+		lblFieldName.setText(mentor.getField());			//filed name
 		
-		//lblProgramsNumber.setText();		//mentoring programs number
+		lblProgramsNumber.setText(mentor.getProgramsNumber() + "");		//mentoring programs number
 		
-		//tADescription.setText();			//mentor's description
-		tADescription.setTextBody("Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-                + "Sed ac risus vitae velit sodales bibendum quis eget dui. "
-                + "Morbi eget placerat ipsum. Donec nec mi in nisi aliquam volutpat non ac elit. "
-                + "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. "
-                + "Nulla facilisi. Sed tincidunt ex ac varius commodo. "
-                + "Nam laoreet libero mauris, vel facilisis justo vehicula sed. "
-                + "Pellentesque in bibendum velit. Nullam consequat quam ut neque mollis, "
-                + "vitae porttitor sapien bibendum. Vivamus mollis purus in justo finibus, "
-                + "vel ultricies velit vestibulum. Duis pretium auctor ipsum, a commodo libero consectetur eget.");
+		tADescription.setText(mentor.getDescription());			//mentor's description
 		
 		btnDetails.addActionListener(detailsActionListener());						//button action
 		

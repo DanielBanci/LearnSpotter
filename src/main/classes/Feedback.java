@@ -1,5 +1,7 @@
 package main.classes;
 
+import java.util.Objects;
+
 /**
  * A class that holds the data related to the feedback.
  * @author Cătălin
@@ -7,7 +9,7 @@ package main.classes;
  */
 public class Feedback {
 	private int id;
-	private int idUser;
+	private User user;
 	private String text;
 	private int rating;
 	
@@ -16,7 +18,7 @@ public class Feedback {
 	 */
 	public Feedback() {
 		id = 0;
-		idUser = 0;
+		user = new User();
 		text = null;
 		rating = 0;
 	}
@@ -24,9 +26,9 @@ public class Feedback {
 	/**
 	 * Creates a new instance of the Course class with the specified parameters.
 	 */
-	public Feedback(int id, int idUser, String text, int rating) {
+	public Feedback(int id, User user, String text, int rating) {
 		this.id = id;
-		this.idUser = idUser;
+		this.user = user;
 		this.text = text;
 		this.rating = rating;
 	}
@@ -38,11 +40,11 @@ public class Feedback {
 		this.id = id;
 	}
 	
-	public int getIdUser() {
-		return idUser;
+	public User getUser() {
+		return user;
 	}
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public String getText() {
@@ -57,5 +59,30 @@ public class Feedback {
 	}
 	public void setRating(int rating) {
 		this.rating = rating;
+	}
+	
+	/**
+	 * @deprecated This method is only used for debugging
+	 * @return an instance representing a mockup of the class for debugging purposes
+	 */
+	static public Feedback createMockup() {
+		Feedback mockup = new Feedback(0, new User(0, "Ana", "Popescu", "ana.popescu@gmail.com", "password123", "0712345678"), "A really nice and easy to understand course! The course was well-organized and easy to navigate, "
+				+ "and the content was presented in a clear and concise manner.Thank you for your hard work and dedication to your students' learning.", 4);
+		return mockup;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) {
+	        return true;
+	    }
+	    if (obj == null || getClass() != obj.getClass()) {
+	        return false;
+	    }
+	    Feedback otherFeedback = (Feedback)obj;
+	    return (this.id == otherFeedback.id) 
+	           && Objects.equals(this.user, otherFeedback.user) 
+	           && Objects.equals(this.text, otherFeedback.text) 
+	           && (this.rating == otherFeedback.rating);
 	}
 }
