@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import main.classes.Course;
 import main.ui.content.MainPanel;
 import main.ui.coursePosts.CoursePost;
 import main.ui.layouts.WrapLayout;
@@ -23,7 +24,7 @@ public class DisplayCoursesPanel extends JPanel {
 		setMaximumSize(new Dimension(1300,900000));
 		setOpaque(false);
 		for(int i=0;i<20;i++) {
-			add(new CoursePost(true));
+			add(new CoursePost(Course.createMockup()));
 		}
 		DisplayCoursesPanel f = this;
 		

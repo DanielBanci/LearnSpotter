@@ -85,7 +85,7 @@ public class MentorPost extends RoundPanel {
 		
 		lblProgramsNumber.setText(mentor.getProgramsNumber() + "");		//mentoring programs number
 		
-		tADescription.setText(mentor.getDescription());			//mentor's description
+		tADescription.setTextBody(mentor.getDescription());			//mentor's description
 		
 		btnDetails.addActionListener(detailsActionListener());						//button action
 		

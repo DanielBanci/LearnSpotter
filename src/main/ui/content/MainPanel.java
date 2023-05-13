@@ -18,6 +18,8 @@ import main.ui.mentoringProgram.MentoringProgramDetails;
 import main.ui.mentors.MentorPost;
 import main.ui.mentors.MentorProfile;
 import main.ui.newContent.NewCoursePost;
+import main.ui.newContent.NewMentoringProgram;
+import main.ui.newContent.NewUserProfile;
 import main.utility.ImageLoader;
 
 import javax.swing.BoxLayout;
@@ -64,6 +66,11 @@ public class MainPanel extends JScrollPane {
 		return instance;
 	}
 	
+	public static MainPanel updateInstance() {
+		instance = new MainPanel(true);
+		return instance;
+	}
+	
 	private MainPanel(Boolean TODO) {
 		this();
 		logoPanel = new ImagePanel(ImageLoader.getInstance().getLogo(),new Dimension(200,100));
@@ -72,13 +79,11 @@ public class MainPanel extends JScrollPane {
 		topPanel.setPreferredSize(new Dimension(10, 100));
 		setColumnHeaderView(topPanel);
 		
-		//content.add(new HomePanel(true));
+		content.add(new HomePanel(true));
 		//content.add(new DisplayMentoringProgramsPanel());
 		//content.setLayout(new FlowLayout(FlowLayout.CENTER));
-		JPanel p = new JPanel();
-		p.setLayout(new FlowLayout(FlowLayout.CENTER));
-		p.add(new NewCoursePost());
-		content.add(new NewCoursePost());
+		//content.add(new NewUserProfile(true));
+		//content.add(new NewMentoringProgram());
 	}
 	
 	/**

@@ -10,13 +10,18 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import javax.swing.border.EmptyBorder;
 
+import main.app.App;
 import main.ui.displayContent.DisplayCoursesPanel;
 import main.ui.displayContent.DisplayMentoringProgramsPanel;
 import main.ui.displayContent.DisplayMentorsPanel;
+import main.ui.login.LoginPanel;
+import main.ui.newContent.NewCoursePost;
+import main.ui.newContent.NewMentoringProgram;
 
 public class LeftPanel extends JPanel {
 
@@ -31,6 +36,9 @@ public class LeftPanel extends JPanel {
 	private JMenuItem mISearchMentors;
 	private JMenuItem mISearchMentoringPrograms;
 	private JMenuItem mILogOut;
+	private JMenu mnNewMenu;
+	private JMenuItem mINewCourse;
+	private JMenuItem mINewMentoringProgram;
 
 	public LeftPanel(Boolean TODO) {
 		this();
@@ -38,7 +46,56 @@ public class LeftPanel extends JPanel {
 		mISearchCourses.addActionListener(actionMISearchCourses());
 		mISearchMentors.addActionListener(actionMISearchMentors());
 		mISearchMentoringPrograms.addActionListener(actionMISearchMentoringPrograms());
+		mINewCourse.addActionListener(actionMINewCourse());
+		mINewMentoringProgram.addActionListener(actionMINewMentoringPrograms());
 		
+		mILogOut.addActionListener(actionMILogOutS());
+	}
+	
+	private ActionListener actionMILogOutS() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JPanel contentPane = new JPanel();
+				contentPane.setLayout(new BorderLayout());
+				contentPane.add(new LoginPanel(),BorderLayout.CENTER);
+				//App.getInstance().getFrame().getContentPane().removeAll();
+				App.getInstance().getFrame().setContentPane(contentPane);
+				App.getInstance().getFrame().validate();
+				
+				/*MainPanel.getInstance().getContent().removeAll();
+				MainPanel.getInstance().getContent().add(new NewCoursePost());
+				MainPanel.getInstance().getContent().validate();*/
+			}
+			
+		};
+	}
+	
+	private ActionListener actionMINewCourse() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.getInstance().getContent().removeAll();
+				MainPanel.getInstance().getContent().add(new NewCoursePost());
+				MainPanel.getInstance().getContent().validate();
+			}
+			
+		};
+	}
+	
+	private ActionListener actionMINewMentoringPrograms() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.getInstance().getContent().removeAll();
+				MainPanel.getInstance().getContent().add(new NewMentoringProgram());
+				MainPanel.getInstance().getContent().validate();
+			}
+			
+		};
 	}
 	
 	private ActionListener actionMISearchMentoringPrograms() {
@@ -104,7 +161,7 @@ public class LeftPanel extends JPanel {
 
 		menuBar = new JMenuBar();
 		menuBar.setLayout(new BoxLayout(menuBar, BoxLayout.Y_AXIS));
-		menuBar.setPreferredSize(new Dimension(180, 150));
+		menuBar.setPreferredSize(new Dimension(180, 200));
 		menuPanel.add(menuBar);
 
 		mIHome = new JMenuItem("Home");
@@ -145,6 +202,18 @@ public class LeftPanel extends JPanel {
 		mSettings.setHorizontalTextPosition(SwingConstants.CENTER);
 		mSettings.setPreferredSize(new Dimension(170, 50));
 		mSettings.invalidate();
+		
+		mnNewMenu = new JMenu("New post");
+		mnNewMenu.setPreferredSize(new Dimension(105, 50));
+		mnNewMenu.setForeground(new Color(0, 0, 0));
+		mnNewMenu.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		menuBar.add(mnNewMenu);
+		
+		mINewCourse = new JMenuItem("New course");
+		mnNewMenu.add(mINewCourse);
+		
+		mINewMentoringProgram = new JMenuItem("New mentoring program");
+		mnNewMenu.add(mINewMentoringProgram);
 		menuBar.add(mSettings);
 
 		mILogOut = new JMenuItem("Log out");

@@ -19,7 +19,6 @@ import java.util.Map;
 
 import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
-import java.awt.BorderLayout;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -27,10 +26,14 @@ import javax.swing.JOptionPane;
 import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-
-public class NewCoursePost extends JPanel {						//must be put in a flow layout
-	private JTextField tFCourseTitle;
+/**
+ * Panel that let the user to uplod a new course post.
+ * The user needs to provide a title, a desciption of the course, a price (or select free) and to upload the file(s)
+ * @author Daniel
+ * @version 1.0
+ */
+public class NewCoursePost extends JPanel {						
+	private JTextField tFCourseTitle;							
 	private JTextField tFPrice;
 	private JTextArea tACourseDescription;
 	private JCheckBox checkBoxFree;
@@ -136,6 +139,11 @@ public class NewCoursePost extends JPanel {						//must be put in a flow layout
 		btnPost.addActionListener(postButtonAction());
 
 	}
+	
+	/**
+	 * It checks the input data and store and display the new course
+	 * @return post button action listener
+	 */
 	private ActionListener postButtonAction() {
 		return new ActionListener() {
 

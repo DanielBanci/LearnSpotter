@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import main.classes.Mentor;
 import main.ui.content.MainPanel;
 import main.ui.layouts.WrapLayout;
 import main.ui.mentors.MentorPost;
@@ -20,7 +21,7 @@ public class DisplayMentorsPanel extends JPanel {
 		setMaximumSize(new Dimension(1200,900000));
 		setOpaque(false);
 		for(int i = 0;i < 25;i++) {
-			add(new MentorPost(true));
+			add(new MentorPost(Mentor.createMockup()));
 		}
 		
 		DisplayMentorsPanel f = this;

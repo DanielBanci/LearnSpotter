@@ -145,7 +145,7 @@ public class LoginData extends RoundPanel {
 		                
 		                //Open the app for the user
 		            	App.getInstance().getFrame().getContentPane().removeAll();
-		            	App.getInstance().getFrame().setContentPane(MainPanel.getInstance());
+		            	App.getInstance().getFrame().setContentPane(MainPanel.updateInstance());
 		            	
 		            	//update the frame
 		            	App.getInstance().getFrame().invalidate();
