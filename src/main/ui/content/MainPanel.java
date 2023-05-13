@@ -80,10 +80,10 @@ public class MainPanel extends JScrollPane {
 		topPanel.setPreferredSize(new Dimension(10, 100));
 		setColumnHeaderView(topPanel);
 
-		//content.add(new HomePanel(true));
+		content.add(new HomePanel(true));
 		// content.add(new DisplayMentoringProgramsPanel());
 		// content.setLayout(new FlowLayout(FlowLayout.CENTER));
-		 content.add(new NewMentorProfile(true));
+		 //content.add(new NewMentorProfile(true));
 		// content.add(new NewMentoringProgram());
 	}
 
