@@ -43,7 +43,7 @@ public class DbConnection {
           		  			 " description VARCHAR(255), " +
           		  			 " PRIMARY KEY ( id ))";
 	        
-	        String mentoringPrograms = "CREATE TABLE IF NOT EXISTS mentors " +
+	        String mentoringPrograms = "CREATE TABLE IF NOT EXISTS mentoring_programs " +
  		  			 				   "(id INTEGER not NULL, " +
  		  			 				   " id_mentor INTEGER, " +
  		  			 				   " name VARCHAR(255), " +
@@ -60,11 +60,30 @@ public class DbConnection {
  		  			 		  " start_time TIME, " +
  		  			 		  " PRIMARY KEY ( id ))";
 	        
+	        String courses = "CREATE TABLE IF NOT EXISTS courses " + 
+	        				 "(id INTEGER not NULL AUTO_INCREMENT, " + 
+	        				 "id_mentor INTEGER, " + 
+	        				 "id_mentoring_program INTEGER, " + 
+	        				 "name VARCHAR(50), " + 
+	        				 "description VARCHAR(255), " +
+	        				 "price INTEGER, " + 
+	        				 "currency VARCHAR(4), " +
+	        				 "PRIMARY KEY (id))";
+	        
+	        String resources = "CREATE TABLE IF NOT EXISTS resources " +
+	        				   "(id_course INTEGER, " + 
+	        				   "id_mentoring_program INTEGER, " +
+	        				   "name VARCHAR(50), " + 
+	        				   "file BLOB)";
+	        
 	        stmt.executeUpdate(users);
 	        stmt.executeUpdate(feedback);
 	        stmt.executeUpdate(mentors);
 	        stmt.executeUpdate(mentoringPrograms);
 	        stmt.executeUpdate(schedule);
+	        stmt.executeUpdate(courses);
+//	        System.
+	        stmt.executeUpdate(resources);
 	    }
 	    catch(Exception e) {
 	        e.printStackTrace();

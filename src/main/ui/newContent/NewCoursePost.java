@@ -2,6 +2,7 @@ package main.ui.newContent;
 
 import javax.swing.JPanel;
 
+import main.db.DbConnection;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customUI.HintTextAreaUI;
@@ -14,6 +15,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Files;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -162,6 +169,74 @@ public class NewCoursePost extends JPanel {
 				if(courses.size() == 0) {
 					JOptionPane.showMessageDialog(null,"You must upload a course.",
 							"Eroare",JOptionPane.ERROR_MESSAGE);
+				} else {
+					String courseTitle = tFCourseTitle.getText();
+					String courseDescription = tACourseDescription.getText();
+					boolean free = checkBoxFree.isSelected();
+					
+					int price = 0;
+					if(!free)
+					{
+						try {
+							price = Integer.parseInt(tFPrice.getText());
+						} catch(Exception exc) {
+							System.out.println("The price has to be a number");
+						}
+					}
+						
+					String currency = (String) comboBoxMoney.getSelectedItem();
+					
+					DbConnection dbConnection;
+					Connection conn = null;
+					try {
+						dbConnection = new DbConnection();
+						conn = dbConnection.getConnection();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					String sql = "INSERT INTO courses (id_mentor, id_mentoring_program, name, description, price, currency) VALUES (?, ?, ?, ?, ?, ?)";
+
+					PreparedStatement statement;
+					try {
+						statement = conn.prepareStatement(sql);
+						
+						statement.setInt(1, 1);
+						statement.setInt(2, 1);
+						statement.setString(3, courseTitle);
+						statement.setString(4, courseDescription);
+						statement.setInt(5, price);
+						statement.setString(6, currency);
+						
+						int rowsInserted = statement.executeUpdate();
+
+						if (rowsInserted > 0) {
+						    System.out.println("A new course was inserted successfully!");
+						    
+						    sql = "SELECT id FROM courses ORDER BY id DESC LIMIT 1";
+
+						    Statement lastIdStatement = conn.createStatement();
+						    ResultSet result = lastIdStatement.executeQuery(sql);
+
+						    if (result.next()) {
+						        int lastId = result.getInt("id");
+						        
+						        for (Map.Entry<String, byte[]> entry : courses.entrySet()) {
+						        	sql = "INSERT INTO resources(id_course, id_mentoring_program, name, file) VALUES(?, ?, ?, ?)";
+						        	PreparedStatement pstmt = conn.prepareStatement(sql);
+						            pstmt.setInt(1, lastId); // set id value to 1
+						            pstmt.setInt(2, -1);
+						            pstmt.setString(3, entry.getKey());
+						            pstmt.setBytes(4, entry.getValue());
+						            pstmt.executeUpdate();
+						        }
+						    }
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 				
 			}

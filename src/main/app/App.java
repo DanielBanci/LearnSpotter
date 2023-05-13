@@ -33,6 +33,7 @@ public class App {
 					app.frame.setVisible(true);
 					
 					DbConnection dbConnection = new DbConnection();
+					dbConnection.initializeDatabase();
 					Connection conn = dbConnection.getConnection();
 				} catch (Exception e) {
 					e.printStackTrace();
