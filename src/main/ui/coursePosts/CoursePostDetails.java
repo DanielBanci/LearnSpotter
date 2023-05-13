@@ -350,7 +350,7 @@ public class CoursePostDetails extends RoundPanel {
 		panel_6.add(panel_7);
 		panel_7.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-		JLabel lblNewLabel_1 = new JLabel("Full description: ");
+		JLabel lblNewLabel_1 = new JLabel("Description: ");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_7.add(lblNewLabel_1);
 

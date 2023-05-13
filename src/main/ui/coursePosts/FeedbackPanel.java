@@ -9,6 +9,8 @@ import main.ui.ratingBar.StarRatingBar;
 import main.utility.ImageLoader;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 
 import javax.swing.BoxLayout;
 import javax.swing.border.EmptyBorder;
@@ -31,6 +33,8 @@ public class FeedbackPanel extends JPanel {
 	private JPanel profilePicPanel;								//The profile pic
 	private JLabel lblName;										//the name of the user
 	private JTextArea tAFeedbackMessage;						//the feedback message
+	private JPanel panel_5;
+	private JLabel lblDate;
 	
 	/**
 	 * Constructor with parameters. It create the panel and fill the related data.
@@ -41,8 +45,30 @@ public class FeedbackPanel extends JPanel {
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
 		lblName.setName(feedback.getUser().getFirstName() + " " + feedback.getUser().getLastName());
 		tAFeedbackMessage.setText(feedback.getText());
+		lblDate.setText(feedback.getDate().toString());
+		
+		//display the rating
+		Container parent = ratingBarPanel.getParent();
+		int index = findComponentIndex(parent, ratingBarPanel);
+		parent.remove(ratingBarPanel);
+		ratingBarPanel = new StarRatingBar(feedback.getRating(),1);
+		parent.add(ratingBarPanel,index);
 	}
 
+	/**
+	 * Method that search for a panel index inside the container.
+	 * @param target the panel in interest
+	 * @return the index of the panel, -1 if not found
+	 */
+	public int findComponentIndex(Container container,Object target) {
+		Component[] components = container.getComponents();
+		for (int i = 0; i < components.length; i++) {
+			if (components[i].equals(target)) {
+				return i;
+			}
+		}
+		return -1; // Component not found
+	}
 	/**
 	 * Create the panel.
 	 * UI components with a default example.
@@ -103,6 +129,16 @@ public class FeedbackPanel extends JPanel {
 		ratingBarPanel.setMinimumSize(new Dimension(150, 30));
 		ratingBarPanel.setMaximumSize(new Dimension(150, 30));
 		panel_4.add(ratingBarPanel);
+		
+		panel_5 = new JPanel();
+		panel_5.setOpaque(false);
+		FlowLayout flowLayout = (FlowLayout) panel_5.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panel_1.add(panel_5);
+		
+		lblDate = new JLabel("Date label");
+		lblDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_5.add(lblDate);
 		
 		RoundPanel panel_2 = new RoundPanel();
 		panel_2.setStrokeSize(3);

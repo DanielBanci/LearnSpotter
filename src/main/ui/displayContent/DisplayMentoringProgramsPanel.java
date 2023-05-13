@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import main.classes.MentoringProgram;
 import main.ui.content.MainPanel;
 import main.ui.layouts.WrapLayout;
 import main.ui.mentoringProgram.MentoringProgramPost;
@@ -20,7 +21,7 @@ public class DisplayMentoringProgramsPanel extends JPanel {
 		setLayout(new WrapLayout(FlowLayout.CENTER,10,40));
 		setMaximumSize(new Dimension(1300,900000));
 		for(int i = 0;i < 25;i++) {
-			add(new MentoringProgramPost(true,true));
+			add(new MentoringProgramPost(MentoringProgram.createMockup(),true));
 		}
 		
 		DisplayMentoringProgramsPanel f = this;

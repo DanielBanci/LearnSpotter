@@ -2,6 +2,8 @@ package main.ui.mentoringProgram;
 
 import javax.swing.JPanel;
 
+import main.classes.Mentor;
+import main.classes.MentoringProgram;
 import main.ui.content.MainPanel;
 import main.ui.coursePosts.CoursePostDetails;
 import main.ui.customComponents.RoundButton;
@@ -26,6 +28,8 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Component;
+import java.awt.Container;
+
 import javax.swing.Box;
 
 /**
@@ -52,7 +56,7 @@ public class MentoringProgramPost extends RoundPanel {
 	//aux
 	private JPanel panel_4;
 	
-	public MentoringProgramPost(Boolean TODO,Boolean shortContent) {
+	public MentoringProgramPost(MentoringProgram mentoringProgram,Boolean shortContent) {
 		this();
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
 		panelAboutLbl = new JPanel();
@@ -73,10 +77,41 @@ public class MentoringProgramPost extends RoundPanel {
 		tADescription = new TextAreaWithPreview();
 		panelTextArea.add(tADescription, BorderLayout.CENTER);
 		
+		//display info
+		lblMentorName.setText(mentoringProgram.getMentor().getFirstName() + " " + mentoringProgram.getMentor().getLastName());
+		lblProgramTitle.setText(mentoringProgram.getName());
+		lblReviewsNumber.setText(String.valueOf(mentoringProgram.getNoViews()));
+		lblField.setText(mentoringProgram.getField());
+		lblDuration.setText(String.valueOf(mentoringProgram.getDuration()));
+		lblPrice.setText(String.valueOf(mentoringProgram.getPrice()));
+		tADescription.setTextBody(mentoringProgram.getDescription());
+		
+		
+		//rating
+		Container parent = ratingBarPanel.getParent();
+		int index = findComponentIndex(parent, ratingBarPanel);
+		parent.remove(ratingBarPanel);
+		ratingBarPanel = new StarRatingBar(mentoringProgram.getRating(),1);
+		parent.add(ratingBarPanel,index);
 		
 		if(shortContent) {
 			makeShortContent();
 		}
+	}
+	
+	/**
+	 * Method that search for a panel index inside the container.
+	 * @param target the panel in interest
+	 * @return the index of the panel, -1 if not found
+	 */
+	public int findComponentIndex(Container container,Object target) {
+		Component[] components = container.getComponents();
+		for (int i = 0; i < components.length; i++) {
+			if (components[i].equals(target)) {
+				return i;
+			}
+		}
+		return -1; // Component not found
 	}
 	
 	private ActionListener detailsActionListener() {

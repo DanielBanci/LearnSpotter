@@ -19,7 +19,43 @@ public class MentoringProgram {
 	private Collection<java.sql.Timestamp> schedule;
 	private int duration; //in weeks
 	private int price;
+	private Mentor mentor;
+	private int rating;
+	private int noViews;
+	private String field;
 	
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
+	public int getNoViews() {
+		return noViews;
+	}
+
+	public void setNoViews(int noViews) {
+		this.noViews = noViews;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public Mentor getMentor() {
+		return mentor;
+	}
+
+	public void setMentor(Mentor mentor) {
+		this.mentor = mentor;
+	}
+
 	/**
 	 * Creates a new instance of the MentoringProgram class with the specified parameters.
 	 */
@@ -47,7 +83,8 @@ public class MentoringProgram {
 	 * @param duration
 	 * @param price
 	 */
-	public MentoringProgram(int id, int idMentor, String name, String difficultyLevel, String description, String location, Collection<java.sql.Timestamp> schedule, int duration, int price) {
+	public MentoringProgram(int id, int idMentor, String name, String difficultyLevel, String description, String location,
+			Collection<java.sql.Timestamp> schedule, int duration, int price,Mentor mentor,int rating,int noViews,String field) {
 		this.id = id;
 		this.idMentor = idMentor;
 		this.name = name;
@@ -57,6 +94,10 @@ public class MentoringProgram {
 		this.schedule = schedule;
 		this.duration = duration;
 		this.price = price;
+		this.mentor = mentor;
+		this.rating = rating;
+		this.noViews = noViews;
+		this.field = field;
 	}
 	
 	public int getId() {
@@ -121,4 +162,16 @@ public class MentoringProgram {
 	public void setPrice(int price) {
 		this.price = price;
 	}
+	/**
+	 * @deprecated
+	 */
+	public static MentoringProgram createMockup() {
+        // Create a mock mentor for the mentoring program
+        Mentor mentor = Mentor.createMockup();
+
+        MentoringProgram mockup = new MentoringProgram(0, 0, "Sample Program", "Intermediate",
+                "Sample program description", "Sample location", new ArrayList<>(), 12, 100,
+                mentor, 4, 100, "Sample Field");
+        return mockup;
+    }
 }

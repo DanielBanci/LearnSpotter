@@ -22,7 +22,16 @@ public class Course {
 	private double price;
 	private java.sql.Date lastUpdate;
 	private Collection<Feedback> feedback;
+	private Mentor owner;
 	
+	public Mentor getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Mentor owner) {
+		this.owner = owner;
+	}
+
 	/**
 	 * Creates a new instance of the Course class with default values.
 	 */
@@ -54,7 +63,8 @@ public class Course {
 	 * @param lastUpdate
 	 * @param feedback
 	 */
-	public Course(int id, String name, int idMentor, int idMentoringProgram, String url, String description, int rating, int noViews, double price, java.sql.Date lastUpdate, Collection<Feedback> feedback) {
+	public Course(int id, String name, int idMentor, int idMentoringProgram, String url, String description, int rating, int noViews,
+			double price, java.sql.Date lastUpdate, Collection<Feedback> feedback,Mentor owner) {
 		this.id = id;
 		this.name = name;
 		this.idMentor = idMentor;
@@ -66,6 +76,7 @@ public class Course {
 		this.price = price;
 		this.lastUpdate = lastUpdate;
 		this.feedback = feedback;
+		this.owner = owner;
 	}
 	
 	public int getId() {
@@ -160,7 +171,8 @@ public class Course {
 			e.printStackTrace();
 		}
 		java.sql.Date sqlDate = new java.sql.Date(parsed.getTime());
-		Course mockup = new Course(0, "Software Engineering", 0, 0, "", "ceva descriere cum o fi sa fie doar sa fie sa vedem cum e ca de ce nu dor asa", 4, 0, 299.0d, sqlDate, new ArrayList<Feedback>());
+		Course mockup = new Course(0, "Software Engineering", 0, 0, "", "ceva descriere cum o fi sa fie doar sa fie sa vedem "
+				+ "cum e ca de ce nu dor asa", 4, 0, 299.0d, sqlDate, new ArrayList<Feedback>(),new Mentor());
 		return mockup;
 	}
 }

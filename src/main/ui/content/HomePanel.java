@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 
 import main.classes.Course;
 import main.classes.Mentor;
+import main.classes.MentoringProgram;
 import main.ui.coursePosts.CoursePost;
 import main.ui.mentoringProgram.MentoringProgramPost;
 import main.ui.mentors.MentorPost;
@@ -79,7 +80,7 @@ public class HomePanel extends JPanel {
 			mentorsP.add(new MentorPost(Mentor.createMockup()));
 		}
 		for(int i = 0;i<5;i++) {
-			mentoringProgramP.add(new MentoringProgramPost(true, true));
+			mentoringProgramP.add(new MentoringProgramPost(MentoringProgram.createMockup(), true));
 		}
 		
 		panel = new JPanel();

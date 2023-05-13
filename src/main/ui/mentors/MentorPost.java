@@ -45,6 +45,7 @@ public class MentorPost extends RoundPanel {
 	private JLabel lblFieldName;									//the name of the field the mentor teach
 	private JLabel lblProgramsNumber;								//the number of the programe he/she has
 	private TextAreaWithPreview tADescription;								//description of the mentor
+	private Mentor mentor;
 
 	/**
 	 * Method that search for a panel index inside the container.
@@ -67,6 +68,7 @@ public class MentorPost extends RoundPanel {
 	 */
 	public MentorPost(Mentor mentor) {
 		this();
+		this.mentor = mentor;
 		//profile pic
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
 		
@@ -101,7 +103,7 @@ public class MentorPost extends RoundPanel {
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.Y_AXIS));
-				MainPanel.getInstance().getContent().add(new MentorProfile(true));
+				MainPanel.getInstance().getContent().add(new MentorProfile(true,mentor));
 				MainPanel.getInstance().getContent().revalidate();
 				
 			}

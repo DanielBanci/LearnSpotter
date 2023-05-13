@@ -1,5 +1,6 @@
 package main.classes;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -12,7 +13,16 @@ public class Feedback {
 	private User user;
 	private String text;
 	private int rating;
+	private Date date;
 	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	/**
 	 * Creates a new instance of the Feedback class with default values.
 	 */
@@ -26,11 +36,13 @@ public class Feedback {
 	/**
 	 * Creates a new instance of the Course class with the specified parameters.
 	 */
-	public Feedback(int id, User user, String text, int rating) {
+	public Feedback(int id, User user, String text, int rating,Date date) {
 		this.id = id;
 		this.user = user;
 		this.text = text;
 		this.rating = rating;
+		this.date = date;
+		
 	}
 	
 	public int getId() {
@@ -66,8 +78,10 @@ public class Feedback {
 	 * @return an instance representing a mockup of the class for debugging purposes
 	 */
 	static public Feedback createMockup() {
-		Feedback mockup = new Feedback(0, new User(0, "Ana", "Popescu", "ana.popescu@gmail.com", "password123", "0712345678"), "A really nice and easy to understand course! The course was well-organized and easy to navigate, "
-				+ "and the content was presented in a clear and concise manner.Thank you for your hard work and dedication to your students' learning.", 4);
+		Feedback mockup = new Feedback(0, new User(0, "Ana", "Popescu", "ana.popescu@gmail.com", "password123", "0712345678"), 
+				"A really nice and easy to understand course! The course was well-organized and easy to navigate, "
+				+ "and the content was presented in a clear and concise manner.Thank you for your hard work and dedication to your"
+				+ " students' learning.", 4, new Date());
 		return mockup;
 	}
 	

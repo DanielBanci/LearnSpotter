@@ -3,6 +3,7 @@ package main.ui.mentoringProgram;
 import javax.swing.JPanel;
 
 import main.ui.customComponents.RoundPanel;
+import main.classes.MentoringProgram;
 import main.ui.calendar.*;
 
 import javax.swing.BoxLayout;
@@ -21,7 +22,7 @@ public class MentoringProgramDetails extends MentoringProgramPost {
 		return contentPanel;
 	}
 	public MentoringProgramDetails(Boolean TODO,Boolean shortPanel) {
-		super(TODO,shortPanel);
+		super(MentoringProgram.createMockup(),shortPanel);
 		
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(32767, 50));
@@ -30,7 +31,7 @@ public class MentoringProgramDetails extends MentoringProgramPost {
 		add(panel);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JMenuBar menuBar = new MenuBar(this);
+		JMenuBar menuBar = new MenuBar(this,MentoringProgram.createMockup());
 		panel.add(menuBar);
 		
 		contentPanel = new JPanel();

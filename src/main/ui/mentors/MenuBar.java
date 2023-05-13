@@ -8,6 +8,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingConstants;
 
+import main.classes.Mentor;
+
 public class MenuBar extends JMenuBar {
 
 	private JMenuItem menuItemAbout;
@@ -21,18 +23,18 @@ public class MenuBar extends JMenuBar {
 	private CoursesPosts coursesPosts;
 	private ProgramsPanel programsPanel;
 	
-	public MenuBar(MentorProfile m) {
+	public MenuBar(MentorProfile m,Mentor mentor) {
 		this();
 		mentorProfilePanel = m;
-		
+		mentor = Mentor.createMockup();
 		//create the panels with the required data 							TODO
-		aboutPanel = new AboutPanel();
-		reviewsPanel = new ReviewsPanel();
-		coursesPosts = new CoursesPosts();
-		programsPanel = new ProgramsPanel(true);
+		aboutPanel = new AboutPanel(mentor);
+		reviewsPanel = new ReviewsPanel(mentor);
+		coursesPosts = new CoursesPosts(mentor);
+		programsPanel = new ProgramsPanel(mentor);
 	}
 	
-	public MenuBar() {
+	private MenuBar() {
 		super();
 		
 		menuItemAbout = new JMenuItem("About");

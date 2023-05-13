@@ -2,6 +2,7 @@ package main.ui.mentors;
 
 import javax.swing.JPanel;
 
+import main.classes.Mentor;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customComponents.TextAreaWithPreview;
 
@@ -13,9 +14,14 @@ import javax.swing.border.EmptyBorder;
 public class AboutPanel extends RoundPanel {
 	private TextAreaWithPreview tAAbout;
 	
-	public AboutPanel(String data) {
+	public AboutPanel(Mentor mentor) {
 		this();
-		tAAbout.setTextBody(data);
+		if(mentor.getDescription() != null) {
+			tAAbout.setTextBody(mentor.getDescription());
+		}else {
+			tAAbout.setTextBody("No description to be displayed.");
+		}
+		
 	}
 	/**
 	 * Create the panel.
