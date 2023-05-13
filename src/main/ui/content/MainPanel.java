@@ -18,6 +18,7 @@ import main.ui.mentoringProgram.MentoringProgramDetails;
 import main.ui.mentors.MentorPost;
 import main.ui.mentors.MentorProfile;
 import main.ui.newContent.NewCoursePost;
+import main.ui.newContent.NewMentorProfile;
 import main.ui.newContent.NewMentoringProgram;
 //import main.ui.newContent.NewUserProfile;
 import main.utility.ImageLoader;
@@ -79,10 +80,10 @@ public class MainPanel extends JScrollPane {
 		topPanel.setPreferredSize(new Dimension(10, 100));
 		setColumnHeaderView(topPanel);
 
-		content.add(new HomePanel(true));
+		//content.add(new HomePanel(true));
 		// content.add(new DisplayMentoringProgramsPanel());
 		// content.setLayout(new FlowLayout(FlowLayout.CENTER));
-		// content.add(new NewUserProfile(true));
+		 content.add(new NewMentorProfile(true));
 		// content.add(new NewMentoringProgram());
 	}
 

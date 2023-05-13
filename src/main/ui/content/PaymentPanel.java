@@ -1,7 +1,7 @@
 package main.ui.content;
 
 import javax.swing.JPanel;
-
+import javax.swing.JPopupMenu;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -27,6 +27,7 @@ import java.sql.Statement;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
@@ -37,6 +38,7 @@ import main.ui.customComponents.ImagePanel;
 import main.ui.customComponents.RoundButton;
 import main.utility.*;
 import main.ui.login.LoginData;
+import main.classes.Card;
 import main.db.*;
 
 import java.awt.GridLayout;
@@ -50,13 +52,138 @@ public class PaymentPanel extends JPanel {
 	private JComboBox<String> cBMM;
 	private JComboBox<String> cBYY;
 	private JButton btnCompletePayment;
+	private Card card;
+	public Card getCard() {
+		return card;
+	}
+
 	public JButton getBtnCompletePayment() {
 		return btnCompletePayment;
 	}
 
-	private JTextField textField;
+	private JTextField tFCardHolderName;
 	private JPanel cardIconPanel;
 
+	public PaymentPanel(Card card) {
+		this();
+		this.card = card;
+		//set the sum on the button
+		btnCompletePayment.setText("Add card");
+		btnCompletePayment.setPreferredSize(new Dimension(100,30));
+		
+		//load card icon
+		//ImagePanel img = new ImagePanel(ImageLoader.getInstance().getCardIcon(),new Dimension(250,120));
+		//cardIconPanel.add(img,BorderLayout.CENTER);
+		
+		//set combo models
+		cBMM.setModel(mMComboModel());
+		cBYY.setModel(yYComboModel());
+		
+		//set action to the payment button after it was added to a component
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				btnCompletePayment.addActionListener(addCardButtonActionListener());
+			}
+		});
+	}
+	
+	private ActionListener addCardButtonActionListener() {
+		ActionListener act = new ActionListener() {
+			String message = "";
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// implement here	
+				if(tFCardNumber.getText().length() == 16) 
+				{
+					if(tFCvcCvv.getText().length() == 3)
+					{
+						if(Integer.parseInt(cBMM.getSelectedItem().toString()) >= 6)
+						{
+							if(Integer.parseInt(cBYY.getSelectedItem().toString()) >= 2023)
+							{	if(isValidName(tFCardHolderName.getText())) {
+								//String cardNumber, String cvvCvc, String cardHolderName, String expirationMonth, String expirationYear
+								card = new Card(tFCardNumber.getText(),
+										tFCvcCvv.getText(),
+										tFCardHolderName.getText(),
+										cBMM.getSelectedItem().toString(),
+										cBYY.getSelectedItem().toString());
+								
+								JPopupMenu popupMenu = new JPopupMenu();
+								popupMenu.setOpaque(false);
+								popupMenu.setBorder(new EmptyBorder(0,0,0,0));
+								
+								JLabel mes = new JLabel("Card added successfully!");
+								mes.setForeground(Color.green);
+								mes.setFont(new Font("Tahoma", Font.PLAIN, 16));
+						        popupMenu.add(mes);
+						        
+						        //get the position to display the popup menu
+						        int xPos = 0;
+						        int yPos = - btnCompletePayment.getHeight();										//disply on top
+						        popupMenu.show(btnCompletePayment,xPos ,yPos );
+						        
+						        Timer timer = new Timer(3000, new ActionListener() {						//visible for 3 sec
+				                    @Override
+				                    public void actionPerformed(ActionEvent evt) {
+				                        popupMenu.setVisible(false);
+				                    }
+				                });
+				                timer.setRepeats(false);
+				                timer.start();
+								
+								return;
+							}else {
+								message = "Please enter a valid name";
+								JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
+							}
+							} else {
+								message = "The year must be greater or equal than 2023";
+								JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
+							}
+						} else {
+							message = "The month must be greater or equal than 6";
+							JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
+						}
+					} else {
+						message = "The cvv must have 3 digits";
+						JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					message = "Card number must have 16 digits";
+					JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			
+		};
+		return act;
+	}
+	
+	public boolean isValidName(String name) {
+	    // Remove leading and trailing whitespaces
+	    name = name.trim();
+
+	    // Split the name into individual parts
+	    String[] nameParts = name.split(" ");
+
+	    // Check if the name contains at least two parts
+	    if (nameParts.length >= 2) {
+	        // Check if each part is not empty
+	        for (String part : nameParts) {
+	            if (part.isEmpty()) {
+	                return false;
+	            }
+	        }
+	        // All parts are non-empty
+	        return true;
+	    }
+
+	    // Name does not contain at least two parts
+	    return false;
+	}
+
+	
 	public PaymentPanel(Double totalSum) {
 		this();
 		//set the sum on the button
@@ -64,8 +191,8 @@ public class PaymentPanel extends JPanel {
 		btnCompletePayment.setText("Complete payment (Total $" + totalSum + ")");
 		
 		//load card icon
-		ImagePanel img = new ImagePanel(ImageLoader.getInstance().getCardIcon(),new Dimension(250,120));
-		cardIconPanel.add(img,BorderLayout.CENTER);
+		//ImagePanel img = new ImagePanel(ImageLoader.getInstance().getCardIcon(),new Dimension(250,120));
+		//cardIconPanel.add(img,BorderLayout.CENTER);
 		
 		//set combo models
 		cBMM.setModel(mMComboModel());
@@ -100,7 +227,7 @@ public class PaymentPanel extends JPanel {
 						if(Integer.parseInt(cBMM.getSelectedItem().toString()) >= 6)
 						{
 							if(Integer.parseInt(cBYY.getSelectedItem().toString()) >= 2023)
-							{
+							{if(isValidName(tFCardHolderName.getText())) {
 								////after the payments was successfully made			//TODO: check if the payment was succesfully
 								//notify the view course button the the payment was successfully made
 								((CourseFilePanel)aux.getFilePanel()).setPayed(true);
@@ -115,6 +242,10 @@ public class PaymentPanel extends JPanel {
 								emailSender.sendToAsync(LoginData.emailIfLoginSucceded);
 								
 								return;
+							}else {
+								message = "Please enter a valid name";
+								JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
+							}
 							} else {
 								message = "The year must be greater or equal than 2023";
 								JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
@@ -177,14 +308,14 @@ public class PaymentPanel extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(32767, 130));
 		panel.setOpaque(false);
-		add(panel);
+		//add(panel);
 		
 		cardIconPanel = new JPanel();
 		cardIconPanel.setOpaque(false);
 		cardIconPanel.setPreferredSize(new Dimension(250, 120));
 		cardIconPanel.setMinimumSize(new Dimension(250, 120));
 		cardIconPanel.setMaximumSize(new Dimension(250, 120));
-		panel.add(cardIconPanel);
+		//panel.add(cardIconPanel);
 		cardIconPanel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_1 = new JPanel();
@@ -316,12 +447,12 @@ public class PaymentPanel extends JPanel {
 		panel_8.add(panel_9, gbc_panel_9);
 		panel_9.setLayout(new BorderLayout(0, 0));
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField.setOpaque(false);
-		textField.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		panel_9.add(textField, BorderLayout.CENTER);
-		textField.setColumns(10);
+		tFCardHolderName = new JTextField();
+		tFCardHolderName.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tFCardHolderName.setOpaque(false);
+		tFCardHolderName.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		panel_9.add(tFCardHolderName, BorderLayout.CENTER);
+		tFCardHolderName.setColumns(10);
 		
 		JPanel panel_10 = new JPanel();
 		panel_10.setOpaque(false);

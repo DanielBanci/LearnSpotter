@@ -10,6 +10,7 @@ import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customComponents.RoundPasswordField;
 import main.ui.customComponents.RoundTextField;
+import main.ui.newContent.NewUserProfile;
 import main.db.*;
 
 import javax.swing.JLabel;
@@ -18,6 +19,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,6 +40,7 @@ public class LoginData extends RoundPanel {
 	private JPasswordField passwordField;		//the password input
 	private JButton btnLogin;					//button to log in  
 	private JCheckBox checkBox;		//check box to show/hide password
+	private JLabel lblNewAccount;
 	
 	public static String emailIfLoginSucceded;
 
@@ -76,6 +80,18 @@ public class LoginData extends RoundPanel {
 		lblNewLabel_1.setPreferredSize(new Dimension(40, 13));
 		checkButtonPanel.add(lblNewLabel_1);
 		
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		panel.setBorder(new EmptyBorder(10, 0, 0, 0));
+		panel.setMaximumSize(new Dimension(32767, 30));
+		add(panel);
+		
+		lblNewAccount = new JLabel("Don't have an account yet? Register now!      ");
+		lblNewAccount.setForeground(new Color(240, 150, 0));
+		lblNewAccount.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel.add(lblNewAccount);
+		lblNewAccount.addMouseListener(newAccounMouseAdapter());
+		
 		JPanel loginButtonPanel = new JPanel();
 		loginButtonPanel.setOpaque(false);
 		loginButtonPanel.setBorder(new EmptyBorder(25, 25, 25, 25));
@@ -112,6 +128,29 @@ public class LoginData extends RoundPanel {
 		btnLogin.addActionListener(loginButtonActionListener());
 		
 
+	}
+	
+	private MouseAdapter newAccounMouseAdapter() {
+		return new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				App.getInstance().getFrame().getContentPane().removeAll();
+				App.getInstance().getFrame().getContentPane().add(new NewAccountPanel());
+				App.getInstance().getFrame().getContentPane().revalidate();
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				Color c = lblNewAccount.getBackground();
+				lblNewAccount.setBackground(lblNewAccount.getForeground());
+				lblNewAccount.setForeground(c);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				Color c = lblNewAccount.getBackground();
+				lblNewAccount.setBackground(lblNewAccount.getForeground());
+				lblNewAccount.setForeground(c);
+			}
+		};
 	}
 	
 	/**
