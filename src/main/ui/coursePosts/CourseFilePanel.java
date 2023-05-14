@@ -40,6 +40,7 @@ public class CourseFilePanel extends JPanel {
 	protected JPanel pdfViewPanel;				//the panel that disply the pdf			
 	private JPanel courseDetailsParent;			//the panel with the course details
 	private JLabel lblIconPdfFile;
+	private String message = "You need to buy the course to perform this action!";
 	
 	//for action listeners
 	protected JButton btnViewCourse;				//the button the show the pdf
@@ -86,6 +87,22 @@ public class CourseFilePanel extends JPanel {
 		btnViewCourse.addActionListener(btnViewCourseActionListener());
 		lblIconPdfFile.setIcon(pdfFileIcon);
 		btnViewCourse.setIcon(iconButtonLocked);
+		
+	}
+	
+	public CourseFilePanel(JPanel courseDetailsP,Boolean payed) {
+		this();
+		this.payed = payed;
+		message = "You need to join the program to perform this action!";
+		loadButtonsImageIcon();
+		courseDetailsParent = courseDetailsP;
+		btnViewCourse.addActionListener(btnViewCourseActionListener());
+		lblIconPdfFile.setIcon(pdfFileIcon);
+		if(payed) {
+			btnViewCourse.setIcon(iconButtonUnlocked);
+		}else {
+			btnViewCourse.setIcon(iconButtonLocked);
+		}
 		
 	}
 	
@@ -175,7 +192,7 @@ public class CourseFilePanel extends JPanel {
 					popupMenu.setOpaque(false);
 					popupMenu.setBorder(new EmptyBorder(0,0,0,0));
 					
-					JLabel mes = new JLabel("You need to buy the course to perform this action!");
+					JLabel mes = new JLabel(message);
 					mes.setForeground(Color.red);
 					mes.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			        popupMenu.add(mes);

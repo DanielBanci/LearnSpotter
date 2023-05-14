@@ -16,24 +16,9 @@ public class Mentor extends User {
 	private int programsNumber;
 	private Date registerDate;
 	private List<Feedback> feedbacks;
-	private List<Course> courses;
-	private List<MentoringProgram> mentoringPrograms;
 	
-	public List<MentoringProgram> getMentoringPrograms() {
-		return mentoringPrograms;
-	}
-
-	public void setMentoringPrograms(List<MentoringProgram> mentoringPrograms) {
-		this.mentoringPrograms = mentoringPrograms;
-	}
-
-	public List<Course> getCourses() {
-		return courses;
-	}
-
-	public void setCourses(List<Course> courses) {
-		this.courses = courses;
-	}
+	
+	
 
 	public List<Feedback> getFeedbacks() {
 		return feedbacks;
@@ -75,14 +60,13 @@ public class Mentor extends User {
 	 */
 	public Mentor(int id, String firstName, String lastName, String email, String password, String phoneNumber, String description, 
 			String field, int programsNumber,Date registerDate,List<Feedback> feedbacks,List<Course> courses,List<MentoringProgram> mentoringPrograms) {
-		super(id, firstName, lastName, email, password, phoneNumber);
+		super(id, firstName, lastName, email, password, phoneNumber,courses,mentoringPrograms);
 		this.description = description;
 		this.field = field;
 		this.programsNumber = programsNumber;
 		this.registerDate = registerDate;
 		this.feedbacks = feedbacks;
-		this.courses = courses;
-		this.mentoringPrograms = mentoringPrograms;
+		
 	}
 	
 	public String getDescription() {
