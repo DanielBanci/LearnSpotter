@@ -59,6 +59,10 @@ public class Mentor extends User {
 		description = null;
 		field = null;
 		programsNumber = 0;
+		registerDate = new java.util.Date();
+		feedbacks = new ArrayList<Feedback>();
+		courses = new ArrayList<Course>();
+		mentoringPrograms = new ArrayList<MentoringProgram>();
 	}
 	
 	/**

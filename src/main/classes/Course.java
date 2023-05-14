@@ -27,6 +27,14 @@ public class Course {
 	private Collection<Feedback> feedback;
 	private Mentor owner;
 	
+	public Map<String, byte[]> getPdfFiles() {
+		return pdfFiles;
+	}
+	
+	public void setPdfFiles(Map<String, byte[]> pdfFiles) {
+		this.pdfFiles = pdfFiles;
+	}
+	
 	public Mentor getOwner() {
 		return owner;
 	}
@@ -43,6 +51,7 @@ public class Course {
 		name = null;
 		idMentor = 0;
 		idMentoringProgram = 0;
+		pdfFiles = new HashMap<String, byte[]>();
 		url = null;
 		description = null;
 		rating = 0;
@@ -58,6 +67,7 @@ public class Course {
 	 * @param name
 	 * @param idMentor
 	 * @param idMentoringProgram
+	 * @param pdfFiles
 	 * @param url
 	 * @param description
 	 * @param rating
@@ -72,6 +82,7 @@ public class Course {
 		this.name = name;
 		this.idMentor = idMentor;
 		this.idMentoringProgram = idMentoringProgram;
+		this.pdfFiles = pdfFiles;
 		this.url = url;
 		this.description = description;
 		this.rating = rating;
