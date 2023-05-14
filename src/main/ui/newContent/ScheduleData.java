@@ -28,4 +28,19 @@ public class ScheduleData{
 	this.atEvery = atEvery;
 	this.repeat = repeat;
 	}
+	
+	public boolean equals(Object obj) {
+		if(obj == this)
+			return true;
+		
+		if(obj == null || getClass() != obj.getClass())
+			return false;
+		
+		ScheduleData otherSchedule = (ScheduleData)obj;
+		return (startDate == otherSchedule.startDate
+				&& startTime == otherSchedule.startTime
+				&& untilDate == otherSchedule.untilDate
+				&& atEvery == otherSchedule.atEvery
+				&& repeat == otherSchedule.repeat);
+	}
 }

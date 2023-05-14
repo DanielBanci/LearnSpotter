@@ -16,7 +16,6 @@ import main.ui.newContent.ScheduleData;
  */
 public class MentoringProgram {
 	private int id;
-	private int idMentor;
 	private String name;
 	private String difficultyLevel;
 	private String description;
@@ -101,7 +100,6 @@ public class MentoringProgram {
 	 */
 	public MentoringProgram() {
 		id = 0;
-		idMentor = 0;
 		name = null;
 		difficultyLevel = null;
 		description = null;
@@ -109,12 +107,19 @@ public class MentoringProgram {
 		schedule = new ArrayList<>();
 		duration = 0;
 		price = 0;
+		mentor = new Mentor();
+		rating = 0;
+		noViews = 0;
+		field = null;
+		feedbacks = new ArrayList<>();
+		files = new HashMap<>();
+		currency = null;
+		
 	}
 	
 	/**
 	 * Creates a new instance of the MentoringProgram class with the specified parameters.
 	 * @param id
-	 * @param idMentor
 	 * @param name
 	 * @param difficultyLevel
 	 * @param description
@@ -122,12 +127,16 @@ public class MentoringProgram {
 	 * @param schedule
 	 * @param duration
 	 * @param price
+	 * @param mentor
+	 * @param rating
+	 * @param noViews
+	 * @param field
+	 * @param feedbacks
+	 * @param files
+	 * @param currency
 	 */
-	public MentoringProgram(int id, int idMentor, String name, String difficultyLevel, String description, String location,
-			List<ScheduleData> schedule, int duration, int price,String currency,Mentor mentor,int rating,int noViews,String field,
-			List<Feedback> feedbacks,Map<String,byte[]> files) {
+	public MentoringProgram(int id, String name, String difficultyLevel, String description, String location, List<ScheduleData> schedule, int duration, int price,String currency,Mentor mentor,int rating,int noViews,String field, List<Feedback> feedbacks,Map<String,byte[]> files) {
 		this.id = id;
-		this.idMentor = idMentor;
 		this.name = name;
 		this.difficultyLevel = difficultyLevel;
 		this.description = description;
@@ -149,13 +158,6 @@ public class MentoringProgram {
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	
-	public int getIdMentor() {
-		return idMentor;
-	}
-	public void setIdMentor(int idMentor) {
-		this.idMentor = idMentor;
 	}
 	
 	public String getName() {
@@ -212,8 +214,7 @@ public class MentoringProgram {
 	public static MentoringProgram createMockup() {
         // Create a mock mentor for the mentoring program
         Mentor mentor = Mentor.createMockup();
-
-        MentoringProgram mockup = new MentoringProgram(0, 0, "Sample Program", "Intermediate",
+        MentoringProgram mockup = new MentoringProgram(0, "Sample Program", "Intermediate",
                 "Sample program description", "Sample location", new ArrayList<>(), 12, 100,"RON",
                 mentor, 4, 100, "Sample Field", new ArrayList<>(),new HashMap<>());
         return mockup;

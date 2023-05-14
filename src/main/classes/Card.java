@@ -144,6 +144,21 @@ public class Card {
 
         return mockup;
     }
-
+    
+    @Override
+    public boolean equals(Object obj) {
+    	if(obj == this)
+    		return true;
+    	
+    	if(obj == null || getClass() != obj.getClass())
+    		return false;
+    	
+    	Card otherCard = (Card)obj;
+    	return (cardNumber == otherCard.cardNumber
+    			&& cvvCvc == otherCard.cvvCvc
+    			&& cardHolderName == otherCard.cardHolderName
+    			&& expirationMonth == otherCard.expirationMonth
+    			&& expirationYear == otherCard.expirationYear);
+    }
 }
 

@@ -31,6 +31,7 @@ public class Feedback {
 		user = new User();
 		text = null;
 		rating = 0;
+		date = new java.util.Date();
 	}
 	
 	/**
