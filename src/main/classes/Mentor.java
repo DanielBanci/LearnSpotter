@@ -16,6 +16,7 @@ public class Mentor extends User {
 	private int programsNumber;
 	private Date registerDate;
 	private List<Feedback> feedbacks;
+	private Card card;
 	
 	
 	
@@ -55,13 +56,15 @@ public class Mentor extends User {
 	 * @param programsNumber
 	 */
 	public Mentor(int id, String firstName, String lastName, String email, String password, String phoneNumber, String description, 
-			String field, int programsNumber,Date registerDate,List<Feedback> feedbacks,List<Course> courses,List<MentoringProgram> mentoringPrograms) {
+			String field, int programsNumber,Date registerDate,List<Feedback> feedbacks,List<Course> courses,
+			List<MentoringProgram> mentoringPrograms,Card card) {
 		super(id, firstName, lastName, email, password, phoneNumber,courses,mentoringPrograms);
 		this.description = description;
 		this.field = field;
 		this.programsNumber = programsNumber;
 		this.registerDate = registerDate;
 		this.feedbacks = feedbacks;
+		this.card = card;
 		
 	}
 	
@@ -107,7 +110,7 @@ public class Mentor extends User {
                 + "Pellentesque in bibendum velit. Nullam consequat quam ut neque mollis, "
                 + "vitae porttitor sapien bibendum. Vivamus mollis purus in justo finibus, "
                 + "vel ultricies velit vestibulum. Duis pretium auctor ipsum, a commodo libero consectetur eget.", "garFIELD!!!", 0,new Date(),
-                new ArrayList<>(),new ArrayList<>(),new ArrayList<>());
+                new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),Card.createMockup());
 		return mockup;
 	}
 }

@@ -13,6 +13,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -28,6 +31,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import main.classes.Card;
+import main.classes.Course;
+import main.classes.Feedback;
+import main.classes.Mentor;
+import main.classes.MentoringProgram;
 import main.ui.content.PaymentPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
@@ -54,6 +61,7 @@ public class NewMentorProfile extends JPanel {
 	private JButton btnRegister;
 	private JTextArea tAStudyFields;
 	private JTextField tFLocation;
+	private JTextField tFPhoneNumber;
 	
 	public NewMentorProfile(Boolean TODO) {
 		this();
@@ -187,6 +195,23 @@ public class NewMentorProfile extends JPanel {
 		panel_22.setOpaque(false);
 		panel_4.add(panel_22);
 		panel_22.setLayout(new BorderLayout(0, 0));
+		JPanel panel_221 = new JPanel();
+		panel_221.setPreferredSize(new Dimension(12, 10));
+		panel_221.setOpaque(false);
+		panel_4.add(panel_221);
+		panel_221.setLayout(new BorderLayout(0, 0));
+		JPanel panel_222 = new JPanel();
+		panel_222.setOpaque(false);
+		panel_4.add(panel_222);
+		panel_222.setLayout(new BorderLayout(0, 0));
+		
+		tFPhoneNumber = new JTextField();
+		tFPhoneNumber.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		tFPhoneNumber.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tFPhoneNumber.setUI(new HintTextFieldUI("Your phone number...", true, Color.GRAY));
+		tFPhoneNumber.setOpaque(false);
+		panel_222.add(tFPhoneNumber, BorderLayout.NORTH);
+		tFPhoneNumber.setColumns(10);
 		
 		tFLocation = new JTextField();
 		tFLocation.setUI(new HintTextFieldUI("Your location...", true, Color.GRAY));
@@ -298,11 +323,35 @@ public class NewMentorProfile extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int id = 1;//getLastUserId() + 1;
+				String firstName = tFFirstName.getText();
+				String lastName = tFLastName.getText();
+				String field = tAStudyFields.getText();
+				String location = tFLocation.getText();
+				String phoneNumber = tFPhoneNumber.getText();								//verify to be write corectly
+				String email = tFEmail.getText();											//verify email to be write correctly
+				String password = passwordField.getPassword().toString();					//verify if passwords match and make a chanck to be strong
+				String passwordVerify = passwordField_1.getPassword().toString();
+				
+				String description = ""; 										//no description when account just created
+				int programsNumber = 0;											//no programsNumber when account just created
+				Date registerDate = new Date();
+				
+				List<Course> courses = new ArrayList<>();						//no buyed courses when account just created
+				List<MentoringProgram> mentoringPrograms = new ArrayList<>();	//no mentoring program joined when account just created
+				List<Feedback> feedback = new ArrayList<>();					//no feedback when account just created
+				
+				//check if the user added succesfylly a card
 				if(cardDetailsPanel.getCard() != null) {
 					card = cardDetailsPanel.getCard();
 				}else {
 					JOptionPane.showMessageDialog(null,"You need to add a card first","Eroare",JOptionPane.ERROR_MESSAGE);
 				}
+				
+				//if test passed
+				Mentor mentor = new Mentor(id,firstName,lastName,email,password,phoneNumber,description,field,programsNumber,registerDate,
+						feedback,courses,mentoringPrograms,card);
+				//TODO store new mentor
 			}
 			
 		};
