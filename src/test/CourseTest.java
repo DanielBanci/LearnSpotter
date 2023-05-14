@@ -12,6 +12,7 @@ import org.junit.Test;
 import main.classes.Course;
 import main.classes.Feedback;
 import main.classes.Mentor;
+import main.classes.MentoringProgram;
 import main.classes.User;
 
 
@@ -92,7 +93,7 @@ public class CourseTest {
 		course.setNoViews(5);
 		course.setPrice(6.0d);
 		course.setLastUpdate(new java.sql.Date(7));
-		course.setFeedback(new ArrayList<Feedback>(Arrays.asList(new Feedback(1, new User(1, "success", "success2", "success3", "success4", "success5"), "success", 2, new java.sql.Date(3)))));
+		course.setFeedback(new ArrayList<Feedback>(Arrays.asList(new Feedback(1, new User(1, "success", "success2", "success3", "success4", "success5", new ArrayList<Course>(), new ArrayList<MentoringProgram>()), "success", 2, new java.sql.Date(3)))));
 		
 		int id = course.getId();
 		String name = course.getName();
@@ -116,7 +117,7 @@ public class CourseTest {
 		assertEquals(5, noViews);
 		assertEquals(6.0d, price, 0.001d);
 		assertEquals(new java.sql.Date(7), lastUpdate);
-		assertEquals(new ArrayList<Feedback>(Arrays.asList(new Feedback(1, new User(1, "success", "success2", "success3", "success4", "success5"), "success", 2, new java.sql.Date(3)))), feedback);
+		assertEquals(new ArrayList<Feedback>(Arrays.asList(new Feedback(1, new User(1, "success", "success2", "success3", "success4", "success5", new ArrayList<Course>(), new ArrayList<MentoringProgram>()), "success", 2, new java.sql.Date(3)))), feedback);
 	}
 
 }

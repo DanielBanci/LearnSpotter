@@ -18,8 +18,13 @@ public class Mentor extends User {
 	private List<Feedback> feedbacks;
 	private Card card;
 	
+	public Card getCard() {
+		return card;
+	}
 	
-	
+	public void setCard(Card card) {
+		this.card = card;
+	}
 
 	public List<Feedback> getFeedbacks() {
 		return feedbacks;
@@ -45,10 +50,9 @@ public class Mentor extends User {
 		description = null;
 		field = null;
 		programsNumber = 0;
-		registerDate = new java.util.Date();
+		registerDate = null;
 		feedbacks = new ArrayList<Feedback>();
-		courses = new ArrayList<Course>();
-		mentoringPrograms = new ArrayList<MentoringProgram>();
+		card = new Card();
 	}
 	
 	/**
@@ -58,10 +62,13 @@ public class Mentor extends User {
 	 * @param description
 	 * @param field
 	 * @param programsNumber
+	 * @param registerDate
+	 * @param feedbacks
+	 * @param courses
+	 * @param mentoringPrograms
+	 * @param card
 	 */
-	public Mentor(int id, String firstName, String lastName, String email, String password, String phoneNumber, String description, 
-			String field, int programsNumber,Date registerDate,List<Feedback> feedbacks,List<Course> courses,
-			List<MentoringProgram> mentoringPrograms,Card card) {
+	public Mentor(int id, String firstName, String lastName, String email, String password, String phoneNumber, String description, String field, int programsNumber,Date registerDate,List<Feedback> feedbacks,List<Course> courses, List<MentoringProgram> mentoringPrograms,Card card) {
 		super(id, firstName, lastName, email, password, phoneNumber,courses,mentoringPrograms);
 		this.description = description;
 		this.field = field;

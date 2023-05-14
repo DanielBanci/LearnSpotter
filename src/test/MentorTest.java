@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import main.classes.Card;
 import main.classes.Course;
 import main.classes.Feedback;
 import main.classes.Mentor;
@@ -41,7 +42,7 @@ public class MentorTest {
 		assertEquals(null, description);
 		assertEquals(null, field);
 		assertEquals(0, programsNumber);
-		assertEquals(new java.util.Date(), registerDate);
+		assertEquals(null, registerDate);
 		assertEquals(new ArrayList<Feedback>(), feedbacks);
 		assertEquals(new ArrayList<Course>(), courses);
 		assertEquals(new ArrayList<MentoringProgram>() ,mentoringPrograms);
@@ -49,7 +50,7 @@ public class MentorTest {
 	
 	@Test
 	public void fullConstructorTest() {
-		Mentor mentor = new Mentor(1, "success", "success2", "success3", "success4", "success5", "success6", "success7", 2, new java.util.Date(3), new ArrayList<Feedback>(), new ArrayList<Course>(), new ArrayList<MentoringProgram>());
+		Mentor mentor = new Mentor(1, "success", "success2", "success3", "success4", "success5", "success6", "success7", 2, new java.util.Date(3), new ArrayList<Feedback>(), new ArrayList<Course>(), new ArrayList<MentoringProgram>(), new Card());
 		
 		int id = mentor.getId();
 		String firstName = mentor.getFirstName();
@@ -64,6 +65,7 @@ public class MentorTest {
 		List<Feedback> feedbacks = mentor.getFeedbacks();
 		List<Course> courses = mentor.getCourses();
 		List<MentoringProgram> mentoringPrograms = mentor.getMentoringPrograms();
+		Card card = mentor.getCard();
 		
 		assertEquals(1, id);
 		assertEquals("success", firstName);
@@ -78,11 +80,12 @@ public class MentorTest {
 		assertEquals(new ArrayList<Feedback>(), feedbacks);
 		assertEquals(new ArrayList<Course>(), courses);
 		assertEquals(new ArrayList<MentoringProgram>() ,mentoringPrograms);
+		assertEquals(new Card(), card);
 	}
 	
 	@Test
 	public void settersAndGettersTest() {
-		Mentor mentor = new Mentor(-1, "fail", "fail2", "fail3", "fail4", "fail5", "fail6", "fail7", -2, new java.util.Date(-3), new ArrayList<Feedback>(), new ArrayList<Course>(), new ArrayList<MentoringProgram>());
+		Mentor mentor = new Mentor(-1, "fail", "fail2", "fail3", "fail4", "fail5", "fail6", "fail7", -2, new java.util.Date(-3), new ArrayList<Feedback>(), new ArrayList<Course>(), new ArrayList<MentoringProgram>(), new Card());
 		
 		mentor.setId(1);
 		mentor.setFirstName("success");
@@ -97,6 +100,7 @@ public class MentorTest {
 		mentor.setFeedbacks(new ArrayList<Feedback>());
 		mentor.setCourses(new ArrayList<Course>());
 		mentor.setMentoringPrograms(new ArrayList<MentoringProgram>());
+		mentor.setCard(new Card());
 		
 		int id = mentor.getId();
 		String firstName = mentor.getFirstName();
@@ -111,6 +115,7 @@ public class MentorTest {
 		List<Feedback> feedbacks = mentor.getFeedbacks();
 		List<Course> courses = mentor.getCourses();
 		List<MentoringProgram> mentoringPrograms = mentor.getMentoringPrograms();
+		Card card = mentor.getCard();
 		
 		assertEquals(1, id);
 		assertEquals("success", firstName);
@@ -125,6 +130,7 @@ public class MentorTest {
 		assertEquals(new ArrayList<Feedback>(), feedbacks);
 		assertEquals(new ArrayList<Course>(), courses);
 		assertEquals(new ArrayList<MentoringProgram>() ,mentoringPrograms);
+		assertEquals(new Card(), card);
 	}
 
 }
