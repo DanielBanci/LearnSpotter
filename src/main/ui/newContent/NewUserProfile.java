@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
@@ -265,7 +266,7 @@ public class NewUserProfile extends JPanel {
 		btnRegister.addActionListener(registerActionListener());
 	}
 	
-	private ActionListener registerActionListener() {				//TODO check input, make user account, store account, connect user
+	private ActionListener registerActionListener() {				//check input, make user account, store account, connect user
 		return new ActionListener() {
 
 			@Override
@@ -274,9 +275,34 @@ public class NewUserProfile extends JPanel {
 				String firstName = tFFirstName.getText();
 				String lastName = tFLastName.getText();
 				String phoneNumber = tFPhoneNumber.getText();								//verify to be write corectly
+				if(!tFPhoneNumber.getText().matches("0?7[0-9]{8}$")) { 
+					JOptionPane.showMessageDialog(null, "Invalid phone number. Make sure the number is 10 digits long including the leading '0' and contains no spaces or dashes.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				String email = tFEmail.getText();											//verify email to be write correctly
-				String password = passwordField.getPassword().toString();					//verify if passwords match and make a chanck to be strong
+				if(email.isBlank()) {
+					JOptionPane.showMessageDialog(null, "An email is required.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}(?:\\.[a-zA-Z]{2,})?$")) { //Doesn't work
+					JOptionPane.showMessageDialog(null, "Invalid email format.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				String password = passwordField.getPassword().toString();					//TODO verify if passwords match and make a chanck to be strong
+				if(password.isBlank()) {
+					JOptionPane.showMessageDialog(null, "Setting a password is required.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(!password.matches(".*[A-Z]+.*") || !password.matches(".*[a-z]+.*") ||
+				        !password.matches(".*[0-9]+.*") || !password.matches(".*[!@#$%^&*()_+\\-=[\\]{};':\"\\\\|,.<>/?]+.*")) {
+					JOptionPane.showMessageDialog(null, "The password is too weak. It must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
+				        return;
+				    }
 				String passwordVerify = passwordField_1.getPassword().toString();
+				if(password != passwordVerify) {
+					JOptionPane.showMessageDialog(null, "The passwords do not match. Watch out for Caps Lock, NumLock or the Shift key.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				
 				List<Course> courses = new ArrayList<>();						//no buyed courses when account just created
 				List<MentoringProgram> mentoringPrograms = new ArrayList<>();	//no mentoring program joined when account just created
@@ -296,8 +322,8 @@ public class NewUserProfile extends JPanel {
                     passwordField.setEchoChar((char) 0); // Show password
                     passwordField_1.setEchoChar((char) 0);
                 } else {
-                    passwordField.setEchoChar('•'); // Hide password
-                    passwordField_1.setEchoChar('•');
+                    passwordField.setEchoChar('ï¿½'); // Hide password
+                    passwordField_1.setEchoChar('ï¿½');
                 }
 			}
 			

@@ -44,7 +44,8 @@ public class User {
 		email = null;
 		password = null;
 		phoneNumber = null;
-		
+		courses = new ArrayList<>();
+		mentoringPrograms = new ArrayList<>();
 	}
 	
 	/**
@@ -55,15 +56,18 @@ public class User {
 	 * @param email
 	 * @param password
 	 * @param phoneNumber
+	 * @param courses
+	 * @param mentoringPrograms
 	 */
-	public User(int id, String firstName, String lastName, String email, String password, String phoneNumber,
-		 List<Course> courses,List<MentoringProgram> mentoringPrograms) {
+	public User(int id, String firstName, String lastName, String email, String password, String phoneNumber, List<Course> courses,List<MentoringProgram> mentoringPrograms) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.phoneNumber = phoneNumber;
+		this.courses = courses;
+		this.mentoringPrograms = mentoringPrograms;
 		this.courses = courses;
 		this.mentoringPrograms = mentoringPrograms;
 	}
@@ -124,7 +128,9 @@ public class User {
 	           && Objects.equals(this.lastName, otherUser.lastName) 
 	           && Objects.equals(this.email, otherUser.email) 
 	           && Objects.equals(this.password, otherUser.password) 
-	           && Objects.equals(this.phoneNumber, otherUser.phoneNumber);
+	           && Objects.equals(this.phoneNumber, otherUser.phoneNumber)
+	           && Objects.equals(this.courses, otherUser.courses)
+	           && Objects.equals(this.mentoringPrograms, otherUser.mentoringPrograms);
 	}
 	/**
 	 * @deprecated

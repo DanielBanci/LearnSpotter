@@ -31,6 +31,7 @@ import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import java.awt.BorderLayout;
 import javax.swing.JTextArea;
@@ -241,10 +242,40 @@ public class NewMentoringProgram extends JPanel {
 				int mentorId = Integer.parseInt(prefs.get("id", "-1"));
 				
 				String title = tFTitle.getText();//a title, not empty
+				if(title.isBlank()) {
+					JOptionPane.showMessageDialog(null, "A non-blank title is required.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				String field = tFField.getText();//one or more fields
-				int duration = Integer.valueOf(tFLessonDuration.getText());//integer
-				int price = Integer.valueOf(tFCoursePrice.getText());//integer?
+				if(field.isBlank()) {
+					JOptionPane.showMessageDialog(null, "At least one field is required.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(tFLessonDuration.getText().isBlank()) {
+					JOptionPane.showMessageDialog(null, "Setting a duration is required.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				try {
+					int duration = Integer.valueOf(tFLessonDuration.getText());//integer
+				} catch(NumberFormatException _) {
+					JOptionPane.showMessageDialog(null, tFLessonDuration.getText() + " is not a integer.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(tFCoursePrice.getText().isBlank()) {
+					JOptionPane.showMessageDialog(null, "Setting a price is required.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				try {
+					int price = Integer.valueOf(tFCoursePrice.getText());//integer?
+			} catch(NumberFormatException _) {
+				JOptionPane.showMessageDialog(null, tFCoursePrice.getText() + " is not a integer.", "Error", JOptionPane.ERROR_MESSAGE); //My class says double but if you say so, I'm ready to oblige
+				return;
+			}
 				String description = tADescription.getText();//not empty
+				if(description.isBlank()) {
+					JOptionPane.showMessageDialog(null, "A non-blank description is required.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				String difficulty = cBDifficulty.getSelectedItem().toString();//no check necessary
 				String currency = comboBoxCurrency.getSelectedItem().toString();//no check necessary
 				String location = comboBoxLocation.getSelectedItem().toString();//no check necessary
