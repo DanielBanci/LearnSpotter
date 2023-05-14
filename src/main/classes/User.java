@@ -1,5 +1,7 @@
 package main.classes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -14,7 +16,24 @@ public class User {
 	private String email;
 	private String password;
 	private String phoneNumber;
+	private List<Course> courses;									//payed or owned courses
+	private List<MentoringProgram> mentoringPrograms;				//joined or owned mentoring programs
 	
+	public List<MentoringProgram> getMentoringPrograms() {
+		return mentoringPrograms;
+	}
+
+	public void setMentoringPrograms(List<MentoringProgram> mentoringPrograms) {
+		this.mentoringPrograms = mentoringPrograms;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
 	/**
 	 * Creates a new instance of the User class with default values.
 	 */
@@ -25,6 +44,7 @@ public class User {
 		email = null;
 		password = null;
 		phoneNumber = null;
+		
 	}
 	
 	/**
@@ -36,13 +56,16 @@ public class User {
 	 * @param password
 	 * @param phoneNumber
 	 */
-	public User(int id, String firstName, String lastName, String email, String password, String phoneNumber) {
+	public User(int id, String firstName, String lastName, String email, String password, String phoneNumber,
+		 List<Course> courses,List<MentoringProgram> mentoringPrograms) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.phoneNumber = phoneNumber;
+		this.courses = courses;
+		this.mentoringPrograms = mentoringPrograms;
 	}
 	
 	public int getId() {
@@ -103,4 +126,23 @@ public class User {
 	           && Objects.equals(this.password, otherUser.password) 
 	           && Objects.equals(this.phoneNumber, otherUser.phoneNumber);
 	}
+	/**
+	 * @deprecated
+	 * @return
+	 */
+	public static User createMockup() {
+	    // Create courses mockup
+	    List<Course> courses = new ArrayList<>();
+	    courses.add(Course.createMockup());
+
+	    // Create mentoring programs mockup
+	    List<MentoringProgram> mentoringPrograms = new ArrayList<>();
+	    mentoringPrograms.add(MentoringProgram.createMockup());
+
+	    // Create user mockup
+	    User mockup = new User(0, "John", "Doe", "johndoe@example.com", "password", "555-12345", courses, mentoringPrograms);
+
+	    return mockup;
+	}
+
 }

@@ -32,7 +32,7 @@ public class MenuBar extends JMenuBar {
 		//create the panels with the required data 							TODO
 		aboutPanel = new AboutPanel(mentoringProgram);
 		reviewsPanel = new ReviewsPanel(mentoringProgram);
-		coursesPanel = new CoursesPanel(mentoringProgram);
+		coursesPanel = new CoursesPanel(mentoringProgram,mentorProgramDetails);
 		schedulePanel = new SchedulePanelMentoringPrograms(mentoringProgram);
 	}
 

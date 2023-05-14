@@ -78,7 +78,7 @@ public class Feedback {
 	 * @return an instance representing a mockup of the class for debugging purposes
 	 */
 	static public Feedback createMockup() {
-		Feedback mockup = new Feedback(0, new User(0, "Ana", "Popescu", "ana.popescu@gmail.com", "password123", "0712345678"), 
+		Feedback mockup = new Feedback(0, User.createMockup(), 
 				"A really nice and easy to understand course! The course was well-organized and easy to navigate, "
 				+ "and the content was presented in a clear and concise manner.Thank you for your hard work and dedication to your"
 				+ " students' learning.", 4, new Date());

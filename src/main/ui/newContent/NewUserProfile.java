@@ -2,6 +2,9 @@ package main.ui.newContent;
 
 import javax.swing.JPanel;
 
+import main.classes.Course;
+import main.classes.MentoringProgram;
+import main.classes.User;
 import main.ui.customComponents.ImagePanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
@@ -29,6 +32,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
@@ -45,14 +50,17 @@ public class NewUserProfile extends JPanel {
 	private JTextField tFFirstName;
 	private JTextField tFLastName;
 	private JTextField tFEmail;
-	private JPasswordField passwordField;
+	private JPasswordField passwordField;						
 	private JPasswordField passwordField_1;
 	private JCheckBox checkBShowPassword;
-	private JButton btnRegister;
+	private JButton btnRegister;									
+	private JTextField tFPhoneNumber;
 	
 	public NewUserProfile(Boolean TODO) {
 		this();
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(220,200)));
+		
+		
 	}
 	/**
 	 * Create the panel.
@@ -142,6 +150,25 @@ public class NewUserProfile extends JPanel {
 		panel_4.add(panel_7);
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
+		JPanel panel_9 = new JPanel();
+		panel_9.setPreferredSize(new Dimension(12, 10));
+		panel_9.setMinimumSize(new Dimension(12, 10));
+		panel_9.setOpaque(false);
+		panel_4.add(panel_9);
+		
+		JPanel panel_91 = new JPanel();
+		panel_91.setOpaque(false);
+		panel_4.add(panel_91);
+		panel_91.setLayout(new BorderLayout(0, 0));
+		
+		tFPhoneNumber = new JTextField();
+		tFPhoneNumber.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tFPhoneNumber.setUI(new HintTextFieldUI("Your phone number...", true, Color.GRAY));
+		tFPhoneNumber.setOpaque(false);
+		tFPhoneNumber.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		panel_91.add(tFPhoneNumber, BorderLayout.CENTER);
+		tFPhoneNumber.setColumns(10);
+		
 		tFLastName = new JTextField();
 		tFLastName.setUI(new HintTextFieldUI("Your last name...", true, Color.GRAY));
 		tFLastName.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -198,12 +225,10 @@ public class NewUserProfile extends JPanel {
 		
 		JPanel panel_18 = new JPanel();
 		panel_18.setOpaque(false);
-		panel_18.setPreferredSize(new Dimension(12, 10));
 		panel_4.add(panel_18);
 		panel_18.setLayout(new BorderLayout(0, 0));
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setMaximumSize(new Dimension(2147483647, 30));
 		passwordField_1.setUI(new main.ui.customUI.HintPasswordFieldUI("Verify your password",false,Color.GRAY));
 		passwordField_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		passwordField_1.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
@@ -219,6 +244,8 @@ public class NewUserProfile extends JPanel {
 		checkBShowPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		checkBShowPassword.setOpaque(false);
 		panel_19.add(checkBShowPassword, BorderLayout.WEST);
+		
+		
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setOpaque(false);
@@ -243,7 +270,18 @@ public class NewUserProfile extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int id = 1;//getLastUserId() + 1;
+				String firstName = tFFirstName.getText();
+				String lastName = tFLastName.getText();
+				String phoneNumber = tFPhoneNumber.getText();								//verify to be write corectly
+				String email = tFEmail.getText();											//verify email to be write correctly
+				String password = passwordField.getPassword().toString();					//verify if passwords match and make a chanck to be strong
+				String passwordVerify = passwordField_1.getPassword().toString();
 				
+				List<Course> courses = new ArrayList<>();						//no buyed courses when account just created
+				List<MentoringProgram> mentoringPrograms = new ArrayList<>();	//no mentoring program joined when account just created
+				
+				User user = new User(id,firstName,lastName,email, password,phoneNumber,courses,mentoringPrograms);	//store user
 			}
 			
 		};
