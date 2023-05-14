@@ -115,7 +115,7 @@ public class PaymentPanel extends JPanel {
 								popupMenu.setBorder(new EmptyBorder(0,0,0,0));
 								
 								JLabel mes = new JLabel("Card added successfully!");
-								mes.setForeground(Color.green);
+								mes.setForeground(new Color(44, 122, 20));
 								mes.setFont(new Font("Tahoma", Font.PLAIN, 16));
 						        popupMenu.add(mes);
 						        

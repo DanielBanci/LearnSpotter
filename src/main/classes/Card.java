@@ -129,5 +129,21 @@ public class Card {
     public void setExpirationYear(String expirationYear) {
         this.expirationYear = expirationYear;
     }
+    /**
+     * @deprecated
+     * @return
+     */
+    public static Card createMockup() {
+        String cardNumber = "1234567890123456";
+        String cvvCvc = "123";
+        String cardHolderName = "John Doe";
+        String expirationMonth = "12";
+        String expirationYear = "2025";
+
+        Card mockup = new Card(cardNumber, cvvCvc, cardHolderName, expirationMonth, expirationYear);
+
+        return mockup;
+    }
+
 }
 
