@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import main.classes.MentoringProgram;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customComponents.TextAreaWithPreview;
 import javax.swing.BoxLayout;
@@ -19,7 +20,7 @@ public class AboutPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public AboutPanel(Boolean t) {
+	public AboutPanel(MentoringProgram mentoringProgram) {
 		setOpaque(false);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		panelTextArea = new RoundPanel();
@@ -29,6 +30,7 @@ public class AboutPanel extends JPanel {
 		
 		tADescription = new TextAreaWithPreview();
 		panelTextArea.add(tADescription, BorderLayout.CENTER);
+		tADescription.setTextBody(mentoringProgram.getDescription());
 		
 		add(panelTextArea);
 	}

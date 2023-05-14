@@ -2,6 +2,9 @@ package main.ui.newContent;
 
 import javax.swing.JPanel;
 
+import main.classes.Feedback;
+import main.classes.Mentor;
+import main.classes.MentoringProgram;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customUI.HintTextAreaUI;
@@ -15,6 +18,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -32,10 +38,16 @@ public class NewMentoringProgram extends JPanel {
 	private JButton btnPost;
 	private JTextArea tADescription;
 	private JComboBox<String> cBDifficulty;
-	private JComboBox<String> comboBox;
-	private JPanel coursesPanel;
-	private JPanel scheduleChooserPanel;
+	private JComboBox<String> comboBoxCurrency;
+	private FileUploadPanel coursesPanel;
+	private ScheduleChooserPanel scheduleChooserPanel;
+	private JComboBox<String> comboBoxLocation;
+	private Mentor mentor;
 
+	public NewMentoringProgram(Mentor mentor) {
+		this();
+		this.mentor = mentor;
+	}
 	/**
 	 * Create the panel.
 	 */
@@ -84,6 +96,24 @@ public class NewMentoringProgram extends JPanel {
 		
 		JPanel panel_3 = new JPanel();
 		panel_8.add(panel_3);
+		
+		JPanel panel_11 = new JPanel();
+		FlowLayout flowLayout_6 = (FlowLayout) panel_11.getLayout();
+		flowLayout_6.setAlignment(FlowLayout.LEFT);
+		panel_11.setOpaque(false);
+		panel_8.add(panel_11);
+		
+		JLabel lblNewLabel_3 = new JLabel("Location: ");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_11.add(lblNewLabel_3);
+		
+		comboBoxLocation = new JComboBox<>();
+		comboBoxLocation.setFocusable(false);
+		comboBoxLocation.addItem("Online");
+		comboBoxLocation.addItem("Hybrid");
+		comboBoxLocation.addItem("Onsite");
+		panel_11.add(comboBoxLocation);
+		
 		panel_3.setOpaque(false);
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
@@ -103,6 +133,8 @@ public class NewMentoringProgram extends JPanel {
 		panel_8.add(panel_9);
 		panel_9.setOpaque(false);
 		panel_9.setLayout(new BoxLayout(panel_9, BoxLayout.Y_AXIS));
+		
+		
 		
 		JPanel panel = new JPanel();
 		panel_9.add(panel);
@@ -145,12 +177,12 @@ public class NewMentoringProgram extends JPanel {
 		panel_5.add(tFCoursePrice);
 		tFCoursePrice.setColumns(10);
 		
-		comboBox = new JComboBox<>();
-		comboBox.addItem("RON");
-		comboBox.addItem("EURO");
-		comboBox.addItem("USD");
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_5.add(comboBox);
+		comboBoxCurrency = new JComboBox<>();
+		comboBoxCurrency.addItem("RON");
+		comboBoxCurrency.addItem("EURO");
+		comboBoxCurrency.addItem("USD");
+		comboBoxCurrency.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_5.add(comboBoxCurrency);
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new EmptyBorder(0, 5, 0, 0));
@@ -172,6 +204,8 @@ public class NewMentoringProgram extends JPanel {
 		panel_8.add(scheduleChooserPanel);
 		scheduleChooserPanel.setOpaque(false);
 		
+		
+		
 		JPanel panel_7 = new JPanel();
 		panel_7.setOpaque(false);
 		panel_8.add(panel_7);
@@ -192,6 +226,35 @@ public class NewMentoringProgram extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {					//TODO post new mentoring program
 				
+				//TODO check the input
+				
+				int id = 1;//getLastCourseId() + 1;
+				int mentorId = 1;//getMentorId() + 1;
+				String title = tFTitle.getText();//a title, not empty
+				String field = tFField.getText();//one or more fields
+				int duration = Integer.valueOf(tFLessonDuration.getText());//integer
+				int price = Integer.valueOf(tFCoursePrice.getText());//integer?
+				String description = tADescription.getText();//not empty
+				String difficulty = cBDifficulty.getSelectedItem().toString();//no check necessary
+				String currency = comboBoxCurrency.getSelectedItem().toString();//no check necessary
+				String location = comboBoxLocation.getSelectedItem().toString();//no check necessary
+				Map<String,byte[]> uploadedFiles = coursesPanel.uploadedFiles; //no check necessary
+				List<ScheduleData> scheduledData = new ArrayList<>();
+				
+				//get schedule details
+				for(Object i : scheduleChooserPanel.scheduledData.keySet()) {
+					scheduledData.add(scheduleChooserPanel.scheduledData.get(i));
+				}
+				
+				List<Feedback> feedbacks = new ArrayList<>();//empty when the account just created
+				int rating = 0;
+				int noViews = 0;
+				
+				Mentor programMentor = mentor;
+				
+				MentoringProgram mentoringProgram = new MentoringProgram(id,mentorId,title,difficulty,description,location,scheduledData,
+														duration,price,currency,mentor,rating,noViews,field,feedbacks,uploadedFiles);
+				//TODO upload data to database and display new mentoring program
 			}
 			
 		};

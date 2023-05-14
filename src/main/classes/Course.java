@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A class that holds the data related to the course.
@@ -15,6 +17,7 @@ public class Course {
 	private String name;
 	private int idMentor;
 	private int idMentoringProgram;
+	private Map<String,byte[]> pdfFiles;
 	private String url;
 	private String description;
 	private int rating;
@@ -64,7 +67,7 @@ public class Course {
 	 * @param feedback
 	 */
 	public Course(int id, String name, int idMentor, int idMentoringProgram, String url, String description, int rating, int noViews,
-			double price, java.sql.Date lastUpdate, Collection<Feedback> feedback,Mentor owner) {
+			double price, java.sql.Date lastUpdate, Collection<Feedback> feedback,Mentor owner,Map<String,byte[]> pdfFiles) {
 		this.id = id;
 		this.name = name;
 		this.idMentor = idMentor;
@@ -77,6 +80,7 @@ public class Course {
 		this.lastUpdate = lastUpdate;
 		this.feedback = feedback;
 		this.owner = owner;
+		this.pdfFiles = pdfFiles;
 	}
 	
 	public int getId() {
@@ -172,7 +176,7 @@ public class Course {
 		}
 		java.sql.Date sqlDate = new java.sql.Date(parsed.getTime());
 		Course mockup = new Course(0, "Software Engineering", 0, 0, "", "ceva descriere cum o fi sa fie doar sa fie sa vedem "
-				+ "cum e ca de ce nu dor asa", 4, 0, 299.0d, sqlDate, new ArrayList<Feedback>(),new Mentor());
+				+ "cum e ca de ce nu dor asa", 4, 0, 299.0d, sqlDate, new ArrayList<Feedback>(),new Mentor(),new HashMap<>());
 		return mockup;
 	}
 }

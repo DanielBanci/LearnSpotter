@@ -52,12 +52,14 @@ public class MentoringProgramPost extends RoundPanel {
 	protected JPanel panelAboutLbl;
 	private JLabel lblDifficulty;
 	private RoundButton btnDetails;
+	private MentoringProgram mentoringProgram;
 	
 	//aux
 	private JPanel panel_4;
 	
 	public MentoringProgramPost(MentoringProgram mentoringProgram,Boolean shortContent) {
 		this();
+		this.mentoringProgram = mentoringProgram;
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
 		panelAboutLbl = new JPanel();
 		panelAboutLbl.setBorder(new EmptyBorder(0, 5, 0, 0));
@@ -121,7 +123,7 @@ public class MentoringProgramPost extends RoundPanel {
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.Y_AXIS));
-				MainPanel.getInstance().getContent().add(new MentoringProgramDetails(false,false));
+				MainPanel.getInstance().getContent().add(new MentoringProgramDetails(mentoringProgram,false));
 				MainPanel.getInstance().getContent().revalidate();
 			}
 			

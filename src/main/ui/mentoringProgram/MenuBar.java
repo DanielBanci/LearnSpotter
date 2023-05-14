@@ -9,6 +9,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import main.classes.MentoringProgram;
+
 
 public class MenuBar extends JMenuBar {
 
@@ -23,15 +25,15 @@ public class MenuBar extends JMenuBar {
 	private CoursesPanel coursesPanel;
 	private SchedulePanelMentoringPrograms schedulePanel;
 
-	public MenuBar(MentoringProgramDetails m) {
+	public MenuBar(MentoringProgramDetails m,MentoringProgram mentoringProgram) {
 		this();
 		mentorProgramDetails = m;
 
 		//create the panels with the required data 							TODO
-		aboutPanel = new AboutPanel(true);
-		reviewsPanel = new ReviewsPanel();
-		coursesPanel = new CoursesPanel();
-		schedulePanel = new SchedulePanelMentoringPrograms();
+		aboutPanel = new AboutPanel(mentoringProgram);
+		reviewsPanel = new ReviewsPanel(mentoringProgram);
+		coursesPanel = new CoursesPanel(mentoringProgram);
+		schedulePanel = new SchedulePanelMentoringPrograms(mentoringProgram);
 	}
 
 	public MenuBar() {

@@ -26,7 +26,8 @@ public class MenuBar extends JMenuBar {
 	public MenuBar(MentorProfile m,Mentor mentor) {
 		this();
 		mentorProfilePanel = m;
-		mentor = Mentor.createMockup();
+		if(mentor == null)System.out.println("DA");
+		//mentor = Mentor.createMockup();
 		//create the panels with the required data 							TODO
 		aboutPanel = new AboutPanel(mentor);
 		reviewsPanel = new ReviewsPanel(mentor);
@@ -34,7 +35,7 @@ public class MenuBar extends JMenuBar {
 		programsPanel = new ProgramsPanel(mentor);
 	}
 	
-	private MenuBar() {
+	public MenuBar() {
 		super();
 		
 		menuItemAbout = new JMenuItem("About");

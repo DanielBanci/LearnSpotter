@@ -3,6 +3,11 @@ package main.classes;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import main.ui.newContent.ScheduleData;
 
 /**
  * A class that holds the data related to the mentoring program.
@@ -16,14 +21,49 @@ public class MentoringProgram {
 	private String difficultyLevel;
 	private String description;
 	private String location;
-	private Collection<java.sql.Timestamp> schedule;
+	private List<ScheduleData> schedule;
 	private int duration; //in weeks
 	private int price;
 	private Mentor mentor;
 	private int rating;
 	private int noViews;
 	private String field;
+	private List<Feedback> feedbacks;
+	private Map<String,byte[]> files;
+	private String currency;
 	
+	public Map<String, byte[]> getFiles() {
+		return files;
+	}
+
+	public void setFiles(Map<String, byte[]> files) {
+		this.files = files;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
+	public Map<String,byte[]> getCourses() {
+		return files;
+	}
+
+	public void setCourses(Map<String,byte[]> files) {
+		this.files = files;
+	}
+
+	public List<Feedback> getFeedbacks() {
+		return feedbacks;
+	}
+
+	public void setFeedbacks(List<Feedback> feedbacks) {
+		this.feedbacks = feedbacks;
+	}
+
 	public String getField() {
 		return field;
 	}
@@ -66,7 +106,7 @@ public class MentoringProgram {
 		difficultyLevel = null;
 		description = null;
 		location = null;
-		schedule = new ArrayList<java.sql.Timestamp>();
+		schedule = new ArrayList<>();
 		duration = 0;
 		price = 0;
 	}
@@ -84,7 +124,8 @@ public class MentoringProgram {
 	 * @param price
 	 */
 	public MentoringProgram(int id, int idMentor, String name, String difficultyLevel, String description, String location,
-			Collection<java.sql.Timestamp> schedule, int duration, int price,Mentor mentor,int rating,int noViews,String field) {
+			List<ScheduleData> schedule, int duration, int price,String currency,Mentor mentor,int rating,int noViews,String field,
+			List<Feedback> feedbacks,Map<String,byte[]> files) {
 		this.id = id;
 		this.idMentor = idMentor;
 		this.name = name;
@@ -94,10 +135,13 @@ public class MentoringProgram {
 		this.schedule = schedule;
 		this.duration = duration;
 		this.price = price;
+		this.currency = currency;
 		this.mentor = mentor;
 		this.rating = rating;
 		this.noViews = noViews;
 		this.field = field;
+		this.feedbacks = feedbacks;
+		this.files = files;
 	}
 	
 	public int getId() {
@@ -142,10 +186,10 @@ public class MentoringProgram {
 		this.location = location;
 	}
 	
-	public Collection<java.sql.Timestamp> getSchedule() {
+	public List<ScheduleData> getSchedule() {
 		return schedule;
 	}
-	public void setSchedule(Collection<java.sql.Timestamp> schedule) {
+	public void setSchedule(List<ScheduleData> schedule) {
 		this.schedule = schedule;
 	}
 	
@@ -170,8 +214,8 @@ public class MentoringProgram {
         Mentor mentor = Mentor.createMockup();
 
         MentoringProgram mockup = new MentoringProgram(0, 0, "Sample Program", "Intermediate",
-                "Sample program description", "Sample location", new ArrayList<>(), 12, 100,
-                mentor, 4, 100, "Sample Field");
+                "Sample program description", "Sample location", new ArrayList<>(), 12, 100,"RON",
+                mentor, 4, 100, "Sample Field", new ArrayList<>(),new HashMap<>());
         return mockup;
     }
 }

@@ -180,7 +180,8 @@ public class NewCoursePost extends JPanel {
 						try {
 							price = Integer.parseInt(tFPrice.getText());
 						} catch(Exception exc) {
-							System.out.println("The price has to be a number");
+							JOptionPane.showMessageDialog(null,"The price has to be a number.",
+									"Eroare",JOptionPane.ERROR_MESSAGE);
 						}
 					}
 						

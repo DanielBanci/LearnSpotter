@@ -53,6 +53,7 @@ public class NewMentorProfile extends JPanel {
 	private Card card;
 	private JButton btnRegister;
 	private JTextArea tAStudyFields;
+	private JTextField tFLocation;
 	
 	public NewMentorProfile(Boolean TODO) {
 		this();
@@ -182,6 +183,24 @@ public class NewMentorProfile extends JPanel {
 		panel_4.add(panel_9);
 		panel_9.setLayout(new BorderLayout(0, 0));
 		
+		JPanel panel_22 = new JPanel();
+		panel_22.setOpaque(false);
+		panel_4.add(panel_22);
+		panel_22.setLayout(new BorderLayout(0, 0));
+		
+		tFLocation = new JTextField();
+		tFLocation.setUI(new HintTextFieldUI("Your location...", true, Color.GRAY));
+		tFLocation.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		tFLocation.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tFLocation.setOpaque(false);
+		panel_22.add(tFLocation, BorderLayout.NORTH);
+		tFLocation.setColumns(10);
+		JPanel panel_23 = new JPanel();
+		panel_23.setOpaque(false);
+		panel_23.setPreferredSize(new Dimension(12, 10));
+		panel_4.add(panel_23);
+		panel_23.setLayout(new BorderLayout(0, 0));
+		
 		JPanel panel_14 = new JPanel();
 		panel_14.setMaximumSize(new Dimension(32767, 30));
 		panel_14.setOpaque(false);
@@ -224,12 +243,10 @@ public class NewMentorProfile extends JPanel {
 		
 		JPanel panel_18 = new JPanel();
 		panel_18.setOpaque(false);
-		panel_18.setPreferredSize(new Dimension(12, 10));
 		panel_4.add(panel_18);
 		panel_18.setLayout(new BorderLayout(0, 0));
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setMaximumSize(new Dimension(2147483647, 30));
 		passwordField_1.setUI(new main.ui.customUI.HintPasswordFieldUI("Verify your password",false,Color.GRAY));
 		passwordField_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		passwordField_1.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));

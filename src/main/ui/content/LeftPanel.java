@@ -93,6 +93,7 @@ public class LeftPanel extends JPanel {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().add(new NewMentoringProgram());
 				MainPanel.getInstance().getContent().validate();
+				MainPanel.getInstance().getContent().revalidate();
 			}
 			
 		};

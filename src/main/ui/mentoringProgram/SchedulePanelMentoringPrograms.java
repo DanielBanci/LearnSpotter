@@ -1,5 +1,6 @@
 package main.ui.mentoringProgram;
 
+import main.classes.MentoringProgram;
 import main.ui.calendar.*;
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -9,6 +10,11 @@ import java.awt.BorderLayout;
 
 public class SchedulePanelMentoringPrograms extends JPanel {
 	private SchedulePanel calendarPanel;
+	
+	public SchedulePanelMentoringPrograms(MentoringProgram mentoringProgram) {
+		this();
+		//mentoringProgram.getSchedule()
+	}
 	/**
 	 * Create the panel.
 	 */

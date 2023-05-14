@@ -10,9 +10,14 @@ import main.ui.customComponents.RoundButton;
 import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -161,17 +166,56 @@ public class ScheduleChooserPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {					//TODO check the input the dates must be in the future
-				if(!areDisplayedScheduledDates) {							//the dates and time must be different for each schedule,
-					lblSchedules.setVisible(true);							//for the onces in the same day need to be checked with the lesson duration
-					areDisplayedScheduledDates = true;
-				}
+				//the dates and time must be different for each schedule,
+				//for the onces in the same day need to be checked with the lesson duration
+					
 				ScheduleData data = new ScheduleData();
 				data.startDate = dateTimeChooser.getDatePicker().getDate();
 				data.startTime = dateTimeChooser.getTimePicker().getTime();
 				data.repeat = checkBRepet.isSelected();
+				
+				// Check if the start date and time are not null
+			    if (data.startDate == null || data.startTime == null) {
+			        JOptionPane.showMessageDialog(null, "Please select a valid start date and time.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+			        return;
+			    }
+				
+				// Check if the start date is at least a day apart from the current date
+			    LocalDate currentDate = LocalDate.now();
+			    LocalDate selectedDate = data.startDate;
+			    if (selectedDate.isBefore(currentDate.plusDays(1))) {
+			        JOptionPane.showMessageDialog(null, "Start date must be at least a day apart from the current date.", "Invalid Date", JOptionPane.ERROR_MESSAGE);
+			        return;
+			    }
+			    
+			    // Check if the until date is at least a day apart from the start date
+			    LocalDate untilDate = untilDateChooser.getDate();
+			    if (untilDate != null && untilDate.isBefore(selectedDate.plusDays(1))) {
+			        JOptionPane.showMessageDialog(null, "Until date must be at least a day apart from the start date.", "Invalid Date", JOptionPane.ERROR_MESSAGE);
+			        return;
+			    }
+
+			    // Check if the start time overlaps with another scheduled time
+			    LocalTime selectedTime = data.startTime;
+			    boolean isTimeOverlap = scheduledData.values().stream()
+			            .anyMatch(schedule -> {
+			                LocalDateTime scheduledDateTime = LocalDateTime.of(schedule.startDate, schedule.startTime);
+			                LocalDateTime selectedDateTime = LocalDateTime.of(selectedDate, selectedTime);
+			                return selectedDateTime.equals(scheduledDateTime);
+			            });
+			    if (isTimeOverlap) {
+			        JOptionPane.showMessageDialog(null, "The selected time is already scheduled. Please choose a different time.", "Time Conflict", JOptionPane.ERROR_MESSAGE);
+			        return;
+			    }
+				
 				String scheduledDate = dateTimeChooser.getDatePicker().getDateStringOrEmptyString() + " from " +
 						dateTimeChooser.getTimePicker().getTimeStringOrEmptyString();
 				if(checkBRepet.isSelected()) {
+					// Check if the other fields for repetition are not null
+			        if (comboBRepetAt.getSelectedItem() == null || untilDate == null) {
+			            JOptionPane.showMessageDialog(null, "Please select valid options for until date.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+			            return;
+			        }
 					scheduledDate += ", repeat " + comboBRepetAt.getSelectedItem() + " until " +
 							untilDateChooser.getDateStringOrEmptyString();
 					data.atEvery = comboBRepetAt.getSelectedItem().toString();
@@ -180,6 +224,12 @@ public class ScheduleChooserPanel extends JPanel {
 					untilDateChooser.setDate(null);
 					comboBRepetAt.setSelectedItem(comboBRepetAt.getItemAt(0));
 				}
+				
+				if(!areDisplayedScheduledDates) {							
+					lblSchedules.setVisible(true);							
+					areDisplayedScheduledDates = true;
+				}
+				
 				data.parent = new NewScheduleDatePanel(scheduledDate, t);
 				schedulesPanel.add(data.parent);
 				

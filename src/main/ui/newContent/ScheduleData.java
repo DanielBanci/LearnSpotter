@@ -11,7 +11,7 @@ package main.ui.newContent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-class ScheduleData{
+public class ScheduleData{
 	public LocalDate startDate;
 	public LocalTime startTime;
 	public LocalDate untilDate;

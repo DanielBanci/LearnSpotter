@@ -21,8 +21,8 @@ public class MentoringProgramDetails extends MentoringProgramPost {
 	public JPanel getContentPanel() {
 		return contentPanel;
 	}
-	public MentoringProgramDetails(Boolean TODO,Boolean shortPanel) {
-		super(MentoringProgram.createMockup(),shortPanel);
+	public MentoringProgramDetails(MentoringProgram mentoringProgram,Boolean shortPanel) {
+		super(mentoringProgram,shortPanel);
 		
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(32767, 50));
@@ -31,7 +31,7 @@ public class MentoringProgramDetails extends MentoringProgramPost {
 		add(panel);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JMenuBar menuBar = new MenuBar(this,MentoringProgram.createMockup());
+		JMenuBar menuBar = new MenuBar(this,mentoringProgram);
 		panel.add(menuBar);
 		
 		contentPanel = new JPanel();
@@ -53,7 +53,7 @@ public class MentoringProgramDetails extends MentoringProgramPost {
 		add(panel);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JMenuBar menuBar = new MenuBar(this);
+		JMenuBar menuBar = new MenuBar(this,null);
 		panel.add(menuBar);
 		
 		contentPanel = new JPanel();

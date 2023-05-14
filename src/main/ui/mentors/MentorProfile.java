@@ -44,7 +44,7 @@ public class MentorProfile extends RoundPanel {
 	private JLabel lblPrice;
 	
 	public MentorProfile(Boolean TODO,Mentor mentor) {
-		this();
+		this(mentor);
 		displayIcons();
 		
 		//display data
@@ -55,11 +55,11 @@ public class MentorProfile extends RoundPanel {
 		lblPrice.setText("");
 		
 		//menu bar
-		Container parent = menuBar.getParent();
+		/*Container parent = menuBar.getParent();
 		int index = findComponentIndex(parent, menuBar);
 		parent.remove(menuBar);
 		menuBar = new MenuBar(this,mentor);
-		parent.add(menuBar,index);
+		parent.add(menuBar,index);*/
 		
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(250,250)));
 		
@@ -130,7 +130,7 @@ public class MentorProfile extends RoundPanel {
 	/**
 	 * Create the panel.
 	 */
-	public MentorProfile() {
+	public MentorProfile(Mentor mentor) {
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
@@ -305,7 +305,7 @@ public class MentorProfile extends RoundPanel {
 		panel_1.setOpaque(false);
 		add(panel_1);
 		
-		menuBar = new MenuBar(this,null);
+		menuBar = new MenuBar(this,mentor);//MenuBar(this,null);
 		panel_1.add(menuBar);
 		
 		contentPanel = new JPanel();
