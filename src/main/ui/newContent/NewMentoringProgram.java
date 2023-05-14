@@ -1,10 +1,12 @@
 package main.ui.newContent;
 
 import javax.swing.JPanel;
+import java.util.prefs.Preferences;
 
 import main.classes.Feedback;
 import main.classes.Mentor;
 import main.classes.MentoringProgram;
+import main.db.DbConnection;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customUI.HintTextAreaUI;
@@ -18,6 +20,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -229,7 +236,10 @@ public class NewMentoringProgram extends JPanel {
 				//TODO check the input
 				
 				int id = 1;//getLastCourseId() + 1;
-				int mentorId = 1;//getMentorId() + 1;
+				
+				Preferences prefs = Preferences.userNodeForPackage(main.ui.login.LoginData.class);
+				int mentorId = Integer.parseInt(prefs.get("id", "-1"));
+				
 				String title = tFTitle.getText();//a title, not empty
 				String field = tFField.getText();//one or more fields
 				int duration = Integer.valueOf(tFLessonDuration.getText());//integer
@@ -241,11 +251,14 @@ public class NewMentoringProgram extends JPanel {
 				Map<String,byte[]> uploadedFiles = coursesPanel.uploadedFiles; //no check necessary
 				List<ScheduleData> scheduledData = new ArrayList<>();
 				
+				System.out.println(mentorId);
+				
 				//get schedule details
 				for(Object i : scheduleChooserPanel.scheduledData.keySet()) {
+					//System.out.println(i);
 					scheduledData.add(scheduleChooserPanel.scheduledData.get(i));
 				}
-				
+						
 				List<Feedback> feedbacks = new ArrayList<>();//empty when the account just created
 				int rating = 0;
 				int noViews = 0;
@@ -254,7 +267,75 @@ public class NewMentoringProgram extends JPanel {
 				
 				MentoringProgram mentoringProgram = new MentoringProgram(id,mentorId,title,difficulty,description,location,scheduledData,
 														duration,price,currency,mentor,rating,noViews,field,feedbacks,uploadedFiles);
+				
 				//TODO upload data to database and display new mentoring program
+				DbConnection dbConnection = null;
+				try {
+					dbConnection = new DbConnection();	
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				Connection conn = dbConnection.getConnection();
+				
+				int insertedMentoringProgramId = -1;
+				
+				String sql = "INSERT INTO mentoring_programs(id_mentor, name, difficulty_level, description, location, duration, price, currency, field) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				PreparedStatement pstmt;
+				try {
+					pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	 	            pstmt.setInt(1, mentorId);
+	 	            pstmt.setString(2, title);
+					pstmt.setString(3, difficulty);
+					pstmt.setString(4, description);
+					pstmt.setString(5, location);
+					pstmt.setInt(6, duration);
+					pstmt.setInt(7, price);
+					pstmt.setString(8, currency);
+					pstmt.setString(9, field);
+					
+					pstmt.executeUpdate();
+					ResultSet rs = pstmt.getGeneratedKeys();
+					
+					if(rs.next())
+						insertedMentoringProgramId = rs.getInt(1);
+							
+					System.out.println("Mentoring program added successfully with id " + insertedMentoringProgramId);
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				
+
+				
+				for(ScheduleData sD : scheduledData) {
+					String startDateTime = sD.startDate + " " + sD.startTime;
+					boolean repeat = sD.repeat;
+					
+					String repeatRate = "", repeatUntil = "";
+					if(repeat) {
+						repeatRate = sD.atEvery;
+						repeatUntil = sD.untilDate.toString();
+					}
+					
+					sql = "INSERT INTO schedule(id_mentoring_program, start_datetime, repeat_bool, repeat_rate, repeat_until) VALUES(?, ?, ?, ?, ?)";
+					
+					try {
+						pstmt = conn.prepareStatement(sql);
+						pstmt.setInt(1, insertedMentoringProgramId);
+						pstmt.setString(2, startDateTime);
+						pstmt.setBoolean(3, repeat);
+						pstmt.setString(4, repeatRate);
+						pstmt.setString(5, repeatUntil);
+						
+						pstmt.executeUpdate();
+						
+						System.out.println("One schedule added in database");
+					} catch (SQLException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+				}
 			}
 			
 		};

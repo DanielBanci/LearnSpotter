@@ -1,6 +1,8 @@
 package main.ui.login;
 
 import javax.swing.JPanel;
+import java.util.prefs.Preferences;
+
 import javax.swing.BoxLayout;
 import javax.swing.border.EmptyBorder;
 
@@ -164,7 +166,7 @@ public class LoginData extends RoundPanel {
             @SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {                        //TO DO: check input and login the users
                 //complete code here
-            	/*try {
+            	try {
 					DbConnection dbConnection = new DbConnection();
 					Connection conn = dbConnection.getConnection();
 					
@@ -176,11 +178,14 @@ public class LoginData extends RoundPanel {
 		            statement.setString(2, passwordField.getText());
 		            
 					ResultSet resultSet = statement.executeQuery();
+					
+					Preferences prefs = Preferences.userNodeForPackage(LoginData.class);
 		            
 		            if (resultSet.next()) {
 		                System.out.println("Login success");
 		                
-		                emailIfLoginSucceded = tFEmail.getText();*/
+		                prefs.put("id", String.valueOf(resultSet.getInt("id")));
+		                emailIfLoginSucceded = tFEmail.getText();
 		                
 		                //Open the app for the user
 		            	App.getInstance().getFrame().getContentPane().removeAll();
@@ -189,14 +194,14 @@ public class LoginData extends RoundPanel {
 		            	//update the frame
 		            	App.getInstance().getFrame().invalidate();
 		            	App.getInstance().getFrame().revalidate();
-		           /* } else {
+		            } else {
 		                System.out.println("Login failed");
 		            }
 		            
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}*/
+				}
             }
         };
 
@@ -210,7 +215,7 @@ public class LoginData extends RoundPanel {
             	if (checkBox.isSelected()) {
                     passwordField.setEchoChar((char) 0); // Show password
                 } else {
-                    passwordField.setEchoChar('•'); // Hide password
+                    passwordField.setEchoChar('ï¿½'); // Hide password
                 }
             }
         };

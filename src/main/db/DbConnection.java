@@ -21,7 +21,7 @@ public class DbConnection {
 		try {
 	        Statement stmt = conn.createStatement();
 	        String users = "CREATE TABLE IF NOT EXISTS users " +
-	                       "(id INTEGER not NULL, " +
+	                       "(id INTEGER not NULL AUTO_INCREMENT, " +
 	                       " first_name VARCHAR(255), " +
 	                       " last_name VARCHAR(255), " +
 	                       " email VARCHAR(255), " +
@@ -31,33 +31,38 @@ public class DbConnection {
 	                       " PRIMARY KEY ( id ))";
 
 	        String feedback = "CREATE TABLE IF NOT EXISTS feedback " +
-                    		  "(id INTEGER not NULL, " +
+                    		  "(id INTEGER not NULL AUTO_INCREMENT, " +
 		                      " id_user INTEGER, " +
 		                      " text VARCHAR(255), " +
 		                      " rating INTEGER, " +
 		                      " PRIMARY KEY ( id ))";
 	        
 	        String mentors = "CREATE TABLE IF NOT EXISTS mentors " +
-          		  			 "(id INTEGER not NULL, " +
+          		  			 "(id INTEGER not NULL AUTO_INCREMENT, " +
           		  			 " id_user INTEGER, " +
           		  			 " description VARCHAR(255), " +
           		  			 " PRIMARY KEY ( id ))";
 	        
 	        String mentoringPrograms = "CREATE TABLE IF NOT EXISTS mentoring_programs " +
- 		  			 				   "(id INTEGER not NULL, " +
+ 		  			 				   "(id INTEGER not NULL AUTO_INCREMENT, " +
  		  			 				   " id_mentor INTEGER, " +
  		  			 				   " name VARCHAR(255), " +
  		  			 				   " difficulty_level VARCHAR(255)," +
  		  			 				   " description VARCHAR(255), " +
- 		  			 				   " location VARCHAR(255), " + 
- 		  			 				   " schedule_id INTEGER, " +
+ 		  			 				   " location VARCHAR(255), " +
+ 		  			 				   " duration VARCHAR(5), " +
+ 		  			 				   " price INTEGER, " +
+ 		  			 				   " currency VARCHAR(4), " +
+ 		  			 				   " field VARCHAR(50), " +
  		  			 				   " PRIMARY KEY ( id ))";
 	        
 	        String schedule = "CREATE TABLE IF NOT EXISTS schedule " +
- 		  			 		  "(id INTEGER not NULL, " +
+ 		  			 		  "(id INTEGER not NULL AUTO_INCREMENT, " +
  		  			 		  " id_mentoring_program INTEGER, " +
- 		  			 		  " date DATE, " +
- 		  			 		  " start_time TIME, " +
+ 		  			 		  " start_datetime VARCHAR(255), " +
+ 		  			 		  " repeat_bool BOOLEAN, " +
+ 		  			 		  " repeat_rate VARCHAR(50), " +
+ 		  			 		  " repeat_until VARCHAR(50), " +
  		  			 		  " PRIMARY KEY ( id ))";
 	        
 	        String courses = "CREATE TABLE IF NOT EXISTS courses " + 
@@ -82,7 +87,6 @@ public class DbConnection {
 	        stmt.executeUpdate(mentoringPrograms);
 	        stmt.executeUpdate(schedule);
 	        stmt.executeUpdate(courses);
-//	        System.
 	        stmt.executeUpdate(resources);
 	    }
 	    catch(Exception e) {
