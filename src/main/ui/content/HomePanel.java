@@ -9,6 +9,7 @@ import main.classes.Course;
 import main.classes.Mentor;
 import main.classes.MentoringProgram;
 import main.classes.User;
+import main.db.DbConnection;
 import main.ui.coursePosts.CoursePost;
 import main.ui.mentoringProgram.MentoringProgramPost;
 import main.ui.mentors.MentorPost;
@@ -20,6 +21,12 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.Component;
 
 public class HomePanel extends JPanel {
@@ -34,9 +41,54 @@ public class HomePanel extends JPanel {
 	
 	public HomePanel(Boolean TODO,Mentor mentor,User user) {
 		this();
-		for(int i = 0;i<5;i++) {
-			coursesP.add(new CoursePost(Course.createMockup(),user));
+		
+		DbConnection dbConnection = null;
+		try {
+			dbConnection = new DbConnection();	
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
+		Connection conn = dbConnection.getConnection();
+		
+		String sql = "SELECT * FROM courses";
+		Statement statement;
+		try {
+			statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			
+			while(rs.next())
+			{
+				String sql2 = "SELECT * FROM resources WHERE id_course=" + rs.getInt(1);
+				Statement statement2 = conn.createStatement();
+				ResultSet rs2 = statement2.executeQuery(sql2);
+				
+				Map<String, byte[]> files = new HashMap<>();
+				while(rs2.next())
+					files.put(rs.getString(3), rs.getBytes(4));
+				
+				String sql3 = "SELECT * FROM users WHERE id=" + rs.getInt(2);
+				Statement statement3 = conn.createStatement();
+				ResultSet rs3 = statement3.executeQuery(sql3);
+				
+				Mentor mentor1 = null;
+				if(rs3.next())
+				{
+					mentor1 = new Mentor(rs3.getInt(1), rs3.getString(2), rs3.getString(3), rs3.getString(4),
+							rs3.getString(5), rs3.getString(6), rs3.getString(7), rs3.getString(8), 
+							rs3.getInt(9), null, null, null, null, null);
+					
+					coursesP.add(new CoursePost(new Course(rs.getInt(1), rs.getString(4), 
+							rs.getInt(2), rs.getInt(3), rs.getString(5), 
+							0, 0, rs.getInt(6), null, null, 
+							mentor1, files),user));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		for(int i = 0;i<5;i++) {
 			mentorsP.add(new MentorPost(Mentor.createMockup()));
 		}
@@ -62,9 +114,54 @@ public class HomePanel extends JPanel {
 	
 	public HomePanel(Boolean TODO,Mentor mentor) {
 		this();
-		for(int i = 0;i<5;i++) {
-			coursesP.add(new CoursePost(Course.createMockup(),User.createMockup()));
+		DbConnection dbConnection = null;
+		try {
+			dbConnection = new DbConnection();	
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
+		Connection conn = dbConnection.getConnection();
+		
+		String sql = "SELECT * FROM courses";
+		Statement statement;
+		try {
+			statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			
+			while(rs.next())
+			{
+				String sql2 = "SELECT * FROM resources WHERE id_course=" + rs.getInt(1);
+				Statement statement2 = conn.createStatement();
+				ResultSet rs2 = statement2.executeQuery(sql2);
+				
+				Map<String, byte[]> files = new HashMap<>();
+				while(rs2.next())
+					files.put(rs.getString(3), rs.getBytes(4));
+				
+				String sql3 = "SELECT * FROM users WHERE id=" + rs.getInt(2);
+				Statement statement3 = conn.createStatement();
+				ResultSet rs3 = statement3.executeQuery(sql3);
+				
+				Mentor mentor1 = null;
+				
+				if(rs3.next())
+				{
+					mentor1 = new Mentor(rs3.getInt(1), rs3.getString(2), rs3.getString(3), rs3.getString(4),
+							rs3.getString(5), rs3.getString(6), rs3.getString(7), rs3.getString(8), 
+							rs3.getInt(9), null, null, null, null, null);
+							
+					System.out.println(mentor1.getFirstName());
+					
+					coursesP.add(new CoursePost(new Course(rs.getInt(1), rs.getString(4), rs.getInt(2), rs.getInt(3), rs.getString(5), 0, 0, rs.getInt(6), null, null, mentor1, files), mentor));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		for(int i = 0;i<5;i++) {
 			mentorsP.add(new MentorPost(Mentor.createMockup()));
 		}

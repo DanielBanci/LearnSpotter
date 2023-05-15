@@ -36,7 +36,7 @@ public class DbConnection {
 	       				   " expiration_month INTEGER, " +
 	                       " expiration_year INTEGER, " +
 	                       " id_rating INTEGER, " +
-	                       " profile_pic BLOB, " +
+	                       " profile_pic LONGBLOB, " +
 	                       " type VARCHAR(10), " +
 	                       " PRIMARY KEY ( id ))";
 
@@ -89,7 +89,7 @@ public class DbConnection {
 	        				   "(id_course INTEGER, " + 
 	        				   "id_mentoring_program INTEGER, " +
 	        				   "name VARCHAR(50), " + 
-	        				   "file BLOB)";
+	        				   "file LONGBLOB)";
 	        
 	        stmt.executeUpdate(users);
 	        stmt.executeUpdate(feedback);

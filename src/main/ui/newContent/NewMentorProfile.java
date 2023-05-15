@@ -338,7 +338,7 @@ public class NewMentorProfile extends JPanel {
 				String location = tFLocation.getText();
 				String phoneNumber = tFPhoneNumber.getText();								//verify to be write corectly
 				String email = tFEmail.getText();											//verify email to be write correctly
-				String password = passwordField.getPassword().toString();					//verify if passwords match and make a chanck to be strong
+				String password = passwordField.getText();					//verify if passwords match and make a chanck to be strong
 				String passwordVerify = passwordField_1.getPassword().toString();
 				
 				String description = ""; 										//no description when account just created
