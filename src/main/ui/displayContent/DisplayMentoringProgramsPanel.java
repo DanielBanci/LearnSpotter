@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import main.classes.MentoringProgram;
+import main.classes.User;
 import main.ui.content.MainPanel;
 import main.ui.layouts.WrapLayout;
 import main.ui.mentoringProgram.MentoringProgramPost;
@@ -22,7 +23,7 @@ public class DisplayMentoringProgramsPanel extends JPanel {
 		setMaximumSize(new Dimension(1300,900000));
 		if(mentoringPrograms.size() != 0) {
 			for(int i = 0;i < mentoringPrograms.size();i++) {
-			add(new MentoringProgramPost(mentoringPrograms.get(i),true));
+			add(new MentoringProgramPost(mentoringPrograms.get(i),true,User.createMockup()));
 		}
 		}else {
 			JLabel label = new JLabel("No courses to be displayed. Once you joined to a mentoring program it will be displyed here.");
@@ -53,7 +54,7 @@ public class DisplayMentoringProgramsPanel extends JPanel {
 		setLayout(new WrapLayout(FlowLayout.CENTER,10,40));
 		setMaximumSize(new Dimension(1300,900000));
 		for(int i = 0;i < 25;i++) {
-			add(new MentoringProgramPost(MentoringProgram.createMockup(),true));
+			add(new MentoringProgramPost(MentoringProgram.createMockup(),true,User.createMockup()));
 		}
 		
 		DisplayMentoringProgramsPanel f = this;

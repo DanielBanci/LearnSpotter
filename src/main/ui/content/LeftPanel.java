@@ -55,7 +55,7 @@ public class LeftPanel extends JPanel {
 		this(user);
 		this.user = user;
 		this.mentor = mentor;
-		mIHome.addActionListener(actionMIHome());
+		mIHome.addActionListener(actionMIHomeUser());
 		mISearchCourses.addActionListener(actionMISearchCourses());
 		mISearchMentors.addActionListener(actionMISearchMentors());
 		mISearchMentoringPrograms.addActionListener(actionMISearchMentoringPrograms());
@@ -207,7 +207,21 @@ public class LeftPanel extends JPanel {
 			
 		};
 	}
+	//for user
+	private ActionListener actionMIHomeUser() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.getInstance().getContent().removeAll();
+				MainPanel.getInstance().getContent().add(new HomePanel(true,mentor,user));
+				MainPanel.getInstance().getContent().validate();
+			}
+			
+		};
+	}
 	
+	//for mentor
 	private ActionListener actionMIHome() {
 		return new ActionListener() {
 

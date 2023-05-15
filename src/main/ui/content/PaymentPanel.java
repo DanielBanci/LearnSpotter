@@ -38,7 +38,10 @@ import main.ui.customComponents.ImagePanel;
 import main.ui.customComponents.RoundButton;
 import main.utility.*;
 import main.ui.login.LoginData;
+import main.ui.mentoringProgram.MentoringProgramDetails;
 import main.classes.Card;
+import main.classes.MentoringProgram;
+import main.classes.User;
 import main.db.*;
 
 import java.awt.GridLayout;
@@ -53,6 +56,8 @@ public class PaymentPanel extends JPanel {
 	private JComboBox<String> cBYY;
 	private JButton btnCompletePayment;
 	private Card card;
+	private User user;
+	private Boolean payedStatus = false;
 	public Card getCard() {
 		return card;
 	}
@@ -183,9 +188,118 @@ public class PaymentPanel extends JPanel {
 	    return false;
 	}
 
-	
-	public PaymentPanel(Double totalSum) {
+	public PaymentPanel(Double totalSum,User user,MentoringProgram program) {
 		this();
+		this.user = user;
+		//set the sum on the button
+		totalSum = Math.round(totalSum*100)/100.0;
+		btnCompletePayment.setText("Complete payment (Total $" + totalSum + ")");
+		
+		//load card icon
+		//ImagePanel img = new ImagePanel(ImageLoader.getInstance().getCardIcon(),new Dimension(250,120));
+		//cardIconPanel.add(img,BorderLayout.CENTER);
+		
+		//set combo models
+		cBMM.setModel(mMComboModel());
+		cBYY.setModel(yYComboModel());
+		
+		//set action to the payment button after it was added to a component
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				btnCompletePayment.addActionListener(paymentButtonJoin());
+			}
+		});
+	}
+	
+	private ActionListener paymentButtonJoin() {
+		MentoringProgramDetails aux = (MentoringProgramDetails)this.getParent();
+		ActionListener act = new ActionListener() {
+			String message = "";
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// implement here	
+				if(tFCardNumber.getText().length() == 16) 
+				{
+					if(tFCvcCvv.getText().length() == 3)
+					{
+						if(true || Integer.parseInt(cBMM.getSelectedItem().toString()) >= 6)
+						{
+							if(Integer.parseInt(cBYY.getSelectedItem().toString()) >= 2023)
+							{if(isValidName(tFCardHolderName.getText())) {
+								////after the payments was successfully made			//TODO: check if the payment was succesfully
+								//notify the view course button the the payment was successfully made
+								payedStatus = true;
+								//change icon of viewCourse button to unlock
+								aux.setPaymentStatus(payedStatus);
+								
+								//add new mentoring program to user
+								user.getMentoringPrograms().add(aux.getMentoringProgram());
+								
+								System.out.println(user.getCourses().size());
+								//inform user about change
+								JPopupMenu popupMenu = new JPopupMenu();
+								popupMenu.setOpaque(false);
+								popupMenu.setBorder(new EmptyBorder(0,0,0,0));
+								
+								JLabel mes = new JLabel("Joined successfully!");
+								mes.setForeground(new Color(44, 122, 20));
+								mes.setFont(new Font("Tahoma", Font.PLAIN, 16));
+						        popupMenu.add(mes);
+						        
+						        //get the position to display the popup menu
+						        int xPos = 0;
+						        int yPos = - btnCompletePayment.getHeight();										//disply on top
+						        popupMenu.show(btnCompletePayment,xPos ,yPos );
+						        
+						        Timer timer = new Timer(3000, new ActionListener() {						//visible for 3 sec
+				                    @Override
+				                    public void actionPerformed(ActionEvent evt) {
+				                        popupMenu.setVisible(false);
+				                    }
+				                });
+				                timer.setRepeats(false);
+				                timer.start();
+				                
+				                aux.remove(aux.getPaymentPanel());
+				                aux.remove(aux.getButtonPanel());
+								aux.revalidate();
+								return;//change this!!!
+								
+								/*EmailSender emailSender = new EmailSender();
+								emailSender.sendToAsync(LoginData.emailIfLoginSucceded);
+								
+								return;*/
+							}else {
+								message = "Please enter a valid name";
+								JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
+							}
+							} else {
+								message = "The year must be greater or equal than 2023";
+								JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
+							}
+						} else {
+							message = "The month must be greater or equal than 6";
+							JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
+						}
+					} else {
+						message = "The cvv must have 3 digits";
+						JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					message = "Card number must have 16 digits";
+					JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			
+		};
+		return act;
+	}
+	
+	public PaymentPanel(Double totalSum,User user) {
+		this();
+		this.user = user;
 		//set the sum on the button
 		totalSum = Math.round(totalSum*100)/100.0;
 		btnCompletePayment.setText("Complete payment (Total $" + totalSum + ")");
@@ -224,7 +338,7 @@ public class PaymentPanel extends JPanel {
 				{
 					if(tFCvcCvv.getText().length() == 3)
 					{
-						if(Integer.parseInt(cBMM.getSelectedItem().toString()) >= 6)
+						if(true || Integer.parseInt(cBMM.getSelectedItem().toString()) >= 6)
 						{
 							if(Integer.parseInt(cBYY.getSelectedItem().toString()) >= 2023)
 							{if(isValidName(tFCardHolderName.getText())) {
@@ -238,10 +352,14 @@ public class PaymentPanel extends JPanel {
 								aux.remove(aux.getPaymentPanel());
 								aux.revalidate();
 								
-								EmailSender emailSender = new EmailSender();
+								user.getCourses().add(aux.getCourse());
+								System.out.println(user.getCourses().size());
+								return;//change this!!!
+								
+								/*EmailSender emailSender = new EmailSender();
 								emailSender.sendToAsync(LoginData.emailIfLoginSucceded);
 								
-								return;
+								return;*/
 							}else {
 								message = "Please enter a valid name";
 								JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);

@@ -23,6 +23,10 @@ public class MenuBar extends JMenuBar {
 	private JPanel aboutPanel;
 	private ReviewsPanel reviewsPanel;
 	private CoursesPanel coursesPanel;
+	public CoursesPanel getCoursesPanel() {
+		return coursesPanel;
+	}
+
 	private SchedulePanelMentoringPrograms schedulePanel;
 
 	public MenuBar(MentoringProgramDetails m,MentoringProgram mentoringProgram) {

@@ -23,7 +23,7 @@ public class DisplayCoursesPanel extends JPanel {
 		this();
 		if(courses.size() != 0) {
 			for(int i=0;i<courses.size();i++) {
-				add(new CoursePost(courses.get(i),true));
+				add(new CoursePost(courses.get(i),true,user));
 			}
 		}else {
 			JLabel label = new JLabel("No courses to be displayed. Once you bought a course it will be displyed here.");
@@ -50,7 +50,7 @@ public class DisplayCoursesPanel extends JPanel {
 		this();
 
 		for(int i=0;i<20;i++) {
-			add(new CoursePost(Course.createMockup()));
+			add(new CoursePost(Course.createMockup(),User.createMockup()));
 		}
 		DisplayCoursesPanel f = this;
 

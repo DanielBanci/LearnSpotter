@@ -7,6 +7,8 @@ import main.ui.coursePosts.CourseFilePanel;
 import main.ui.coursePosts.CoursePost;
 import main.ui.coursePosts.FeedbackPanel;
 
+import java.awt.Component;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
@@ -25,6 +27,12 @@ public class CoursesPanel extends JPanel {
 				//add(new CoursePost(mentoringProgram.getCourses().get(i)));
 				add(new CourseFilePanel(mentoringProgramDetails,false));
 			}
+		}
+	}
+	
+	public void setPaymentStatus(Boolean status) {
+		for(Component c : getComponents()) {
+			((CourseFilePanel)c).setPayed(status);
 		}
 	}
 	/**
