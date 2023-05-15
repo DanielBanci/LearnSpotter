@@ -20,6 +20,7 @@ import main.app.App;
 import main.classes.Course;
 import main.classes.Feedback;
 import main.classes.Mentor;
+import main.classes.User;
 import main.ui.content.PaymentPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
@@ -67,6 +68,13 @@ public class CoursePostDetails extends RoundPanel {
 	private JLabel lblPriceBuy;				//lbl to display the price near buy button
 	private JLabel lblLastUpdate;			//last date the course was updated
 	private PaymentPanel paymentPanel;
+	private User user;
+	private Course course;
+
+	public Course getCourse() {
+		return course;
+	}
+
 
 	public PaymentPanel getPaymentPanel() {
 		return paymentPanel;
@@ -98,8 +106,10 @@ public class CoursePostDetails extends RoundPanel {
 	 * @param course params the need to be given
 	 * @param suportPanel the panel with the pdf renderer -?
 	 */
-	public CoursePostDetails(Course course, JPanel courseDetailsParent,Boolean owned) {	//TODO: constructor with parameters that fill the area with the properly information
+	public CoursePostDetails(Course course, JPanel courseDetailsParent,User user,Boolean owned) {	//TODO: constructor with parameters that fill the area with the properly information
 		this();
+		this.user = user;
+		this.course = course;
 		//profile image
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(100,120)));
 
@@ -158,7 +168,7 @@ public class CoursePostDetails extends RoundPanel {
 				if(!paymentPanelIsDisplayed) {
 					paymentPanelIsDisplayed = true;
 					if(paymentPanel == null) 						//check if not already created
-						paymentPanel = new PaymentPanel(Double.valueOf(extractNumericChars(lblPriceBuy.getText())));
+						paymentPanel = new PaymentPanel(Double.valueOf(extractNumericChars(lblPriceBuy.getText())),user);
 					
 					//insert the panel properly
 					int parentIndex = findComponentIndex(aux, btnBuyCourse.getParent());
@@ -217,7 +227,7 @@ public class CoursePostDetails extends RoundPanel {
 	 * Create the panel.
 	 * UI with an default example input
 	 */
-	public CoursePostDetails() {
+	private CoursePostDetails() {
 		setBorder(new EmptyBorder(20, 20, 20, 20));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

@@ -42,7 +42,7 @@ public class CoursesPosts extends JPanel {
 			messagePanel.add(label);
 		}else {
 			for(int i=0;i<mentor.getCourses().size();i++) {
-				add(new CoursePost(mentor.getCourses().get(i)));
+				add(new CoursePost(mentor.getCourses().get(i),user));
 			}
 		}
 	}
@@ -63,7 +63,7 @@ public class CoursesPosts extends JPanel {
 		}else {
 			add(buttonPanel,0);
 			for(int i=0;i<mentor.getCourses().size();i++) {
-				add(new CoursePost(mentor.getCourses().get(i)));
+				add(new CoursePost(mentor.getCourses().get(i),mentor));
 			}
 		}
 	}

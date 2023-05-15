@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import main.classes.Course;
+import main.classes.User;
 import main.ui.content.MainPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
@@ -38,7 +39,7 @@ public class CoursePost extends RoundPanel {
 	private JButton btnDetails;				//the button for opening the course panel
 
 
-	public CoursePost(Course course,Boolean owned) {
+	public CoursePost(Course course,Boolean owned,User user) {
 		this();
 		//display info
 		tFCourseTitle.setText(course.getName());
@@ -64,10 +65,10 @@ public class CoursePost extends RoundPanel {
 			txtCoursePrice.setText(String.valueOf(course.getPrice()));
 		}
 		
-		btnDetails.addActionListener(makeDetailsActionListener(course,owned));
+		btnDetails.addActionListener(makeDetailsActionListener(course,owned,user));
 	}
 	
-	public CoursePost(Course course) {
+	public CoursePost(Course course,User user) {
 		this();
 		//display info
 		tFCourseTitle.setText(course.getName());
@@ -93,7 +94,7 @@ public class CoursePost extends RoundPanel {
 			txtCoursePrice.setText(String.valueOf(course.getPrice()));
 		}
 		
-		btnDetails.addActionListener(makeDetailsActionListener(course,false));
+		btnDetails.addActionListener(makeDetailsActionListener(course,false,user));
 	}
 
 	/**
@@ -111,12 +112,12 @@ public class CoursePost extends RoundPanel {
 		return -1; // Component not found
 	}
 
-	private ActionListener makeDetailsActionListener(Course course,Boolean owned) {
+	private ActionListener makeDetailsActionListener(Course course,Boolean owned,User user) {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.Y_AXIS));
-				MainPanel.getInstance().getContent().add(new CoursePostDetails(course, MainPanel.getInstance().getContent(),owned));
+				MainPanel.getInstance().getContent().add(new CoursePostDetails(course, MainPanel.getInstance().getContent(),user,owned));
 				MainPanel.getInstance().getContent().revalidate();
 			}
 		};

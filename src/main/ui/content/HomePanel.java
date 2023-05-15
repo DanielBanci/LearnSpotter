@@ -24,13 +24,25 @@ import java.awt.Component;
 
 public class HomePanel extends JPanel {
 	private JScrollPane coursesPanel;
+	private JPanel coursesP;
 	private JScrollPane mentorsPanel;
+	private JPanel mentorsP;
 	private JScrollPane mentoringProgramPanel;
+	private JPanel mentoringProgramP;
 	private JPanel panel;
 	private JLabel lblNewLabel;
 	
 	public HomePanel(Boolean TODO,Mentor mentor,User user) {
 		this();
+		for(int i = 0;i<5;i++) {
+			coursesP.add(new CoursePost(Course.createMockup(),user));
+		}
+		for(int i = 0;i<5;i++) {
+			mentorsP.add(new MentorPost(Mentor.createMockup()));
+		}
+		for(int i = 0;i<5;i++) {
+			mentoringProgramP.add(new MentoringProgramPost(MentoringProgram.createMockup(), true,user));
+		}
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
@@ -50,6 +62,15 @@ public class HomePanel extends JPanel {
 	
 	public HomePanel(Boolean TODO,Mentor mentor) {
 		this();
+		for(int i = 0;i<5;i++) {
+			coursesP.add(new CoursePost(Course.createMockup(),User.createMockup()));
+		}
+		for(int i = 0;i<5;i++) {
+			mentorsP.add(new MentorPost(Mentor.createMockup()));
+		}
+		for(int i = 0;i<5;i++) {
+			mentoringProgramP.add(new MentoringProgramPost(MentoringProgram.createMockup(), true,mentor));
+		}
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
@@ -72,36 +93,28 @@ public class HomePanel extends JPanel {
 	public HomePanel() {
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		JPanel coursesP = new JPanel();
+		coursesP = new JPanel();
 		coursesP.setBorder(new EmptyBorder(10, 10, 10, 10));
 		coursesPanel = new ScrollPane();
 		coursesPanel.setViewportView(coursesP);
 		//add(coursesPanel);
 		coursesP.setLayout(new FlowLayout(FlowLayout.LEFT, 40, 10));
 		
-		JPanel mentorsP = new JPanel();
+		mentorsP = new JPanel();
 		mentorsP.setBorder(new EmptyBorder(10, 10, 10, 10));
 		mentorsPanel = new ScrollPane();
 		mentorsPanel.setViewportView(mentorsP);
 		//add(mentorsPanel);
 		mentorsP.setLayout(new FlowLayout(FlowLayout.LEFT, 40, 10));
 		
-		JPanel mentoringProgramP = new JPanel();
+		mentoringProgramP = new JPanel();
 		mentoringProgramP.setBorder(new EmptyBorder(10, 10, 10, 10));
 		mentoringProgramPanel = new ScrollPane();
 		mentoringProgramPanel.setViewportView(mentoringProgramP);
 		//add(mentoringProgramPanel);
 		mentoringProgramP.setLayout(new FlowLayout(FlowLayout.LEFT, 40, 10));
 		
-		for(int i = 0;i<5;i++) {
-			coursesP.add(new CoursePost(Course.createMockup()));
-		}
-		for(int i = 0;i<5;i++) {
-			mentorsP.add(new MentorPost(Mentor.createMockup()));
-		}
-		for(int i = 0;i<5;i++) {
-			mentoringProgramP.add(new MentoringProgramPost(MentoringProgram.createMockup(), true));
-		}
+		
 		
 		panel = new JPanel();
 		panel.setBorder(new EmptyBorder(30, 0, 30, 0));
