@@ -27,7 +27,17 @@ public class DbConnection {
 	                       " email VARCHAR(255), " +
 	                       " password VARCHAR(255), " +
 	                       " phone_number VARCHAR(255), " +
+	                       " description VARCHAR(255), " +
+	                       " field VARCHAR(50), " +
+	       				   " programs_number INTEGER, " +
+	                       " card_number VARCHAR(50), " +
+	       				   " cvv VARCHAR(3), " +
+	                       " card_holder_name VARCHAR(50), " +
+	       				   " expiration_month INTEGER, " +
+	                       " expiration_year INTEGER, " +
 	                       " id_rating INTEGER, " +
+	                       " profile_pic BLOB, " +
+	                       " type VARCHAR(10), " +
 	                       " PRIMARY KEY ( id ))";
 
 	        String feedback = "CREATE TABLE IF NOT EXISTS feedback " +

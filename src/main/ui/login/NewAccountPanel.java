@@ -61,7 +61,7 @@ public class NewAccountPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				message = "You can search and buy courses and mentors and you can join mentoring prgrams";
+				message = "You can search and buy courses and mentors and you can join mentoring programs";
 				lblInfo.setText(message);
 				newAccountPanel.removeAll();
 				newAccountPanel.add(new NewUserProfile(true));

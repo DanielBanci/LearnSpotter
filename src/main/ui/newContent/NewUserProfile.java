@@ -5,12 +5,14 @@ import javax.swing.JPanel;
 import main.classes.Course;
 import main.classes.MentoringProgram;
 import main.classes.User;
+import main.db.DbConnection;
 import main.ui.customComponents.ImagePanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customUI.HintTextAreaUI;
 import main.ui.customUI.HintTextFieldUI;
+import main.ui.login.LoginData;
 import main.utility.ImageLoader;
 
 import javax.imageio.ImageIO;
@@ -32,8 +34,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 import java.util.regex.Pattern;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -288,18 +297,21 @@ public class NewUserProfile extends JPanel {
 					JOptionPane.showMessageDialog(null, "Invalid email format.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				String password = passwordField.getPassword().toString();					//TODO verify if passwords match and make a chanck to be strong
+				String password = passwordField.getText();					//TODO verify if passwords match and make a chanck to be strong
 				if(password.isBlank()) {
 					JOptionPane.showMessageDialog(null, "Setting a password is required.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				if(!password.matches(".*[A-Z]+.*") || !password.matches(".*[a-z]+.*") ||
-				        !password.matches(".*[0-9]+.*") || !password.matches(".*[!@#$%^&*()_+\\-=[\\]{};':\"\\\\|,.<>/?]+.*")) {
-					JOptionPane.showMessageDialog(null, "The password is too weak. It must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
-				        return;
-				    }
-				String passwordVerify = passwordField_1.getPassword().toString();
-				if(password != passwordVerify) {
+//				if(!password.matches(".*[A-Z]+.*") || !password.matches(".*[a-z]+.*") ||
+//				        !password.matches(".*[0-9]+.*")) {
+//				        	//!password.matches(".*[!@#$%^&*()_+\\-=[\\]{};':\"\\\\|,.<>/?]+.*" eroare la asta
+//					JOptionPane.showMessageDialog(null, "The password is too weak. It must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
+//				        return;
+//				}
+				String passwordVerify = passwordField_1.getText();
+				
+				System.out.println(password + " " + passwordVerify);
+				if(password.compareTo(passwordVerify) != 0) {
 					JOptionPane.showMessageDialog(null, "The passwords do not match. Watch out for Caps Lock, NumLock or the Shift key.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -308,9 +320,56 @@ public class NewUserProfile extends JPanel {
 				List<MentoringProgram> mentoringPrograms = new ArrayList<>();	//no mentoring program joined when account just created
 				
 				User user = new User(id,firstName,lastName,email, password,phoneNumber,courses,mentoringPrograms);	//store user
+				DbConnection dbConnection = null;
+				try {
+					dbConnection = new DbConnection();	
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				Connection conn = dbConnection.getConnection();
+				
+				String sql = "INSERT INTO users(first_name, last_name, email, password, phone_number, profile_pic, type) VALUES(?, ?, ?, ?, ?, ?, ?)";
+				PreparedStatement pstmt;
+				try {
+					pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	 	            pstmt.setString(1, user.getFirstName());
+	 	            pstmt.setString(2, user.getLastName());
+					pstmt.setString(3, user.getEmail());
+					pstmt.setString(4, user.getPassword());
+					pstmt.setString(5, user.getPhoneNumber());
+					pstmt.setBytes(6, imageToByteArray(profilePic));
+					pstmt.setString(7, "user");
+					
+					pstmt.executeUpdate();
+					ResultSet rs = pstmt.getGeneratedKeys();
+					Preferences prefs = Preferences.userNodeForPackage(LoginData.class);
+					
+					if(rs.next())
+		                prefs.put("id", String.valueOf(rs.getInt(1)));
+					
+					System.out.println("Inserted user with id " + rs.getInt(1));
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 			}
 			
 		};
+	}
+	
+	public static byte[] imageToByteArray(Image image) {
+        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        bufferedImage.getGraphics().drawImage(image, 0, 0, null);
+        
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(bufferedImage, "png", outputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        return outputStream.toByteArray();
 	}
 	
 	private ActionListener checkBShowPasswordAction() {
@@ -322,8 +381,8 @@ public class NewUserProfile extends JPanel {
                     passwordField.setEchoChar((char) 0); // Show password
                     passwordField_1.setEchoChar((char) 0);
                 } else {
-                    passwordField.setEchoChar('•'); // Hide password
-                    passwordField_1.setEchoChar('•');
+                    passwordField.setEchoChar('ï¿½'); // Hide password
+                    passwordField_1.setEchoChar('ï¿½');
                 }
 			}
 			

@@ -13,9 +13,15 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -35,12 +41,14 @@ import main.classes.Course;
 import main.classes.Feedback;
 import main.classes.Mentor;
 import main.classes.MentoringProgram;
+import main.db.DbConnection;
 import main.ui.content.PaymentPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customUI.HintTextAreaUI;
 import main.ui.customUI.HintTextFieldUI;
+import main.ui.login.LoginData;
 import main.utility.ImageLoader;
 import javax.swing.JLabel;
 
@@ -352,10 +360,67 @@ public class NewMentorProfile extends JPanel {
 				Mentor mentor = new Mentor(id,firstName,lastName,email,password,phoneNumber,description,field,programsNumber,registerDate,
 						feedback,courses,mentoringPrograms,card);
 				//TODO store new mentor
+				DbConnection dbConnection = null;
+				try {
+					dbConnection = new DbConnection();	
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				Connection conn = dbConnection.getConnection();
+				
+				String sql = "INSERT INTO users(first_name, last_name, email, password, phone_number, description, field,"
+						+ " programs_number, card_number, cvv, card_holder_name, expiration_month, expiration_year, "
+						+ "profile_pic, type) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				PreparedStatement pstmt;
+				try {
+					pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	 	            pstmt.setString(1, mentor.getFirstName());
+	 	            pstmt.setString(2, mentor.getLastName());
+					pstmt.setString(3, mentor.getEmail());
+					pstmt.setString(4, mentor.getPassword());
+					pstmt.setString(5, mentor.getPhoneNumber());
+					pstmt.setString(6, mentor.getDescription());
+					pstmt.setString(7, mentor.getField());
+					pstmt.setInt(8, mentor.getProgramsNumber());
+					pstmt.setString(9, mentor.getCard().getCardNumber());
+					pstmt.setString(10, mentor.getCard().getCvvCvc());
+					pstmt.setString(11, mentor.getCard().getCardHolderName());
+					pstmt.setString(12, mentor.getCard().getExpirationMonth());
+					pstmt.setString(13, mentor.getCard().getExpirationYear());
+					pstmt.setBytes(14, imageToByteArray(profilePic));
+					pstmt.setString(15, "mentor");
+					
+					pstmt.executeUpdate();
+					ResultSet rs = pstmt.getGeneratedKeys();
+					Preferences prefs = Preferences.userNodeForPackage(LoginData.class);
+					
+					if(rs.next())
+		                prefs.put("id", String.valueOf(rs.getInt(1)));
+					
+					System.out.println("Inserted user with id " + rs.getInt(1));
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 			}
-			
 		};
 	}
+
+	public static byte[] imageToByteArray(Image image) {
+	    BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+	    bufferedImage.getGraphics().drawImage(image, 0, 0, null);
+	    
+	    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	    try {
+	        ImageIO.write(bufferedImage, "png", outputStream);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return outputStream.toByteArray();
+	}
+
 	
 	private ActionListener checkBShowPasswordAction() {
 		return new ActionListener() {
@@ -366,11 +431,10 @@ public class NewMentorProfile extends JPanel {
                     passwordField.setEchoChar((char) 0); // Show password
                     passwordField_1.setEchoChar((char) 0);
                 } else {
-                    passwordField.setEchoChar('•'); // Hide password
-                    passwordField_1.setEchoChar('•');
+                    passwordField.setEchoChar('ï¿½'); // Hide password
+                    passwordField_1.setEchoChar('ï¿½');
                 }
 			}
-			
 		};
 	}
 	

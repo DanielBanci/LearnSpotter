@@ -339,8 +339,6 @@ public class NewMentoringProgram extends JPanel {
 					e2.printStackTrace();
 				}
 				
-
-				
 				for(ScheduleData sD : scheduledData) {
 					String startDateTime = sD.startDate + " " + sD.startTime;
 					boolean repeat = sD.repeat;
