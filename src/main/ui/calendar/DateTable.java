@@ -82,9 +82,7 @@ public class DateTable extends JScrollPane{
 			this();
 			makePointsOfInterest(schedule);
 			
-			for(Point p : datesOfInterest) {
-				System.out.println(p.row + " " + p.column + " " + p.month + " " + p.year);
-			}
+			
 			orderMessages();
 			addMouseListener(mouseAdapter);
 			//repaint();
@@ -129,7 +127,6 @@ public class DateTable extends JScrollPane{
 						year = cal.get(Calendar.YEAR);
 						message = time.toString();
 						datesOfInterest.add(new Point(row,column,month,year,message));
-						System.out.println("Should display " + row + " " + column + " " + month + " " + year + " " + message);
 					}
 				}else {
 					datesOfInterest.add(new Point(row,column,month,year,message));

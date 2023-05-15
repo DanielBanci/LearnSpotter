@@ -40,6 +40,10 @@ public class StarRatingBar extends JPanel{
 			);
 	protected final ImageIcon defaultIcon;					//icon for non-rated stars
 	protected int clicked = -1;								//the index of clicked star; ratingValue = clicked + 1;
+	public int getClicked() {
+		return clicked;
+	}
+
 	private transient MouseAdapter handler;					//action for rating bar
 
 	/**
