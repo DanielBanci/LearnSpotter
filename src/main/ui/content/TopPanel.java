@@ -23,7 +23,6 @@ public class TopPanel extends JPanel {
 
 	private JPanel logoPanel;
 	private SearchBarPanel searchBar;
-	private MenuPanel menuPanel;
 	
 	/**
 	 * Create the panel.
@@ -64,19 +63,7 @@ public class TopPanel extends JPanel {
 		searchBar.setMaximumSize(new Dimension(500,50));
 		searchBarSupport.add(searchBar);
 		
-		//menu
-		JPanel menuSupport = new JPanel();
-		menuSupport.setBorder(new EmptyBorder(0, 15, 0, 0));
-		GridBagConstraints gbc_menuSupport = new GridBagConstraints();
-		gbc_menuSupport.fill = GridBagConstraints.BOTH;
-		gbc_menuSupport.gridx = 2;
-		gbc_menuSupport.gridy = 0;
-		add(menuSupport, gbc_menuSupport);
-		menuSupport.setLayout(new BoxLayout(menuSupport, BoxLayout.X_AXIS));
-		menuPanel = new MenuPanel();
-		menuPanel.setMaximumSize(new Dimension(600,53));
-		menuPanel.setMinimumSize(new Dimension(100,53));
-		menuSupport.add(menuPanel);
+		
 
 	}
 
