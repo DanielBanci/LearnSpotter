@@ -57,6 +57,7 @@ public class CourseFilePanel extends JPanel {
 	 */
 	public void setPayed(Boolean payed) {
 		this.payed = payed;
+		btnViewCourse.setIcon(iconButtonUnlocked);
 	}
 
 	/**

@@ -53,6 +53,7 @@ public class LeftPanel extends JPanel {
 	//for user
 	public LeftPanel(Boolean TODO, Mentor mentor, User user) {
 		this(user);
+		this.user = user;
 		this.mentor = mentor;
 		mIHome.addActionListener(actionMIHome());
 		mISearchCourses.addActionListener(actionMISearchCourses());
@@ -73,7 +74,7 @@ public class LeftPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
-				MainPanel.getInstance().getContent().add(new MentorProfile(true,mentor));
+				MainPanel.getInstance().getContent().add(new DisplayCoursesPanel(user.getCourses(),user));
 				MainPanel.getInstance().getContent().validate();
 			}
 			
@@ -86,7 +87,7 @@ public class LeftPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
-				MainPanel.getInstance().getContent().add(new MentorProfile(true,mentor));
+				MainPanel.getInstance().getContent().add(new DisplayMentoringProgramsPanel(user.getMentoringPrograms()));
 				MainPanel.getInstance().getContent().validate();
 			}
 			

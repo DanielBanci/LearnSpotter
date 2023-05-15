@@ -38,6 +38,35 @@ public class CoursePost extends RoundPanel {
 	private JButton btnDetails;				//the button for opening the course panel
 
 
+	public CoursePost(Course course,Boolean owned) {
+		this();
+		//display info
+		tFCourseTitle.setText(course.getName());
+		lblName.setText(course.getOwner().getFirstName() + " " + course.getOwner().getLastName());
+
+		if(course.getDescription().isEmpty()) {
+			tADescription.setTextBody("No description to display");
+		}else {
+			tADescription.setTextBody(course.getDescription());
+		}
+
+		//display the rating
+		Container parent = ratingBar.getParent();
+		int index = findComponentIndex(parent, ratingBar);
+		parent.remove(ratingBar);
+		ratingBar = new StarRatingBar(course.getRating(),1);
+		parent.add(ratingBar,index);
+
+		lblNrViewsRating.setText(String.valueOf(course.getNoViews()));
+		if(course.getPrice() == 0) {
+			txtCoursePrice.setText("Free");
+		}else {
+			txtCoursePrice.setText(String.valueOf(course.getPrice()));
+		}
+		
+		btnDetails.addActionListener(makeDetailsActionListener(course,owned));
+	}
+	
 	public CoursePost(Course course) {
 		this();
 		//display info
@@ -64,7 +93,7 @@ public class CoursePost extends RoundPanel {
 			txtCoursePrice.setText(String.valueOf(course.getPrice()));
 		}
 		
-		btnDetails.addActionListener(makeDetailsActionListener(course));
+		btnDetails.addActionListener(makeDetailsActionListener(course,false));
 	}
 
 	/**
@@ -82,12 +111,12 @@ public class CoursePost extends RoundPanel {
 		return -1; // Component not found
 	}
 
-	private ActionListener makeDetailsActionListener(Course course) {
+	private ActionListener makeDetailsActionListener(Course course,Boolean owned) {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.Y_AXIS));
-				MainPanel.getInstance().getContent().add(new CoursePostDetails(course, MainPanel.getInstance().getContent()));
+				MainPanel.getInstance().getContent().add(new CoursePostDetails(course, MainPanel.getInstance().getContent(),owned));
 				MainPanel.getInstance().getContent().revalidate();
 			}
 		};

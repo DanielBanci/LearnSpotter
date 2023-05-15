@@ -187,7 +187,7 @@ public class Course {
 		}
 		java.sql.Date sqlDate = new java.sql.Date(parsed.getTime());
 		Course mockup = new Course(0, "Software Engineering", 0, 0, "", "ceva descriere cum o fi sa fie doar sa fie sa vedem "
-				+ "cum e ca de ce nu dor asa", 4, 0, 299.0d, sqlDate, new ArrayList<Feedback>(),new Mentor(),new HashMap<>());
+				+ "cum e ca de ce nu dor asa", 4, 0, 299.0d, sqlDate, new ArrayList<Feedback>(),Mentor.createMockup(),new HashMap<>());
 		return mockup;
 	}
 }

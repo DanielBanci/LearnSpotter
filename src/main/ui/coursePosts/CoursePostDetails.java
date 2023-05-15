@@ -19,6 +19,7 @@ import org.icepdf.core.pobjects.acroform.AdditionalActionsDictionary;
 import main.app.App;
 import main.classes.Course;
 import main.classes.Feedback;
+import main.classes.Mentor;
 import main.ui.content.PaymentPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
@@ -97,13 +98,13 @@ public class CoursePostDetails extends RoundPanel {
 	 * @param course params the need to be given
 	 * @param suportPanel the panel with the pdf renderer -?
 	 */
-	public CoursePostDetails(Course course, JPanel courseDetailsParent) {	//TODO: constructor with parameters that fill the area with the properly information
+	public CoursePostDetails(Course course, JPanel courseDetailsParent,Boolean owned) {	//TODO: constructor with parameters that fill the area with the properly information
 		this();
 		//profile image
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(100,120)));
 
 		//name, couse title, last update and description
-		lblName.setText("Ana Popescu");
+		lblName.setText(course.getOwner().getFirstName() + " " + course.getOwner().getLastName());
 		lblCourseName.setText(course.getName());
 		lblPrice.setText(String.format("(%.2f) RON", course.getPrice()));
 		tAFullDescription.setText(course.getDescription());
@@ -127,7 +128,13 @@ public class CoursePostDetails extends RoundPanel {
 		feedbackPanel.add(new FeedbackPanel(Feedback.createMockup()));
 
 		//action for buy button
-		btnBuyCourse.addActionListener(btnBuyActionListener());
+		if(!owned) {
+			btnBuyCourse.addActionListener(btnBuyActionListener());
+		}else {
+			btnBuyCourse.getParent().getParent().remove(btnBuyCourse.getParent());
+			((CourseFilePanel)filePanel).setPayed(true);
+		}
+		
 
 		//update panel
 		setMaximumSize(new Dimension(800,100000));
