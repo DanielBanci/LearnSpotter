@@ -16,6 +16,7 @@ import main.ui.newContent.ScheduleData;
  */
 public class MentoringProgram {
 	private int id;
+	private int mentorId;
 	private String name;
 	private String difficultyLevel;
 	private String description;
@@ -135,8 +136,11 @@ public class MentoringProgram {
 	 * @param files
 	 * @param currency
 	 */
-	public MentoringProgram(int id, String name, String difficultyLevel, String description, String location, List<ScheduleData> schedule, int duration, int price,String currency,Mentor mentor,int rating,int noViews,String field, List<Feedback> feedbacks,Map<String,byte[]> files) {
+	public MentoringProgram(int id,int mentorId, String name, String difficultyLevel, String description, String location, List<ScheduleData> schedule,
+			int duration, int price,String currency,Mentor mentor,int rating,int noViews,String field, 
+			List<Feedback> feedbacks,Map<String,byte[]> files) {
 		this.id = id;
+		this.mentorId = mentorId;
 		this.name = name;
 		this.difficultyLevel = difficultyLevel;
 		this.description = description;
@@ -214,7 +218,7 @@ public class MentoringProgram {
 	public static MentoringProgram createMockup() {
         // Create a mock mentor for the mentoring program
         Mentor mentor = Mentor.createMockup();
-        MentoringProgram mockup = new MentoringProgram(0, "Sample Program", "Intermediate",
+        MentoringProgram mockup = new MentoringProgram(0,0, "Sample Program", "Intermediate",
                 "Sample program description", "Sample location", new ArrayList<>(), 12, 100,"RON",
                 mentor, 4, 100, "Sample Field", new ArrayList<>(),new HashMap<>());
         return mockup;

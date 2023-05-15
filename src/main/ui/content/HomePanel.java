@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 import main.classes.Course;
 import main.classes.Mentor;
 import main.classes.MentoringProgram;
+import main.classes.User;
 import main.ui.coursePosts.CoursePost;
 import main.ui.mentoringProgram.MentoringProgramPost;
 import main.ui.mentors.MentorPost;
@@ -28,7 +29,26 @@ public class HomePanel extends JPanel {
 	private JPanel panel;
 	private JLabel lblNewLabel;
 	
-	public HomePanel(Boolean TODO) {
+	public HomePanel(Boolean TODO,Mentor mentor,User user) {
+		this();
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				//MainPanel.getInstance().setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				MainPanel.getInstance().getContent().setMaximumSize(new Dimension(1300,9000000));
+				MainPanel.getInstance().getContent().validate();
+				coursesPanel.getHorizontalScrollBar().setValue(0);
+				mentorsPanel.getHorizontalScrollBar().setValue(0);
+				mentoringProgramPanel.getHorizontalScrollBar().setValue(0);
+				
+			}
+			
+		});
+		
+	}
+	
+	public HomePanel(Boolean TODO,Mentor mentor) {
 		this();
 		SwingUtilities.invokeLater(new Runnable() {
 

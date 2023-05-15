@@ -5,6 +5,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import main.app.App;
+import main.classes.Mentor;
 import main.ui.calendar.SchedulePanel;
 import main.ui.coursePosts.CoursePost;
 import main.ui.coursePosts.CoursePostDetails;
@@ -80,7 +81,7 @@ public class MainPanel extends JScrollPane {
 		topPanel.setPreferredSize(new Dimension(10, 100));
 		setColumnHeaderView(topPanel);
 
-		content.add(new HomePanel(true));
+		content.add(new HomePanel(true,Mentor.createMockup()));
 		// content.add(new DisplayMentoringProgramsPanel());
 		// content.setLayout(new FlowLayout(FlowLayout.CENTER));
 		 //content.add(new NewMentorProfile(true));
@@ -114,7 +115,7 @@ public class MainPanel extends JScrollPane {
 		topPanel.setPreferredSize(new Dimension(10, 100));
 		setColumnHeaderView(topPanel);
 
-		leftPanel = new LeftPanel(true);
+		leftPanel = new LeftPanel(true,Mentor.createMockup());
 		leftPanel.setBackground(new Color(128, 128, 128));
 		leftPanel.setPreferredSize(new Dimension(250, 10));
 		setRowHeaderView(leftPanel);

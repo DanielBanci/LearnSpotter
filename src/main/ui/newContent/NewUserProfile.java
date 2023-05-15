@@ -284,7 +284,7 @@ public class NewUserProfile extends JPanel {
 					JOptionPane.showMessageDialog(null, "An email is required.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				if(email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}(?:\\.[a-zA-Z]{2,})?$")) { //Doesn't work
+				if(email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) { //Doesn't work
 					JOptionPane.showMessageDialog(null, "Invalid email format.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -322,8 +322,8 @@ public class NewUserProfile extends JPanel {
                     passwordField.setEchoChar((char) 0); // Show password
                     passwordField_1.setEchoChar((char) 0);
                 } else {
-                    passwordField.setEchoChar('ï¿½'); // Hide password
-                    passwordField_1.setEchoChar('ï¿½');
+                    passwordField.setEchoChar('•'); // Hide password
+                    passwordField_1.setEchoChar('•');
                 }
 			}
 			

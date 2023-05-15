@@ -16,10 +16,13 @@ import java.awt.ComponentOrientation;
 import javax.swing.border.EmptyBorder;
 
 import main.app.App;
+import main.classes.Mentor;
+import main.classes.User;
 import main.ui.displayContent.DisplayCoursesPanel;
 import main.ui.displayContent.DisplayMentoringProgramsPanel;
 import main.ui.displayContent.DisplayMentorsPanel;
 import main.ui.login.LoginPanel;
+import main.ui.mentors.MentorProfile;
 import main.ui.newContent.NewCoursePost;
 import main.ui.newContent.NewMentoringProgram;
 
@@ -39,17 +42,83 @@ public class LeftPanel extends JPanel {
 	private JMenu mnNewMenu;
 	private JMenuItem mINewCourse;
 	private JMenuItem mINewMentoringProgram;
+	private JMenuItem mIMyProfile;
+	
+	private Mentor mentor;
+	private User user = null;
+	private JMenu mnNewMenu_1;
+	private JMenuItem mIMyCourses;
+	private JMenuItem mIMentoringPrograms;
 
-	public LeftPanel(Boolean TODO) {
+	//for user
+	public LeftPanel(Boolean TODO, Mentor mentor, User user) {
+		this(user);
+		this.mentor = mentor;
+		mIHome.addActionListener(actionMIHome());
+		mISearchCourses.addActionListener(actionMISearchCourses());
+		mISearchMentors.addActionListener(actionMISearchMentors());
+		mISearchMentoringPrograms.addActionListener(actionMISearchMentoringPrograms());
+		//mINewCourse.addActionListener(actionMINewCourse());
+		//mINewMentoringProgram.addActionListener(actionMINewMentoringPrograms());
+		//mIMyProfile.addActionListener(actionMIMyProfile());
+		mIMyCourses.addActionListener(actionMIMyCourses());
+		mIMentoringPrograms.addActionListener(actionMIMyMentoringPrograms());
+		
+		mILogOut.addActionListener(actionMILogOutS());
+	}
+	
+	private ActionListener actionMIMyCourses() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.getInstance().getContent().removeAll();
+				MainPanel.getInstance().getContent().add(new MentorProfile(true,mentor));
+				MainPanel.getInstance().getContent().validate();
+			}
+			
+		};
+	}
+	
+	private ActionListener actionMIMyMentoringPrograms() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.getInstance().getContent().removeAll();
+				MainPanel.getInstance().getContent().add(new MentorProfile(true,mentor));
+				MainPanel.getInstance().getContent().validate();
+			}
+			
+		};
+	}
+	
+	//for mentor
+	public LeftPanel(Boolean TODO,Mentor mentor) {
 		this();
+		this.mentor = mentor;
 		mIHome.addActionListener(actionMIHome());
 		mISearchCourses.addActionListener(actionMISearchCourses());
 		mISearchMentors.addActionListener(actionMISearchMentors());
 		mISearchMentoringPrograms.addActionListener(actionMISearchMentoringPrograms());
 		mINewCourse.addActionListener(actionMINewCourse());
 		mINewMentoringProgram.addActionListener(actionMINewMentoringPrograms());
+		mIMyProfile.addActionListener(actionMIMyProfile());
 		
 		mILogOut.addActionListener(actionMILogOutS());
+	}
+	
+	private ActionListener actionMIMyProfile() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.getInstance().getContent().removeAll();
+				MainPanel.getInstance().getContent().add(new MentorProfile(true,mentor));
+				MainPanel.getInstance().getContent().validate();
+			}
+			
+		};
 	}
 	
 	private ActionListener actionMILogOutS() {
@@ -144,7 +213,7 @@ public class LeftPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
-				MainPanel.getInstance().getContent().add(new HomePanel(true));
+				MainPanel.getInstance().getContent().add(new HomePanel(true,mentor));
 				MainPanel.getInstance().getContent().validate();
 			}
 			
@@ -153,7 +222,7 @@ public class LeftPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public LeftPanel() {
+	public LeftPanel(User user) {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		menuPanel = new JPanel();
@@ -166,7 +235,7 @@ public class LeftPanel extends JPanel {
 		menuPanel.add(menuBar);
 
 		mIHome = new JMenuItem("Home");
-		mIHome.setBorder(new EmptyBorder(0, 55, 0, 0));
+		mIHome.setBorder(new EmptyBorder(0, 46, 0, 0));
 		mIHome.setForeground(new Color(0, 0, 0));
 		mIHome.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		mIHome.setMaximumSize(new Dimension(32767, 50));
@@ -204,8 +273,24 @@ public class LeftPanel extends JPanel {
 		mSettings.setPreferredSize(new Dimension(170, 50));
 		mSettings.invalidate();
 		
+		mnNewMenu_1 = new JMenu("My data");
+		mnNewMenu_1.setMaximumSize(new Dimension(32767, 50));
+		mnNewMenu_1.setForeground(new Color(0, 0, 0));
+		mnNewMenu_1.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		menuBar.add(mnNewMenu_1);
+		
+		mIMyCourses = new JMenuItem("My courses");
+		mnNewMenu_1.add(mIMyCourses);
+		
+		mIMentoringPrograms = new JMenuItem("My mentoring ptograms");
+		mnNewMenu_1.add(mIMentoringPrograms);
+		
 		mnNewMenu = new JMenu("New post");
-		mnNewMenu.setPreferredSize(new Dimension(105, 50));
+		mnNewMenu.setBorder(new EmptyBorder(0, 45, 0, 0));
+		mnNewMenu.setHorizontalAlignment(SwingConstants.CENTER);
+		mnNewMenu.setHorizontalTextPosition(SwingConstants.CENTER);
+		mnNewMenu.setMaximumSize(new Dimension(32767, 50));
+		mnNewMenu.setPreferredSize(new Dimension(170, 50));
 		mnNewMenu.setForeground(new Color(0, 0, 0));
 		mnNewMenu.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		menuBar.add(mnNewMenu);
@@ -220,7 +305,86 @@ public class LeftPanel extends JPanel {
 		mILogOut = new JMenuItem("Log out");
 		mSettings.add(mILogOut);
 	}
+	public LeftPanel() {
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+		menuPanel = new JPanel();
+		menuPanel.setOpaque(false);
+		add(menuPanel);
+
+		menuBar = new JMenuBar();
+		menuBar.setLayout(new BoxLayout(menuBar, BoxLayout.Y_AXIS));
+		menuBar.setPreferredSize(new Dimension(180, 200));
+		menuPanel.add(menuBar);
+
+		mIHome = new JMenuItem("Home");
+		mIHome.setBorder(new EmptyBorder(0, 46, 0, 0));
+		mIHome.setForeground(new Color(0, 0, 0));
+		mIHome.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		mIHome.setMaximumSize(new Dimension(32767, 50));
+		mIHome.setHorizontalAlignment(SwingConstants.CENTER);
+		mIHome.setHorizontalTextPosition(SwingConstants.CENTER);
+		mIHome.setPreferredSize(new Dimension(170, 50));
+		menuBar.add(mIHome);
+
+		mSearch = new JMenu("Search");
+		mSearch.setBorder(new EmptyBorder(0, 55, 0, 0));
+		mSearch.setForeground(new Color(0, 0, 0));
+		mSearch.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		mSearch.setMaximumSize(new Dimension(32767, 50));
+		mSearch.setHorizontalAlignment(SwingConstants.CENTER);
+		mSearch.setHorizontalTextPosition(SwingConstants.CENTER);
+		mSearch.setPreferredSize(new Dimension(170, 50));
+		menuBar.add(mSearch);
+
+		mISearchCourses = new JMenuItem("Courses");
+		mSearch.add(mISearchCourses);
+
+		mISearchMentors = new JMenuItem("Mentors");
+		mSearch.add(mISearchMentors);
+
+		mISearchMentoringPrograms = new JMenuItem("Mentoring Programs");
+		mSearch.add(mISearchMentoringPrograms);
+
+		mSettings = new JMenu("Settings");
+		mSettings.setBorder(new EmptyBorder(0, 50, 0, 0));
+		mSettings.setForeground(new Color(0, 0, 0));
+		mSettings.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		mSettings.setMaximumSize(new Dimension(32767, 50));
+		mSettings.setHorizontalAlignment(SwingConstants.CENTER);
+		mSettings.setHorizontalTextPosition(SwingConstants.CENTER);
+		mSettings.setPreferredSize(new Dimension(170, 50));
+		mSettings.invalidate();
+		
+		mIMyProfile = new JMenuItem("My profile");
+		mIMyProfile.setBorder(new EmptyBorder(0, 46, 0, 0));
+		mIMyProfile.setHorizontalTextPosition(SwingConstants.CENTER);
+		mIMyProfile.setHorizontalAlignment(SwingConstants.CENTER);
+		mIMyProfile.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		mIMyProfile.setMaximumSize(new Dimension(32767, 50));
+		mIMyProfile.setPreferredSize(new Dimension(170, 50));
+		menuBar.add(mIMyProfile);
+		
+		mnNewMenu = new JMenu("New post");
+		mnNewMenu.setBorder(new EmptyBorder(0, 45, 0, 0));
+		mnNewMenu.setHorizontalAlignment(SwingConstants.CENTER);
+		mnNewMenu.setHorizontalTextPosition(SwingConstants.CENTER);
+		mnNewMenu.setMaximumSize(new Dimension(32767, 50));
+		mnNewMenu.setPreferredSize(new Dimension(170, 50));
+		mnNewMenu.setForeground(new Color(0, 0, 0));
+		mnNewMenu.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		menuBar.add(mnNewMenu);
+		
+		mINewCourse = new JMenuItem("New course");
+		mnNewMenu.add(mINewCourse);
+		
+		mINewMentoringProgram = new JMenuItem("New mentoring program");
+		mnNewMenu.add(mINewMentoringProgram);
+		menuBar.add(mSettings);
+
+		mILogOut = new JMenuItem("Log out");
+		mSettings.add(mILogOut);
+	}
 
 
 

@@ -237,6 +237,8 @@ public class NewMentoringProgram extends JPanel {
 				//TODO check the input
 				
 				int id = 1;//getLastCourseId() + 1;
+				int duration = 1;
+				int price = 0;
 				
 				Preferences prefs = Preferences.userNodeForPackage(main.ui.login.LoginData.class);
 				int mentorId = Integer.parseInt(prefs.get("id", "-1"));
@@ -256,7 +258,7 @@ public class NewMentoringProgram extends JPanel {
 					return;
 				}
 				try {
-					int duration = Integer.valueOf(tFLessonDuration.getText());//integer
+					duration = Integer.valueOf(tFLessonDuration.getText());//integer
 				} catch(NumberFormatException _) {
 					JOptionPane.showMessageDialog(null, tFLessonDuration.getText() + " is not a integer.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -266,7 +268,7 @@ public class NewMentoringProgram extends JPanel {
 					return;
 				}
 				try {
-					int price = Integer.valueOf(tFCoursePrice.getText());//integer?
+					price = Integer.valueOf(tFCoursePrice.getText());//integer?
 			} catch(NumberFormatException _) {
 				JOptionPane.showMessageDialog(null, tFCoursePrice.getText() + " is not a integer.", "Error", JOptionPane.ERROR_MESSAGE); //My class says double but if you say so, I'm ready to oblige
 				return;

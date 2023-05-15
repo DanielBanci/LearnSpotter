@@ -69,7 +69,6 @@ public class MentorPost extends RoundPanel {
 	public MentorPost(Mentor mentor) {
 		this();
 		this.mentor = mentor;
-		if(this.mentor == null)System.out.println("Da");
 		//profile pic
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
 		

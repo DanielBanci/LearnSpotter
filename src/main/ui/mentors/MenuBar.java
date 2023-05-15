@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.SwingConstants;
 
 import main.classes.Mentor;
+import main.classes.User;
 
 public class MenuBar extends JMenuBar {
 
@@ -22,7 +23,18 @@ public class MenuBar extends JMenuBar {
 	private ReviewsPanel reviewsPanel;
 	private CoursesPosts coursesPosts;
 	private ProgramsPanel programsPanel;
-	
+	//for user
+	public MenuBar(MentorProfile m,Mentor mentor,User user) {
+		this();
+		mentorProfilePanel = m;
+		//mentor = Mentor.createMockup();
+		//create the panels with the required data 							TODO
+		aboutPanel = new AboutPanel(mentor,user);
+		reviewsPanel = new ReviewsPanel(mentor);							//TODO let the user to give a feedback
+		coursesPosts = new CoursesPosts(mentor,user);
+		programsPanel = new ProgramsPanel(mentor,user);
+	}
+	//for mentor
 	public MenuBar(MentorProfile m,Mentor mentor) {
 		this();
 		mentorProfilePanel = m;
