@@ -81,12 +81,13 @@ public class Course {
 	 */
 	public Course(int id, String name, int idMentor, int idMentoringProgram, String url, String description, int rating, int noViews,
 			double price, Date lastUpdate, List<Feedback> feedback,Mentor owner,Map<String,byte[]> pdfFiles) {
+
 		this.id = id;
 		this.name = name;
 		this.idMentor = idMentor;
 		this.idMentoringProgram = idMentoringProgram;
 		this.pdfFiles = pdfFiles;
-		this.url = url;
+//		this.url = url;
 		this.description = description;
 		this.rating = rating;
 		this.noViews = noViews;
@@ -123,13 +124,6 @@ public class Course {
 	}
 	public void setIdMentoringProgram(int idMentoringProgram) {
 		this.idMentoringProgram = idMentoringProgram;
-	}
-	
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String url) {
-		this.url = url;
 	}
 	
 	public double getPrice() {
@@ -189,8 +183,8 @@ public class Course {
 			e.printStackTrace();
 		}
 		java.sql.Date sqlDate = new java.sql.Date(parsed.getTime());
-		Course mockup = new Course(0, "Software Engineering", 0, 0, "", "ceva descriere cum o fi sa fie doar sa fie sa vedem "
-				+ "cum e ca de ce nu dor asa", 4, 0, 299.0d, sqlDate, new ArrayList<Feedback>(),Mentor.createMockup(),new HashMap<>());
+		Course mockup = new Course(0, "Software Engineering", 0, 0, "","ceva descriere cum o fi sa fie doar sa fie sa vedem "
+				+ "cum e ca de ce nu dor asa", 4, 0, 299.0d, new Date(), new ArrayList<Feedback>(),Mentor.createMockup(),new HashMap<>());
 		return mockup;
 	}
 }

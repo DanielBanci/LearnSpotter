@@ -370,8 +370,9 @@ public class NewMentorProfile extends JPanel {
 					JOptionPane.showMessageDialog(null, "The passwords do not match. Watch out for Caps Lock, NumLock or the Shift key.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+
 				
-				String description = ""; 										//no description when account just created
+				String description = "";					//no description when account just created
 				int programsNumber = 0;											//no programsNumber when account just created
 				Date registerDate = new Date();
 				

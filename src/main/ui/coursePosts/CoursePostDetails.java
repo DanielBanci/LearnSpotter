@@ -119,7 +119,7 @@ public class CoursePostDetails extends RoundPanel {
 		lblPrice.setText(String.format("(%.2f) RON", course.getPrice()));
 		lblPriceBuy.setText(String.format("(%.2f) RON", course.getPrice()));
 		tAFullDescription.setText(course.getDescription());
-		lblLastUpdate.setText(course.getLastUpdate().toString());
+//		lblLastUpdate.setText(course.getLastUpdate().toString());
 
 		//overall feedback data
 		Container parent = ratingBarPanel.getParent();

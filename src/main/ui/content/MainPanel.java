@@ -36,6 +36,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.sql.SQLException;
 import java.awt.Color;
 
 /**
