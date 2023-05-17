@@ -32,5 +32,6 @@
 	<classpathentry kind="lib" path="C:/Users/Daniel/git/LearnSpotter/icepdf-viewer-6.2.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Daniel/git/LearnSpotter/javax.mail.jar"/>
 	<classpathentry kind="lib" path="C:/jars/LGoodDatePicker-11.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Daniel/git/LearnSpotter/mysql-connector-j-8.0.31.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

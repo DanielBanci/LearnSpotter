@@ -28,6 +28,7 @@ public class CoursesPosts extends JPanel {
 	private JPanel messagePanel;
 	private JPanel buttonPanel;
 	private JButton btnAddNewCourse;
+	private Mentor mentor;
 	
 	//for user
 	public CoursesPosts(Mentor mentor,User user) {
@@ -50,6 +51,7 @@ public class CoursesPosts extends JPanel {
 	//for mentor
 	public CoursesPosts(Mentor mentor) {
 		this();
+		this.mentor = mentor;
 		if(mentor.getCourses().size() == 0) {
 			JLabel label = new JLabel("No courses to be displayed");
 			label.setFont(new Font("Tharoma",Font.PLAIN,16));
@@ -106,7 +108,7 @@ public class CoursesPosts extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int index = findComponentIndex(CoursesPosts.this,btnAddNewCourse.getParent());
-				add(new NewCoursePost(),index+1);
+				add(new NewCoursePost(mentor),index+1);
 				revalidate();
 			}
 			

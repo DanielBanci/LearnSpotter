@@ -5,11 +5,14 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import main.app.App;
+import main.classes.Feedback;
 import main.classes.Mentor;
+import main.classes.User;
 import main.ui.calendar.SchedulePanel;
 import main.ui.coursePosts.CoursePost;
 import main.ui.coursePosts.CoursePostDetails;
 import main.ui.coursePosts.CoursePostScrollPane;
+import main.ui.coursePosts.FeedbackPanel;
 import main.ui.customComponents.ImagePanel;
 import main.ui.customComponents.RoundImagePanel;
 import main.ui.displayContent.DisplayCoursesPanel;
@@ -64,28 +67,49 @@ public class MainPanel extends JScrollPane {
 	public static MainPanel getInstance() {
 		// return instance == null ? (instance = new MainPanel(true)) : instance;
 		if (instance == null)
-			instance = new MainPanel(true);
+			instance = new MainPanel(true,User.createMockup());
 		return instance;
 	}
 
-	public static MainPanel updateInstance() {
-		instance = new MainPanel(true);
+	public static MainPanel updateInstance(User user) {
+		instance = new MainPanel(true,user);
+		return instance;
+	}
+	public static MainPanel updateInstance(Mentor mentor) {
+		instance = new MainPanel(true,mentor);
 		return instance;
 	}
 
-	private MainPanel(Boolean TODO) {
-		this();
+	private MainPanel(Boolean TODO,Mentor mentor) {
+		this(mentor);
 		logoPanel = new ImagePanel(ImageLoader.getInstance().getLogo(), new Dimension(200, 100));
 		setCorner(JScrollPane.UPPER_LEFT_CORNER, logoPanel);
 		topPanel = new TopPanel();
 		topPanel.setPreferredSize(new Dimension(10, 100));
 		setColumnHeaderView(topPanel);
 
-		content.add(new HomePanel(true,Mentor.createMockup()));
+		content.add(new HomePanel(true,mentor));
 		// content.add(new DisplayMentoringProgramsPanel());
 		// content.setLayout(new FlowLayout(FlowLayout.CENTER));
 		 //content.add(new NewMentorProfile(true));
-		// content.add(new NewMentoringProgram());
+		 //content.add(new FeedbackPanel(true,User.createMockup()));
+		//content.add(new FeedbackPanel(Feedback.createMockup()));
+	}
+	
+	private MainPanel(Boolean TODO,User user) {
+		this(user);
+		logoPanel = new ImagePanel(ImageLoader.getInstance().getLogo(), new Dimension(200, 100));
+		setCorner(JScrollPane.UPPER_LEFT_CORNER, logoPanel);
+		topPanel = new TopPanel();
+		topPanel.setPreferredSize(new Dimension(10, 100));
+		setColumnHeaderView(topPanel);
+
+		content.add(new HomePanel(true,Mentor.createMockup(),user));
+		// content.add(new DisplayMentoringProgramsPanel());
+		// content.setLayout(new FlowLayout(FlowLayout.CENTER));
+		 //content.add(new NewMentorProfile(true));
+		 //content.add(new FeedbackPanel(true,User.createMockup()));
+		//content.add(new FeedbackPanel(Feedback.createMockup()));
 	}
 
 	/**
@@ -104,10 +128,7 @@ public class MainPanel extends JScrollPane {
 		return -1; // Component not found
 	}
 
-	/**
-	 * Create the panel.
-	 */
-	private MainPanel() {
+	private MainPanel(Mentor mentor) {
 		getVerticalScrollBar().setUnitIncrement(16);
 		getHorizontalScrollBar().setUnitIncrement(16);
 		setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -115,7 +136,28 @@ public class MainPanel extends JScrollPane {
 		topPanel.setPreferredSize(new Dimension(10, 100));
 		setColumnHeaderView(topPanel);
 
-		leftPanel = new LeftPanel(true,Mentor.createMockup());
+		leftPanel = new LeftPanel(true,mentor);
+		leftPanel.setBackground(new Color(128, 128, 128));
+		leftPanel.setPreferredSize(new Dimension(250, 10));
+		setRowHeaderView(leftPanel);
+
+		content = new JPanel();
+		setViewportView(content);
+		content.setLayout(new BoxLayout(content, BoxLayout.X_AXIS));
+
+	}
+	/**
+	 * Create the panel.
+	 */
+	private MainPanel(User user) {
+		getVerticalScrollBar().setUnitIncrement(16);
+		getHorizontalScrollBar().setUnitIncrement(16);
+		setBorder(new EmptyBorder(0, 0, 0, 0));
+		topPanel = new JPanel();
+		topPanel.setPreferredSize(new Dimension(10, 100));
+		setColumnHeaderView(topPanel);
+
+		leftPanel = new LeftPanel(true,Mentor.createMockup(),user);
 		leftPanel.setBackground(new Color(128, 128, 128));
 		leftPanel.setPreferredSize(new Dimension(250, 10));
 		setRowHeaderView(leftPanel);

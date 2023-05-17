@@ -39,7 +39,7 @@ public class ProgramsPanel extends JPanel {
 			messagePanel.add(label);
 		}else {
 			for(int i=0;i<mentor.getMentoringPrograms().size();i++) {
-				add(new MentoringProgramPost(mentor.getMentoringPrograms().get(i),true,User.createMockup()));
+				add(new MentoringProgramPost(mentor.getMentoringPrograms().get(i),true,User.createMockup(),false));
 				
 			}
 		}
@@ -62,7 +62,7 @@ public class ProgramsPanel extends JPanel {
 		}else {
 			add(buttonPanel,0);
 			for(int i=0;i<mentor.getMentoringPrograms().size();i++) {
-				add(new MentoringProgramPost(mentor.getMentoringPrograms().get(i),true,User.createMockup()));
+				add(new MentoringProgramPost(mentor.getMentoringPrograms().get(i),true,User.createMockup(),false));
 				
 			}
 		}

@@ -55,13 +55,15 @@ public class MentoringProgramPost extends RoundPanel {
 	private RoundButton btnDetails;
 	private MentoringProgram mentoringProgram;
 	private User user;
+	private Boolean owned;
 	
 	//aux
 	private JPanel panel_4;
 	
-	public MentoringProgramPost(MentoringProgram mentoringProgram,Boolean shortContent,User user) {
+	public MentoringProgramPost(MentoringProgram mentoringProgram,Boolean shortContent,User user,Boolean owned) {
 		this();
 		this.user = user;
+		this.owned = owned;
 		this.mentoringProgram = mentoringProgram;
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
 		panelAboutLbl = new JPanel();
@@ -88,7 +90,7 @@ public class MentoringProgramPost extends RoundPanel {
 		lblReviewsNumber.setText(String.valueOf(mentoringProgram.getNoViews()));
 		lblField.setText(mentoringProgram.getField());
 		lblDuration.setText(String.valueOf(mentoringProgram.getDuration()));
-		lblPrice.setText(String.valueOf(mentoringProgram.getPrice()));
+		lblPrice.setText(String.valueOf(mentoringProgram.getPrice() + " " + mentoringProgram.getCurrency()));
 		tADescription.setTextBody(mentoringProgram.getDescription());
 		
 		
@@ -98,7 +100,10 @@ public class MentoringProgramPost extends RoundPanel {
 		parent.remove(ratingBarPanel);
 		ratingBarPanel = new StarRatingBar(mentoringProgram.getRating(),1);
 		parent.add(ratingBarPanel,index);
-		
+		parent.revalidate();
+		revalidate();
+		invalidate();
+		validate();
 		if(shortContent) {
 			makeShortContent();
 		}
@@ -126,8 +131,9 @@ public class MentoringProgramPost extends RoundPanel {
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.Y_AXIS));
-				MainPanel.getInstance().getContent().add(new MentoringProgramDetails(mentoringProgram,false,user));
+				MainPanel.getInstance().getContent().add(new MentoringProgramDetails(mentoringProgram,false,user,owned));
 				MainPanel.getInstance().getContent().revalidate();
+				MainPanel.getInstance().getContent().repaint();
 			}
 			
 		};

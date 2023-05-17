@@ -1,8 +1,14 @@
 package main.classes;
 
+import java.awt.Image;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.imageio.ImageIO;
+
+import main.utility.ImageLoader;
 
 /**
  * A class that holds the data related to the user.
@@ -16,6 +22,7 @@ public class User {
 	private String email;
 	private String password;
 	private String phoneNumber;
+	private Image profilePic;
 	private List<Course> courses;									//payed or owned courses
 	private List<MentoringProgram> mentoringPrograms;				//joined or owned mentoring programs
 	
@@ -59,7 +66,8 @@ public class User {
 	 * @param courses
 	 * @param mentoringPrograms
 	 */
-	public User(int id, String firstName, String lastName, String email, String password, String phoneNumber, List<Course> courses,List<MentoringProgram> mentoringPrograms) {
+	public User(int id, String firstName, String lastName, String email, String password, String phoneNumber, 
+			List<Course> courses,List<MentoringProgram> mentoringPrograms,Image profilePic) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -70,6 +78,7 @@ public class User {
 		this.mentoringPrograms = mentoringPrograms;
 		this.courses = courses;
 		this.mentoringPrograms = mentoringPrograms;
+		this.profilePic = profilePic;
 	}
 	
 	public int getId() {
@@ -144,9 +153,10 @@ public class User {
 	    // Create mentoring programs mockup
 	    List<MentoringProgram> mentoringPrograms = new ArrayList<>();
 	    mentoringPrograms.add(MentoringProgram.createMockup());
-
+	    
 	    // Create user mockup
-	    User mockup = new User(0, "John", "Doe", "johndoe@example.com", "password", "555-12345", courses, mentoringPrograms);
+	    User mockup = new User(0, "John", "Doe", "johndoe@example.com", "password", "555-12345", courses, mentoringPrograms,
+	    		ImageLoader.getInstance().getUserIcon());
 
 	    return mockup;
 	}

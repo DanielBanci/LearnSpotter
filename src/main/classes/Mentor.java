@@ -1,8 +1,11 @@
 package main.classes;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import main.utility.ImageLoader;
 
 /**
  * A class that holds the data related to the mentor.
@@ -11,13 +14,23 @@ import java.util.List;
  */
 public class Mentor extends User {
 	private int noReviews;
+	
 	private String description;
 	private String field;
 	private int programsNumber;
 	private Date registerDate;
 	private List<Feedback> feedbacks;
 	private Card card;
+	private String location;
 	
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
 	public Card getCard() {
 		return card;
 	}
@@ -68,8 +81,10 @@ public class Mentor extends User {
 	 * @param mentoringPrograms
 	 * @param card
 	 */
-	public Mentor(int id, String firstName, String lastName, String email, String password, String phoneNumber, String description, String field, int programsNumber,Date registerDate,List<Feedback> feedbacks,List<Course> courses, List<MentoringProgram> mentoringPrograms,Card card) {
-		super(id, firstName, lastName, email, password, phoneNumber,courses,mentoringPrograms);
+	public Mentor(int id, String firstName, String lastName, String email, String password, String phoneNumber,Image profilePic, 
+			String location, String description, String field, int programsNumber,Date registerDate,List<Feedback> feedbacks,List<Course> courses, List<MentoringProgram> mentoringPrograms,Card card) {
+		super(id, firstName, lastName, email, password, phoneNumber,courses,mentoringPrograms,profilePic);
+		this.location = location;
 		this.description = description;
 		this.field = field;
 		this.programsNumber = programsNumber;
@@ -112,7 +127,9 @@ public class Mentor extends User {
 	 * @return an instance representing a mockup of the class for debugging purposes
 	 */
 	public static Mentor createMockup() {
-		Mentor mockup = new Mentor(0, "OBVIOUS", "FAKENAMINGTON", "obvious.fakenamington@fakemail.gov", "password", "555-93847", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+		Mentor mockup = new Mentor(0, "OBVIOUS", "FAKENAMINGTON", "obvious.fakenamington@fakemail.gov", "password", "555-93847",
+				ImageLoader.getInstance().getUserIcon(),
+				"Boston", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
                 + "Sed ac risus vitae velit sodales bibendum quis eget dui. "
                 + "Morbi eget placerat ipsum. Donec nec mi in nisi aliquam volutpat non ac elit. "
                 + "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. "

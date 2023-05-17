@@ -2,10 +2,12 @@ package main.ui.newContent;
 
 import javax.swing.JPanel;
 
+import main.app.App;
 import main.classes.Course;
 import main.classes.MentoringProgram;
 import main.classes.User;
 import main.db.DbConnection;
+import main.ui.content.MainPanel;
 import main.ui.customComponents.ImagePanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
@@ -284,7 +286,7 @@ public class NewUserProfile extends JPanel {
 				String firstName = tFFirstName.getText();
 				String lastName = tFLastName.getText();
 				String phoneNumber = tFPhoneNumber.getText();								//verify to be write corectly
-				if(!tFPhoneNumber.getText().matches("0?7[0-9]{8}$")) { 
+				if(!isValidPhoneNumber(tFPhoneNumber.getText())) { 
 					JOptionPane.showMessageDialog(null, "Invalid phone number. Make sure the number is 10 digits long including the leading '0' and contains no spaces or dashes.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -293,7 +295,7 @@ public class NewUserProfile extends JPanel {
 					JOptionPane.showMessageDialog(null, "An email is required.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				if(email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) { //Doesn't work
+				if(!isValidEmail(email) ) { //Doesn't work
 					JOptionPane.showMessageDialog(null, "Invalid email format.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -301,6 +303,10 @@ public class NewUserProfile extends JPanel {
 				if(password.isBlank()) {
 					JOptionPane.showMessageDialog(null, "Setting a password is required.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
+				}
+				if(!isStrongPassword(password)) {
+					JOptionPane.showMessageDialog(null, "The password is too weak. It must contain at least one uppercase letter, one lowercase letter, one digit and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
+//			        return;
 				}
 //				if(!password.matches(".*[A-Z]+.*") || !password.matches(".*[a-z]+.*") ||
 //				        !password.matches(".*[0-9]+.*")) {
@@ -315,11 +321,14 @@ public class NewUserProfile extends JPanel {
 					JOptionPane.showMessageDialog(null, "The passwords do not match. Watch out for Caps Lock, NumLock or the Shift key.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				if(profilePic == null) {
+					profilePic = ImageLoader.getInstance().getUserIcon();
+				}
 				
 				List<Course> courses = new ArrayList<>();						//no buyed courses when account just created
 				List<MentoringProgram> mentoringPrograms = new ArrayList<>();	//no mentoring program joined when account just created
 				
-				User user = new User(id,firstName,lastName,email, password,phoneNumber,courses,mentoringPrograms);	//store user
+				User user = new User(id,firstName,lastName,email, password,phoneNumber,courses,mentoringPrograms,profilePic);	//store user
 				DbConnection dbConnection = null;
 				try {
 					dbConnection = new DbConnection();	
@@ -348,6 +357,12 @@ public class NewUserProfile extends JPanel {
 					if(rs.next())
 		                prefs.put("id", String.valueOf(rs.getInt(1)));
 					
+					App.getInstance().getFrame().getContentPane().removeAll();
+	            	App.getInstance().getFrame().setContentPane(MainPanel.updateInstance(user));
+	            	
+	            	//update the frame
+	            	App.getInstance().getFrame().invalidate();
+	            	App.getInstance().getFrame().revalidate();
 					System.out.println("Inserted user with id " + rs.getInt(1));
 				} catch (SQLException e2) {
 					// TODO Auto-generated catch block
@@ -356,6 +371,59 @@ public class NewUserProfile extends JPanel {
 			}
 			
 		};
+	}
+	/**
+	 * Check if phoneNumber reprezents a correct phone number (romanian phone number)
+	 * @param phoneNumber
+	 * @return true if phone number is correctly formatted.
+	 */
+	public static boolean isValidPhoneNumber(String phoneNumber) {
+	    // regular expression for Romanian phone numbers 
+	    String regex = "^07[0-9]{8}$|^\\+407[0-9]{8}$";
+	    
+	    // check if the phone number matches the regular expression
+	    return phoneNumber.matches(regex);
+	}
+	
+	/**
+	 * Check if a string is in a correct email format.
+	 * @param email
+	 * @return true if the email is correctly formatted.
+	 */
+	public static boolean isValidEmail(String email) {
+		// Regular expression pattern for email validation
+		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
+				"[a-zA-Z0-9_+&*-]+)*@" +
+				"(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+				"A-Z]{2,7}$";
+
+		// Creating a pattern object and matching it with the email string
+		Pattern pattern = Pattern.compile(emailRegex);
+		if (email == null) {
+			return false;
+		}
+		// Matching the pattern with the email string
+		java.util.regex.Matcher matcher = pattern.matcher(email);
+		return matcher.matches();
+	}
+	
+	/**
+	 * Checks if password has at least 8 characters,
+	 * a lowercase letter, an uppercase letter, a number 
+	 * and a special character
+	 * @param password
+	 * @return true if password is strong enough
+	 */
+	public static boolean isStrongPassword(String password) {
+	    // Define the criteria for a strong password
+	    String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+	    
+	    // Check if the password matches the criteria
+	    if (password.matches(regex)) {
+	        return true;
+	    } else {
+	        return false;
+	    }
 	}
 	
 	public static byte[] imageToByteArray(Image image) {
@@ -381,8 +449,8 @@ public class NewUserProfile extends JPanel {
                     passwordField.setEchoChar((char) 0); // Show password
                     passwordField_1.setEchoChar((char) 0);
                 } else {
-                    passwordField.setEchoChar('ï¿½'); // Hide password
-                    passwordField_1.setEchoChar('ï¿½');
+                    passwordField.setEchoChar('•'); // Hide password
+                    passwordField_1.setEchoChar('•');
                 }
 			}
 			

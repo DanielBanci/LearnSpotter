@@ -2,6 +2,7 @@ package main.ui.newContent;
 
 import javax.swing.JPanel;
 
+import main.classes.Mentor;
 import main.db.DbConnection;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
@@ -48,13 +49,15 @@ public class NewCoursePost extends JPanel {
 	private FileUploadPanel uploadCoursePanel;
 	private JButton btnPost;
 	private JPanel panel_4;
+	private Mentor mentor;
 
 	/**
 	 * Create the panel.
 	 */
-	public NewCoursePost() {
+	public NewCoursePost(Mentor mentor) {
 		setOpaque(false);
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		this.mentor = mentor;
 		
 		panel_4 = new RoundPanel();
 		panel_4.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -199,12 +202,14 @@ public class NewCoursePost extends JPanel {
 					
 					String sql = "INSERT INTO courses (id_mentor, id_mentoring_program, name, description, price, currency) VALUES (?, ?, ?, ?, ?, ?)";
 
+					int mentorId = mentor.getId();
+					int mentoringProgramId = -1;	//does not belong to a mentoring program
 					PreparedStatement statement;
 					try {
 						statement = conn.prepareStatement(sql);
 						
-						statement.setInt(1, 1);
-						statement.setInt(2, 1);
+						statement.setInt(1, mentorId);
+						statement.setInt(2, mentoringProgramId);
 						statement.setString(3, courseTitle);
 						statement.setString(4, courseDescription);
 						statement.setInt(5, price);

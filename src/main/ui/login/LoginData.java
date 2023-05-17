@@ -7,6 +7,8 @@ import javax.swing.BoxLayout;
 import javax.swing.border.EmptyBorder;
 
 import main.app.App;
+import main.classes.Mentor;
+import main.classes.User;
 import main.ui.content.MainPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
@@ -16,6 +18,7 @@ import main.ui.newContent.NewUserProfile;
 import main.db.*;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -186,15 +189,33 @@ public class LoginData extends RoundPanel {
 		                
 		                prefs.put("id", String.valueOf(resultSet.getInt("id")));
 		                emailIfLoginSucceded = tFEmail.getText();
+		                if(resultSet.getString("type").equals("mentor")) {				//mentor
+		                	/*int id = resultSet.getInt("id");
+		                	String firsName = resultSet.getString("first_name");
+		                	String lastname = resultSet.getString("last_name");
+		                	String email = resultSet.getString("email");
+		                	String password = resultSet.getString("password");
+		                	String phoneNumber = resultSet.getString("phone_number");
+		                	String description = resultSet.getString("description");
+		                	String field = resultSet.getString("Field");
+		                	int programNumbers = resultSet.getInt("program_number");*/
+		                	//to be continued
+		                	//Open the app for the mentor
+			            	App.getInstance().getFrame().getContentPane().removeAll();
+			            	App.getInstance().getFrame().setContentPane(MainPanel.updateInstance(Mentor.createMockup()));
+		                	
+		                }else {															//user
+		                	//Open the app for the user
+			            	App.getInstance().getFrame().getContentPane().removeAll();
+			            	App.getInstance().getFrame().setContentPane(MainPanel.updateInstance(User.createMockup()));
+		                }
 		                
-		                //Open the app for the user
-		            	App.getInstance().getFrame().getContentPane().removeAll();
-		            	App.getInstance().getFrame().setContentPane(MainPanel.updateInstance());
 		            	
 		            	//update the frame
 		            	App.getInstance().getFrame().invalidate();
 		            	App.getInstance().getFrame().revalidate();
 		            } else {
+		            	JOptionPane.showMessageDialog(null,"Wrong email or password!\nLogin failed.","Eroare",JOptionPane.ERROR_MESSAGE);
 		                System.out.println("Login failed");
 		            }
 		            
@@ -215,7 +236,7 @@ public class LoginData extends RoundPanel {
             	if (checkBox.isSelected()) {
                     passwordField.setEchoChar((char) 0); // Show password
                 } else {
-                    passwordField.setEchoChar('ï¿½'); // Hide password
+                    passwordField.setEchoChar('•'); // Hide password
                 }
             }
         };

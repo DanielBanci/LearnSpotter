@@ -16,6 +16,7 @@ import java.awt.ComponentOrientation;
 import javax.swing.border.EmptyBorder;
 
 import main.app.App;
+import main.classes.Course;
 import main.classes.Mentor;
 import main.classes.User;
 import main.ui.displayContent.DisplayCoursesPanel;
@@ -25,6 +26,7 @@ import main.ui.login.LoginPanel;
 import main.ui.mentors.MentorProfile;
 import main.ui.newContent.NewCoursePost;
 import main.ui.newContent.NewMentoringProgram;
+import main.utility.temporaryDatabase.TDB;
 
 public class LeftPanel extends JPanel {
 
@@ -59,6 +61,8 @@ public class LeftPanel extends JPanel {
 		mISearchCourses.addActionListener(actionMISearchCourses());
 		mISearchMentors.addActionListener(actionMISearchMentors());
 		mISearchMentoringPrograms.addActionListener(actionMISearchMentoringPrograms());
+		menuBar.remove(mnNewMenu);
+		mnNewMenu_1.setBorder(new EmptyBorder(0, 50, 0, 0));
 		//mINewCourse.addActionListener(actionMINewCourse());
 		//mINewMentoringProgram.addActionListener(actionMINewMentoringPrograms());
 		//mIMyProfile.addActionListener(actionMIMyProfile());
@@ -74,7 +78,7 @@ public class LeftPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
-				MainPanel.getInstance().getContent().add(new DisplayCoursesPanel(user.getCourses(),user));
+				MainPanel.getInstance().getContent().add(new DisplayCoursesPanel(user.getCourses(),user,true));
 				MainPanel.getInstance().getContent().validate();
 			}
 			
@@ -87,7 +91,7 @@ public class LeftPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
-				MainPanel.getInstance().getContent().add(new DisplayMentoringProgramsPanel(user.getMentoringPrograms()));
+				MainPanel.getInstance().getContent().add(new DisplayMentoringProgramsPanel(user.getMentoringPrograms(),true));
 				MainPanel.getInstance().getContent().validate();
 			}
 			
@@ -116,6 +120,7 @@ public class LeftPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().add(new MentorProfile(true,mentor));
+				MainPanel.getInstance().getContent().repaint();
 				MainPanel.getInstance().getContent().validate();
 			}
 			
@@ -148,7 +153,7 @@ public class LeftPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
-				MainPanel.getInstance().getContent().add(new NewCoursePost());
+				MainPanel.getInstance().getContent().add(new NewCoursePost(mentor));
 				MainPanel.getInstance().getContent().validate();
 			}
 			
@@ -197,10 +202,10 @@ public class LeftPanel extends JPanel {
 	
 	private ActionListener actionMISearchCourses() {
 		return new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
+				if(user == null) user = mentor;
 				MainPanel.getInstance().getContent().add(new DisplayCoursesPanel());
 				MainPanel.getInstance().getContent().validate();
 			}
@@ -297,7 +302,7 @@ public class LeftPanel extends JPanel {
 		mIMyCourses = new JMenuItem("My courses");
 		mnNewMenu_1.add(mIMyCourses);
 		
-		mIMentoringPrograms = new JMenuItem("My mentoring ptograms");
+		mIMentoringPrograms = new JMenuItem("My mentoring programs");
 		mnNewMenu_1.add(mIMentoringPrograms);
 		
 		mnNewMenu = new JMenu("New post");
@@ -358,7 +363,7 @@ public class LeftPanel extends JPanel {
 		mISearchMentors = new JMenuItem("Mentors");
 		mSearch.add(mISearchMentors);
 
-		mISearchMentoringPrograms = new JMenuItem("Mentoring Programs");
+		mISearchMentoringPrograms = new JMenuItem("Mentoring programs");
 		mSearch.add(mISearchMentoringPrograms);
 
 		mSettings = new JMenu("Settings");

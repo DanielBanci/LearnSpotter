@@ -54,6 +54,7 @@ public class MentorProfile extends RoundPanel {
 		lblViewsNumber.setText(String.valueOf(mentor.getNoReviews()));
 		lblProgramsNumber.setText(String.valueOf(mentor.getProgramsNumber()));
 		lblPrice.setText("");															//TODO see what you do with this
+		lblPrice.setVisible(false);
 		
 		//menu bar
 		
@@ -81,6 +82,7 @@ public class MentorProfile extends RoundPanel {
 		lblViewsNumber.setText(String.valueOf(mentor.getNoReviews()));
 		lblProgramsNumber.setText(String.valueOf(mentor.getProgramsNumber()));
 		lblPrice.setText("");															//TODO see what you do with this
+		lblPrice.setVisible(false);
 		
 		//menu bar
 		/*Container parent = menuBar.getParent();
@@ -122,11 +124,11 @@ public class MentorProfile extends RoundPanel {
 		programsNumberIconPanel = new ImagePanel(ImageLoader.getInstance().getProgramsNumberIcon(),new Dimension(60,60));
 		parent.add(programsNumberIconPanel, index);
 		
-		parent = priceIconPanel.getParent();
+		/*parent = priceIconPanel.getParent();
 		index = findComponentIndex(parent,priceIconPanel);
 		parent.remove(priceIconPanel);
 		priceIconPanel = new ImagePanel(ImageLoader.getInstance().getMoneyIcon(),new Dimension(60,60));
-		parent.add(priceIconPanel, index);
+		parent.add(priceIconPanel, index);*/
 		
 		parent = registerdateIconPanel.getParent();
 		index = findComponentIndex(parent,registerdateIconPanel);
@@ -302,11 +304,13 @@ public class MentorProfile extends RoundPanel {
 		priceIconPanel = new JPanel();
 		priceIconPanel.setOpaque(false);
 		priceIconPanel.setPreferredSize(new Dimension(50, 50));
-		panel_10.add(priceIconPanel);
+		//panel_10.add(priceIconPanel);
+		priceIconPanel.setVisible(false);
 		
 		lblPrice = new JLabel("from min to max");
 		lblPrice.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_10.add(lblPrice);
+		lblPrice.setVisible(false);
 		
 		JPanel panel_7 = new JPanel();
 		panel_7.setOpaque(false);

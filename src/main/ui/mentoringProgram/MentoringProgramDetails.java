@@ -50,8 +50,8 @@ public class MentoringProgramDetails extends MentoringProgramPost {
 	public void setPaymentStatus(Boolean status) {
 		menuBar.getCoursesPanel().setPaymentStatus(status);
 	}
-	public MentoringProgramDetails(MentoringProgram mentoringProgram,Boolean shortPanel,User user) {
-		super(mentoringProgram,shortPanel,user);
+	public MentoringProgramDetails(MentoringProgram mentoringProgram,Boolean shortPanel,User user,Boolean owned) {
+		super(mentoringProgram,shortPanel,user,owned);
 		this.mentoringProgram = mentoringProgram;
 		this.user = user;
 		/*JPanel panel = new JPanel();
@@ -96,6 +96,10 @@ public class MentoringProgramDetails extends MentoringProgramPost {
 		menuBar = new MenuBar(this,mentoringProgram);
 		panel.add(menuBar);
 		
+		setPaymentStatus(owned);
+		if(owned) {
+			remove(buttonPanel);
+		}
 		contentPanel = new JPanel();
 		contentPanel.setOpaque(false);
 		add(contentPanel);

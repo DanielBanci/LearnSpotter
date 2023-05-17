@@ -30,19 +30,20 @@ import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 //TO DO: implement constructors with parameters
 public class CoursePost extends RoundPanel {
-	private JTextField tFCourseTitle;		//title of the course
+	//private JTextField tFCourseTitle;		//title of the course
 	private JLabel lblName;					//owner of the course
 	private TextAreaWithPreview tADescription;		//short description of the course; -> probably the first few lines from the description
 	private StarRatingBar ratingBar;		//the rating bar - needs to be non-editable for a post
 	private JLabel lblNrViewsRating;		//the number of the people who rated the course
 	private JTextField txtCoursePrice;		//price of the course
 	private JButton btnDetails;				//the button for opening the course panel
+	private JLabel lblCourseTitle;
 
 
 	public CoursePost(Course course,Boolean owned,User user) {
 		this();
 		//display info
-		tFCourseTitle.setText(course.getName());
+		lblCourseTitle.setText(course.getName());
 		lblName.setText(course.getOwner().getFirstName() + " " + course.getOwner().getLastName());
 
 		if(course.getDescription().isEmpty()) {
@@ -71,7 +72,7 @@ public class CoursePost extends RoundPanel {
 	public CoursePost(Course course,User user) {
 		this();
 		//display info
-		tFCourseTitle.setText(course.getName());
+		lblCourseTitle.setText(course.getName());
 		lblName.setText(course.getOwner().getFirstName() + " " + course.getOwner().getLastName());
 
 		if(course.getDescription().isEmpty()) {
@@ -91,7 +92,7 @@ public class CoursePost extends RoundPanel {
 		if(course.getPrice() == 0) {
 			txtCoursePrice.setText("Free");
 		}else {
-			txtCoursePrice.setText(String.valueOf(course.getPrice()));
+			txtCoursePrice.setText(String.valueOf(course.getPrice() + " RON"));
 		}
 		
 		btnDetails.addActionListener(makeDetailsActionListener(course,false,user));
@@ -136,19 +137,23 @@ public class CoursePost extends RoundPanel {
 		add(titlePanel);
 		titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-		JLabel lblNewLabel = new JLabel("Course title: ");
+		JLabel lblNewLabel = new JLabel("Course title:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		titlePanel.add(lblNewLabel);
 
-		tFCourseTitle = new JTextField();
+		lblCourseTitle = new JLabel("Course title:");
+		lblCourseTitle.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		titlePanel.add(lblCourseTitle);
+		
+		/*tFCourseTitle = new JTextField();
 		tFCourseTitle.setEditable(false);
-		tFCourseTitle.setBorder(new EmptyBorder(0, 10, 0, 0));
+		tFCourseTitle.setBorder(new EmptyBorder(0, 0, 0, 0));
 		tFCourseTitle.setOpaque(false);
 		tFCourseTitle.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tFCourseTitle.setText("Inginerie Software");
 		tFCourseTitle.setMaximumSize(new Dimension(2147483647, 40));
 		titlePanel.add(tFCourseTitle);
-		tFCourseTitle.setColumns(10);
+		tFCourseTitle.setColumns(10);*/
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));

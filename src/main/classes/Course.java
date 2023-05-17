@@ -1,10 +1,13 @@
 package main.classes;
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,8 +26,8 @@ public class Course {
 	private int rating;
 	private int noViews;
 	private double price;
-	private java.sql.Date lastUpdate;
-	private Collection<Feedback> feedback;
+	private Date lastUpdate;
+	private List<Feedback> feedback;
 	private Mentor owner;
 	
 	public Map<String, byte[]> getPdfFiles() {
@@ -77,7 +80,7 @@ public class Course {
 	 * @param feedback
 	 */
 	public Course(int id, String name, int idMentor, int idMentoringProgram, String url, String description, int rating, int noViews,
-			double price, java.sql.Date lastUpdate, Collection<Feedback> feedback,Mentor owner,Map<String,byte[]> pdfFiles) {
+			double price, Date lastUpdate, List<Feedback> feedback,Mentor owner,Map<String,byte[]> pdfFiles) {
 		this.id = id;
 		this.name = name;
 		this.idMentor = idMentor;
@@ -157,17 +160,17 @@ public class Course {
 		this.rating = rating;
 	}
 	
-	public java.sql.Date getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
-	public void setLastUpdate(java.sql.Date lastUpdate) {
+	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 	
-	public Collection<Feedback> getFeedback() {
+	public List<Feedback> getFeedback() {
 		return feedback;
 	}
-	public void setFeedback(Collection<Feedback> feedback) {
+	public void setFeedback(List<Feedback> feedback) {
 		this.feedback = feedback;
 	}
 	

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.prefs.Preferences;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -36,12 +37,14 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+import main.app.App;
 import main.classes.Card;
 import main.classes.Course;
 import main.classes.Feedback;
 import main.classes.Mentor;
 import main.classes.MentoringProgram;
 import main.db.DbConnection;
+import main.ui.content.MainPanel;
 import main.ui.content.PaymentPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
@@ -338,8 +341,35 @@ public class NewMentorProfile extends JPanel {
 				String location = tFLocation.getText();
 				String phoneNumber = tFPhoneNumber.getText();								//verify to be write corectly
 				String email = tFEmail.getText();											//verify email to be write correctly
-				String password = passwordField.getPassword().toString();					//verify if passwords match and make a chanck to be strong
-				String passwordVerify = passwordField_1.getPassword().toString();
+				String password = String.valueOf(passwordField.getPassword());					//verify if passwords match and make a chanck to be strong
+				String passwordVerify = String.valueOf(passwordField_1.getPassword());
+				System.out.println(password);
+				if(!isValidPhoneNumber(tFPhoneNumber.getText())) { 
+					JOptionPane.showMessageDialog(null, "Invalid phone number. Make sure the number is 10 digits long including the leading '0' and contains no spaces or dashes.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}											//verify email to be write correctly
+				if(email.isBlank()) {
+					JOptionPane.showMessageDialog(null, "An email is required.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(!isValidEmail(email) ) { //Doesn't work
+					JOptionPane.showMessageDialog(null, "Invalid email format.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}				//TODO verify if passwords match and make a chanck to be strong
+				if(password.isBlank()) {
+					JOptionPane.showMessageDialog(null, "Setting a password is required.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(!isStrongPassword(password)) {
+					JOptionPane.showMessageDialog(null, "The password is too weak. It must contain at least one uppercase letter, one lowercase letter, one digit and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
+			        return;
+				}
+				
+				System.out.println(password + " " + passwordVerify);
+				if(password.compareTo(passwordVerify) != 0) {
+					JOptionPane.showMessageDialog(null, "The passwords do not match. Watch out for Caps Lock, NumLock or the Shift key.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				
 				String description = ""; 										//no description when account just created
 				int programsNumber = 0;											//no programsNumber when account just created
@@ -355,9 +385,12 @@ public class NewMentorProfile extends JPanel {
 				}else {
 					JOptionPane.showMessageDialog(null,"You need to add a card first","Eroare",JOptionPane.ERROR_MESSAGE);
 				}
+				if(profilePic == null) {
+					profilePic = ImageLoader.getInstance().getUserIcon();
+				}
 				
 				//if test passed
-				Mentor mentor = new Mentor(id,firstName,lastName,email,password,phoneNumber,description,field,programsNumber,registerDate,
+				Mentor mentor = new Mentor(id,firstName,lastName,email,password,phoneNumber,profilePic,location,description,field,programsNumber,registerDate,
 						feedback,courses,mentoringPrograms,card);
 				//TODO store new mentor
 				DbConnection dbConnection = null;
@@ -371,7 +404,7 @@ public class NewMentorProfile extends JPanel {
 				
 				String sql = "INSERT INTO users(first_name, last_name, email, password, phone_number, description, field,"
 						+ " programs_number, card_number, cvv, card_holder_name, expiration_month, expiration_year, "
-						+ "profile_pic, type) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+						+ "profile_pic, type, location) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement pstmt;
 				try {
 					pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -390,6 +423,7 @@ public class NewMentorProfile extends JPanel {
 					pstmt.setString(13, mentor.getCard().getExpirationYear());
 					pstmt.setBytes(14, imageToByteArray(profilePic));
 					pstmt.setString(15, "mentor");
+					pstmt.setString(16, mentor.getLocation());
 					
 					pstmt.executeUpdate();
 					ResultSet rs = pstmt.getGeneratedKeys();
@@ -397,7 +431,13 @@ public class NewMentorProfile extends JPanel {
 					
 					if(rs.next())
 		                prefs.put("id", String.valueOf(rs.getInt(1)));
-					
+					mentor.setId(rs.getInt(1));
+					App.getInstance().getFrame().getContentPane().removeAll();
+	            	App.getInstance().getFrame().setContentPane(MainPanel.updateInstance(mentor));
+	            	
+	            	//update the frame
+	            	App.getInstance().getFrame().invalidate();
+	            	App.getInstance().getFrame().revalidate();
 					System.out.println("Inserted user with id " + rs.getInt(1));
 				} catch (SQLException e2) {
 					// TODO Auto-generated catch block
@@ -405,6 +445,60 @@ public class NewMentorProfile extends JPanel {
 				}
 			}
 		};
+	}
+	
+	/**
+	 * Check if phoneNumber reprezents a correct phone number (romanian phone number)
+	 * @param phoneNumber
+	 * @return true if phone number is correctly formatted.
+	 */
+	public static boolean isValidPhoneNumber(String phoneNumber) {
+	    // regular expression for Romanian phone numbers 
+	    String regex = "^07[0-9]{8}$|^\\+407[0-9]{8}$";
+	    
+	    // check if the phone number matches the regular expression
+	    return phoneNumber.matches(regex);
+	}
+	
+	/**
+	 * Check if a string is in a correct email format.
+	 * @param email
+	 * @return true if the email is correctly formatted.
+	 */
+	public static boolean isValidEmail(String email) {
+		// Regular expression pattern for email validation
+		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
+				"[a-zA-Z0-9_+&*-]+)*@" +
+				"(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+				"A-Z]{2,7}$";
+
+		// Creating a pattern object and matching it with the email string
+		Pattern pattern = Pattern.compile(emailRegex);
+		if (email == null) {
+			return false;
+		}
+		// Matching the pattern with the email string
+		java.util.regex.Matcher matcher = pattern.matcher(email);
+		return matcher.matches();
+	}
+	
+	/**
+	 * Checks if password has at least 8 characters,
+	 * a lowercase letter, an uppercase letter, a number 
+	 * and a special character
+	 * @param password
+	 * @return true if password is strong enough
+	 */
+	public static boolean isStrongPassword(String password) {
+	    // Define the criteria for a strong password
+	    String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+	    
+	    // Check if the password matches the criteria
+	    if (password.matches(regex)) {
+	        return true;
+	    } else {
+	        return false;
+	    }
 	}
 
 	public static byte[] imageToByteArray(Image image) {
@@ -431,8 +525,8 @@ public class NewMentorProfile extends JPanel {
                     passwordField.setEchoChar((char) 0); // Show password
                     passwordField_1.setEchoChar((char) 0);
                 } else {
-                    passwordField.setEchoChar('ï¿½'); // Hide password
-                    passwordField_1.setEchoChar('ï¿½');
+                    passwordField.setEchoChar('•'); // Hide password
+                    passwordField_1.setEchoChar('•');
                 }
 			}
 		};

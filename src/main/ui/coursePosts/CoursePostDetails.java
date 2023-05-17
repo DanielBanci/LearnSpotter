@@ -117,6 +117,7 @@ public class CoursePostDetails extends RoundPanel {
 		lblName.setText(course.getOwner().getFirstName() + " " + course.getOwner().getLastName());
 		lblCourseName.setText(course.getName());
 		lblPrice.setText(String.format("(%.2f) RON", course.getPrice()));
+		lblPriceBuy.setText(String.format("(%.2f) RON", course.getPrice()));
 		tAFullDescription.setText(course.getDescription());
 		lblLastUpdate.setText(course.getLastUpdate().toString());
 
@@ -130,7 +131,7 @@ public class CoursePostDetails extends RoundPanel {
 		//update the pdf renderer
 		index = findComponentIndex(this,filePanel);
 		this.remove(filePanel);
-		filePanel = new CourseFilePanel(courseDetailsParent);
+		filePanel = new CourseFilePanel(courseDetailsParent,course);
 		this.add(filePanel,index);
 
 		//display the feedback
@@ -168,7 +169,7 @@ public class CoursePostDetails extends RoundPanel {
 				if(!paymentPanelIsDisplayed) {
 					paymentPanelIsDisplayed = true;
 					if(paymentPanel == null) 						//check if not already created
-						paymentPanel = new PaymentPanel(Double.valueOf(extractNumericChars(lblPriceBuy.getText())),user);
+						paymentPanel = new PaymentPanel(Double.valueOf(extractNumericChars(lblPrice.getText())),user);
 					
 					//insert the panel properly
 					int parentIndex = findComponentIndex(aux, btnBuyCourse.getParent());

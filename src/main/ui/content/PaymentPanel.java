@@ -100,13 +100,17 @@ public class PaymentPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// implement here	
+				System.out.println(cBMM.getSelectedItem().toString());
+				System.out.println(cBYY.getSelectedItem().toString());
 				if(tFCardNumber.getText().length() == 16) 
 				{
 					if(tFCvcCvv.getText().length() == 3)
 					{
-						if(Integer.parseInt(cBMM.getSelectedItem().toString()) >= 6)
-						{
-							if(Integer.parseInt(cBYY.getSelectedItem().toString()) >= 2023)
+						if(!(Integer.parseInt(cBMM.getSelectedItem().toString()) < 6 && 
+								Integer.parseInt(cBYY.getSelectedItem().toString()) == 2023))
+								{
+							if( 
+									Integer.parseInt(cBYY.getSelectedItem().toString()) >= 2023)
 							{	if(isValidName(tFCardHolderName.getText())) {
 								//String cardNumber, String cvvCvc, String cardHolderName, String expirationMonth, String expirationYear
 								card = new Card(tFCardNumber.getText(),
@@ -148,7 +152,7 @@ public class PaymentPanel extends JPanel {
 								JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
 							}
 						} else {
-							message = "The month must be greater or equal than 6";
+							message = "The month must be greater or equal than 6 for the current year";
 							JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
 						}
 					} else {
@@ -224,7 +228,8 @@ public class PaymentPanel extends JPanel {
 				{
 					if(tFCvcCvv.getText().length() == 3)
 					{
-						if(true || Integer.parseInt(cBMM.getSelectedItem().toString()) >= 6)
+						if(!(Integer.parseInt(cBMM.getSelectedItem().toString()) < 6 && 
+								Integer.parseInt(cBYY.getSelectedItem().toString()) == 2023))
 						{
 							if(Integer.parseInt(cBYY.getSelectedItem().toString()) >= 2023)
 							{if(isValidName(tFCardHolderName.getText())) {
@@ -280,7 +285,7 @@ public class PaymentPanel extends JPanel {
 								JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
 							}
 						} else {
-							message = "The month must be greater or equal than 6";
+							message = "The month must be greater or equal than 6 for the current year";
 							JOptionPane.showMessageDialog(null,message,"Eroare",JOptionPane.ERROR_MESSAGE);
 						}
 					} else {
@@ -334,11 +339,13 @@ public class PaymentPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// implement here	
+				
 				if(tFCardNumber.getText().length() == 16) 
 				{
 					if(tFCvcCvv.getText().length() == 3)
 					{
-						if(true || Integer.parseInt(cBMM.getSelectedItem().toString()) >= 6)
+						if(!(Integer.parseInt(cBMM.getSelectedItem().toString()) < 6 && 
+								Integer.parseInt(cBYY.getSelectedItem().toString()) == 2023))
 						{
 							if(Integer.parseInt(cBYY.getSelectedItem().toString()) >= 2023)
 							{if(isValidName(tFCardHolderName.getText())) {

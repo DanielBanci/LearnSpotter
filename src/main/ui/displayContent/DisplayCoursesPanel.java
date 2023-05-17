@@ -19,11 +19,11 @@ import java.util.List;
 
 public class DisplayCoursesPanel extends JPanel {
 
-	public DisplayCoursesPanel(List<Course> courses,User user) {
+	public DisplayCoursesPanel(List<Course> courses,User user,Boolean owned) {
 		this();
 		if(courses.size() != 0) {
 			for(int i=0;i<courses.size();i++) {
-				add(new CoursePost(courses.get(i),true,user));
+				add(new CoursePost(courses.get(i),owned,user));
 			}
 		}else {
 			JLabel label = new JLabel("No courses to be displayed. Once you bought a course it will be displyed here.");

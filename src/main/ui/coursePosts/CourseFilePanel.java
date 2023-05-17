@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
 import main.app.App;
+import main.classes.Course;
 import main.ui.customComponents.RoundButton;
 import main.utility.ImageLoader;
 
@@ -41,6 +42,7 @@ public class CourseFilePanel extends JPanel {
 	private JPanel courseDetailsParent;			//the panel with the course details
 	private JLabel lblIconPdfFile;
 	private String message = "You need to buy the course to perform this action!";
+	private JLabel lblCourseName;
 	
 	//for action listeners
 	protected JButton btnViewCourse;				//the button the show the pdf
@@ -81,14 +83,68 @@ public class CourseFilePanel extends JPanel {
 	 * Parametes contructor. It will fill the data with the proper values.		//TODO: fill missing data
 	 * @param pane -?
 	 */
-	public CourseFilePanel(JPanel courseDetailsP) {
+	public CourseFilePanel(JPanel courseDetailsP,Course course) {
 		this();
 		loadButtonsImageIcon();
+		lblCourseName.setText(course.getName());
 		courseDetailsParent = courseDetailsP;
-		btnViewCourse.addActionListener(btnViewCourseActionListener());
+		btnViewCourse.addActionListener(btnViewCourseActionListener(course));
 		lblIconPdfFile.setIcon(pdfFileIcon);
 		btnViewCourse.setIcon(iconButtonLocked);
 		
+	}
+	
+	private ActionListener btnViewCourseActionListener(Course course) {
+		CourseFilePanel p = this;
+		ActionListener act = new ActionListener() { 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(payed) { 																			//action if the payment was made
+					if(!displayed) {																	//need to display the pdf
+						p.remove(pdfViewPanel);															//make and add the new pdf
+						pdfViewPanel = new PDFViewPanel(course);
+						btnViewCourse.setIcon(iconButtonUnlocked);										//set image icon as unlockde after the
+						p.add(pdfViewPanel,1);															//payed was made
+						btnViewCourse.setText("Hide course");
+						courseDetailsParent.getComponent(0).setMaximumSize(new Dimension(1300,30000));	//reset size of panel
+						App.getInstance().getFrame().invalidate();										//update ui
+						displayed = true;
+					}else {																				//need to hide the pdf
+						p.remove(pdfViewPanel);															//remove pdf
+						courseDetailsParent.getComponent(0).setMaximumSize(new Dimension(800,30000));	//reset size of panel
+						btnViewCourse.setText("View course");											//reset button message
+						displayed = false;
+						App.getInstance().getFrame().invalidate();										//update ui
+					}
+				}else {	//display a popUp to inform the user that the course needs to be bought for this action
+						//set it visible for 3 seconds
+					JPopupMenu popupMenu = new JPopupMenu();
+					popupMenu.setOpaque(false);
+					popupMenu.setBorder(new EmptyBorder(0,0,0,0));
+					
+					JLabel mes = new JLabel(message);
+					mes.setForeground(Color.red);
+					mes.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			        popupMenu.add(mes);
+			        
+			        //get the position to display the popup menu
+			        int xPos = 0;
+			        int yPos = - btnViewCourse.getHeight();										//disply on top
+			        popupMenu.show(btnViewCourse,xPos ,yPos );
+			        
+			        Timer timer = new Timer(3000, new ActionListener() {						//visible for 3 sec
+	                    @Override
+	                    public void actionPerformed(ActionEvent evt) {
+	                        popupMenu.setVisible(false);
+	                    }
+	                });
+	                timer.setRepeats(false);
+	                timer.start();
+				}
+			}
+		};
+
+		return act;
 	}
 	
 	public CourseFilePanel(JPanel courseDetailsP,Boolean payed) {
@@ -133,9 +189,9 @@ public class CourseFilePanel extends JPanel {
 		
 		courseFilePanel.add(lblIconPdfFile);
 		
-		JLabel lblNewLabel = new JLabel("CourseName.pdf");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		courseFilePanel.add(lblNewLabel);
+		lblCourseName = new JLabel("CourseName.pdf");
+		lblCourseName.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		courseFilePanel.add(lblCourseName);
 		
 		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
 		horizontalStrut_1.setMaximumSize(new Dimension(20000, 10));

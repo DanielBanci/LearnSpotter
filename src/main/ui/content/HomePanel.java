@@ -12,6 +12,7 @@ import main.classes.User;
 import main.ui.coursePosts.CoursePost;
 import main.ui.mentoringProgram.MentoringProgramPost;
 import main.ui.mentors.MentorPost;
+import main.utility.temporaryDatabase.TDB;
 
 import javax.swing.BoxLayout;
 import javax.swing.border.EmptyBorder;
@@ -34,14 +35,16 @@ public class HomePanel extends JPanel {
 	
 	public HomePanel(Boolean TODO,Mentor mentor,User user) {
 		this();
+		
 		for(int i = 0;i<5;i++) {
-			coursesP.add(new CoursePost(Course.createMockup(),user));
+			//coursesP.add(new CoursePost(Course.createMockup(),user));
+			coursesP.add(new CoursePost());
 		}
 		for(int i = 0;i<5;i++) {
 			mentorsP.add(new MentorPost(Mentor.createMockup()));
 		}
 		for(int i = 0;i<5;i++) {
-			mentoringProgramP.add(new MentoringProgramPost(MentoringProgram.createMockup(), true,user));
+			mentoringProgramP.add(new MentoringProgramPost(MentoringProgram.createMockup(), true,user,false));
 		}
 		SwingUtilities.invokeLater(new Runnable() {
 
@@ -69,7 +72,7 @@ public class HomePanel extends JPanel {
 			mentorsP.add(new MentorPost(Mentor.createMockup()));
 		}
 		for(int i = 0;i<5;i++) {
-			mentoringProgramP.add(new MentoringProgramPost(MentoringProgram.createMockup(), true,mentor));
+			mentoringProgramP.add(new MentoringProgramPost(MentoringProgram.createMockup(), true,mentor,false));
 		}
 		SwingUtilities.invokeLater(new Runnable() {
 

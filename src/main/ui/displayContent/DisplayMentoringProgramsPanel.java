@@ -18,12 +18,12 @@ import main.ui.mentors.MentorPost;
 
 public class DisplayMentoringProgramsPanel extends JPanel {
 
-	public DisplayMentoringProgramsPanel(List<MentoringProgram> mentoringPrograms) {
+	public DisplayMentoringProgramsPanel(List<MentoringProgram> mentoringPrograms,Boolean owned) {
 		setLayout(new WrapLayout(FlowLayout.CENTER,10,40));
 		setMaximumSize(new Dimension(1300,900000));
 		if(mentoringPrograms.size() != 0) {
 			for(int i = 0;i < mentoringPrograms.size();i++) {
-			add(new MentoringProgramPost(mentoringPrograms.get(i),true,User.createMockup()));
+			add(new MentoringProgramPost(mentoringPrograms.get(i),true,User.createMockup(),owned));
 		}
 		}else {
 			JLabel label = new JLabel("No courses to be displayed. Once you joined to a mentoring program it will be displyed here.");
@@ -54,7 +54,7 @@ public class DisplayMentoringProgramsPanel extends JPanel {
 		setLayout(new WrapLayout(FlowLayout.CENTER,10,40));
 		setMaximumSize(new Dimension(1300,900000));
 		for(int i = 0;i < 25;i++) {
-			add(new MentoringProgramPost(MentoringProgram.createMockup(),true,User.createMockup()));
+			add(new MentoringProgramPost(MentoringProgram.createMockup(),true,User.createMockup(),false));
 		}
 		
 		DisplayMentoringProgramsPanel f = this;
