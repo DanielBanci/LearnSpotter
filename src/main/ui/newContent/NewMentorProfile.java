@@ -394,14 +394,7 @@ public class NewMentorProfile extends JPanel {
 				Mentor mentor = new Mentor(id,firstName,lastName,email,password,phoneNumber,profilePic,location,description,field,programsNumber,registerDate,
 						feedback,courses,mentoringPrograms,card);
 				//TODO store new mentor
-				DbConnection dbConnection = null;
-				try {
-					dbConnection = new DbConnection();	
-				} catch (SQLException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				Connection conn = dbConnection.getConnection();
+				Connection conn = DbConnection.conn;
 				
 				String sql = "INSERT INTO users(first_name, last_name, email, password, phone_number, description, field,"
 						+ " programs_number, card_number, cvv, card_holder_name, expiration_month, expiration_year, "
@@ -526,8 +519,8 @@ public class NewMentorProfile extends JPanel {
                     passwordField.setEchoChar((char) 0); // Show password
                     passwordField_1.setEchoChar((char) 0);
                 } else {
-                    passwordField.setEchoChar('•'); // Hide password
-                    passwordField_1.setEchoChar('•');
+                    passwordField.setEchoChar('ï¿½'); // Hide password
+                    passwordField_1.setEchoChar('ï¿½');
                 }
 			}
 		};

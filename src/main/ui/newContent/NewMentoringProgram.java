@@ -302,14 +302,7 @@ public class NewMentoringProgram extends JPanel {
 														duration,price,currency,mentor,rating,noViews,field,feedbacks,uploadedFiles);
 				
 				//TODO upload data to database and display new mentoring program
-				DbConnection dbConnection = null;
-				try {
-					dbConnection = new DbConnection();	
-				} catch (SQLException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				Connection conn = dbConnection.getConnection();
+				Connection conn = DbConnection.conn;
 				
 				int insertedMentoringProgramId = -1;
 				

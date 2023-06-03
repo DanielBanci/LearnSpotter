@@ -1,6 +1,10 @@
 package main.classes;
 
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,6 +13,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import main.db.DbConnection;
 
 /**
  * A class that holds the data related to the course.
@@ -94,8 +100,30 @@ public class Course {
 		this.price = price;
 		this.lastUpdate = lastUpdate;
 		this.feedback = feedback;
-		this.owner = owner;
+		this.owner = setupOwner();
 		this.pdfFiles = pdfFiles;
+	}
+	
+	private Mentor setupOwner()
+	{
+		Connection conn = DbConnection.conn;
+		
+		String sql = "SELECT * FROM users where type='mentor' AND id=" + this.idMentor;
+		
+		try {
+			Statement statement = conn.createStatement();
+			ResultSet rs3 = statement.executeQuery(sql);
+			
+			if(rs3.next())
+			{
+				return new Mentor(rs3.getInt(1), rs3.getString(2), rs3.getString(3), rs3.getString(4),
+						rs3.getString(5), rs3.getString(6), null, "", rs3.getString(7), 
+						rs3.getString(8), rs3.getInt(9), null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null);
+			}
+		} catch(Exception e) {
+			System.out.println(e);
+		}
+		return new Mentor();
 	}
 	
 	public int getId() {

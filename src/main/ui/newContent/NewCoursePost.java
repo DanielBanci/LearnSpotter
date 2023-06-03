@@ -190,15 +190,7 @@ public class NewCoursePost extends JPanel {
 						
 					String currency = (String) comboBoxMoney.getSelectedItem();
 					
-					DbConnection dbConnection;
-					Connection conn = null;
-					try {
-						dbConnection = new DbConnection();
-						conn = dbConnection.getConnection();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					Connection conn = DbConnection.conn;
 					
 					String sql = "INSERT INTO courses (id_mentor, id_mentoring_program, name, description, price, currency) VALUES (?, ?, ?, ?, ?, ?)";
 

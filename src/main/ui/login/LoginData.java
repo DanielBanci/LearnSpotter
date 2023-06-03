@@ -170,8 +170,7 @@ public class LoginData extends RoundPanel {
 			public void actionPerformed(ActionEvent e) {                        //TO DO: check input and login the users
                 //complete code here
             	try {
-					DbConnection dbConnection = new DbConnection();
-					Connection conn = dbConnection.getConnection();
+					Connection conn = DbConnection.conn;
 					
 					String query = "SELECT * FROM users WHERE email=? AND password=?";
 					
@@ -236,7 +235,7 @@ public class LoginData extends RoundPanel {
             	if (checkBox.isSelected()) {
                     passwordField.setEchoChar((char) 0); // Show password
                 } else {
-                    passwordField.setEchoChar('•'); // Hide password
+                    passwordField.setEchoChar('ï¿½'); // Hide password
                 }
             }
         };

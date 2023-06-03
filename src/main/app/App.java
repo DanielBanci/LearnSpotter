@@ -32,9 +32,9 @@ public class App {
 					App app = App.getInstance();
 					app.frame.setVisible(true);
 					
-					DbConnection dbConnection = new DbConnection();
-					dbConnection.initializeDatabase();
-					Connection conn = dbConnection.getConnection();
+//					DbConnection dbConnection = new DbConnection();
+					DbConnection.initializeDatabase();
+					Connection conn = DbConnection.conn;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

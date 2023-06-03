@@ -329,14 +329,7 @@ public class NewUserProfile extends JPanel {
 				List<MentoringProgram> mentoringPrograms = new ArrayList<>();	//no mentoring program joined when account just created
 				
 				User user = new User(id,firstName,lastName,email, password,phoneNumber,courses,mentoringPrograms,profilePic);	//store user
-				DbConnection dbConnection = null;
-				try {
-					dbConnection = new DbConnection();	
-				} catch (SQLException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				Connection conn = dbConnection.getConnection();
+				Connection conn = DbConnection.conn;
 				
 				String sql = "INSERT INTO users(first_name, last_name, email, password, phone_number, profile_pic, type) VALUES(?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement pstmt;
@@ -449,8 +442,8 @@ public class NewUserProfile extends JPanel {
                     passwordField.setEchoChar((char) 0); // Show password
                     passwordField_1.setEchoChar((char) 0);
                 } else {
-                    passwordField.setEchoChar('•'); // Hide password
-                    passwordField_1.setEchoChar('•');
+                    passwordField.setEchoChar('ï¿½'); // Hide password
+                    passwordField_1.setEchoChar('ï¿½');
                 }
 			}
 			

@@ -89,6 +89,7 @@ public class MentoringProgramPost extends RoundPanel {
 		lblProgramTitle.setText(mentoringProgram.getName());
 		lblReviewsNumber.setText(String.valueOf(mentoringProgram.getNoViews()));
 		lblField.setText(mentoringProgram.getField());
+		lblDifficulty.setText(mentoringProgram.getDifficultyLevel());
 		lblDuration.setText(String.valueOf(mentoringProgram.getDuration()));
 		lblPrice.setText(String.valueOf(mentoringProgram.getPrice() + " " + mentoringProgram.getCurrency()));
 		tADescription.setTextBody(mentoringProgram.getDescription());

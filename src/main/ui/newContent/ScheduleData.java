@@ -22,11 +22,11 @@ public class ScheduleData{
 	public ScheduleData() {}
 	
 	public ScheduleData(LocalDate startDate, LocalTime startTime, LocalDate untilDate, String atEvery, Boolean repeat,NewScheduleDatePanel parent) {
-	this.startDate = startDate;
-	this.startTime = startTime;
-	this.untilDate = untilDate;
-	this.atEvery = atEvery;
-	this.repeat = repeat;
+		this.startDate = startDate;
+		this.startTime = startTime;
+		this.untilDate = untilDate;
+		this.atEvery = atEvery;
+		this.repeat = repeat;
 	}
 	
 	public boolean equals(Object obj) {

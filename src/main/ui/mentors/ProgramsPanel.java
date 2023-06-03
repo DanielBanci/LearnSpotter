@@ -29,6 +29,7 @@ public class ProgramsPanel extends JPanel {
 	//for user
 	public ProgramsPanel(Mentor mentor,User user) {
 		this();
+		
 		if(mentor.getMentoringPrograms().size() == 0) {
 			JLabel label = new JLabel("No programs to be displayed");
 			label.setFont(new Font("Tharoma",Font.PLAIN,16));
@@ -43,12 +44,12 @@ public class ProgramsPanel extends JPanel {
 				
 			}
 		}
-		
 	}
 	
 	//for mentor
 	public ProgramsPanel(Mentor mentor) {
 		this();
+		System.out.println("numar: " + mentor.getProgramsNumber());
 		if(mentor.getMentoringPrograms().size() == 0) {
 			JLabel label = new JLabel("No programs to be displayed");
 			label.setFont(new Font("Tharoma",Font.PLAIN,16));
@@ -61,7 +62,7 @@ public class ProgramsPanel extends JPanel {
 			add(buttonPanel,1);
 		}else {
 			add(buttonPanel,0);
-			for(int i=0;i<mentor.getMentoringPrograms().size();i++) {
+			for(int i=0;i < mentor.getProgramsNumber();i++) {
 				add(new MentoringProgramPost(mentor.getMentoringPrograms().get(i),true,User.createMockup(),false));
 				
 			}

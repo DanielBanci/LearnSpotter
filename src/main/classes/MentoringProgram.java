@@ -1,12 +1,19 @@
 package main.classes;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import main.db.DbConnection;
 import main.ui.newContent.ScheduleData;
 
 /**
@@ -136,16 +143,16 @@ public class MentoringProgram {
 	 * @param files
 	 * @param currency
 	 */
-	public MentoringProgram(int id,int mentorId, String name, String difficultyLevel, String description, String location, List<ScheduleData> schedule,
-			int duration, int price,String currency,Mentor mentor,int rating,int noViews,String field, 
-			List<Feedback> feedbacks,Map<String,byte[]> files) {
+	public MentoringProgram(int id,int mentorId, String name, String difficultyLevel, String description, String location, 
+			List<ScheduleData> schedule, int duration, int price,String currency,Mentor mentor,
+			int rating,int noViews,String field, List<Feedback> feedbacks,Map<String,byte[]> files) {
 		this.id = id;
 		this.mentorId = mentorId;
 		this.name = name;
 		this.difficultyLevel = difficultyLevel;
 		this.description = description;
 		this.location = location;
-		this.schedule = schedule;
+		this.schedule = setupSchedule();
 		this.duration = duration;
 		this.price = price;
 		this.currency = currency;
@@ -155,6 +162,29 @@ public class MentoringProgram {
 		this.field = field;
 		this.feedbacks = feedbacks;
 		this.files = files;
+	}
+	
+	private List<ScheduleData> setupSchedule()
+	{
+		List<ScheduleData> schedules = new ArrayList<>();
+		Connection conn = DbConnection.conn;
+
+		String sql = "SELECT * FROM schedule WHERE id_mentoring_program=" + this.id;
+		Statement statement;
+		try {
+			statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+
+			while(rs.next())
+				schedules.add(new ScheduleData(LocalDate.parse(rs.getString("start_datetime").split(" ")[0]), 
+						LocalTime.parse(rs.getString("start_datetime").split(" ")[1]), 
+						LocalDate.parse(rs.getString("repeat_until")), rs.getString("repeat_rate"), 
+						rs.getBoolean("repeat_bool"), null));
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		
+		return schedules;
 	}
 	
 	public int getId() {

@@ -6,18 +6,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DbConnection {
-	private Connection conn;
+	public static Connection conn;
 	
-	public DbConnection() throws SQLException {
-		String jdbcUrl = "jdbc:mysql://localhost:3306/proiectpc";
-	    String username = "root";
-	    String password = "db2023";
-	      
-	    this.conn = DriverManager.getConnection(jdbcUrl, username, password);
+	public DbConnection() {
+		
 	}
 	
-	public void initializeDatabase()
+	public static void initializeDatabase() throws SQLException
 	{
+		String jdbcUrl = "jdbc:mysql://localhost:3306/proiectpc";
+	    String username = "root";
+	    String password = "";
+	    
+	    conn = DriverManager.getConnection(jdbcUrl, username, password);
+		
 		try {
 	        Statement stmt = conn.createStatement();
 	        String users = "CREATE TABLE IF NOT EXISTS users " +
@@ -101,12 +103,12 @@ public class DbConnection {
 	    }
 	    catch(Exception e) {
 	        e.printStackTrace();
-	        this.conn = null;
+	        conn = null;
 	    }
 	}
 	
-	public Connection getConnection()
-	{
-		return this.conn;
-	}
+//	public Connection getConnection()
+//	{
+//		return this.conn;
+//	}
 }

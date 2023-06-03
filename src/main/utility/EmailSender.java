@@ -98,8 +98,7 @@ public class EmailSender {
 	{
 		String lastName = "";
 		
-		DbConnection dbConnection = new DbConnection();
-		Connection conn = dbConnection.getConnection();
+		Connection conn = DbConnection.conn;
 		
 		// Create a statement to execute the SQL query
         Statement stmt = conn.createStatement();

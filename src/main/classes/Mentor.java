@@ -1,10 +1,17 @@
 package main.classes;
 
 import java.awt.Image;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import main.db.DbConnection;
+import main.ui.mentoringProgram.MentoringProgramPost;
 import main.utility.ImageLoader;
 
 /**
@@ -22,6 +29,7 @@ public class Mentor extends User {
 	private List<Feedback> feedbacks;
 	private Card card;
 	private String location;
+	private int id;
 	
 	public String getLocation() {
 		return location;
@@ -54,6 +62,11 @@ public class Mentor extends User {
 	public void setRegisterDate(Date registerDate) {
 		this.registerDate = registerDate;
 	}
+	
+	public int getProgramsNumber()
+	{
+		return this.getMentoringPrograms().size();
+	}
 
 	/**
 	 * Creates a new instance of the Mentor class with default values.
@@ -80,10 +93,15 @@ public class Mentor extends User {
 	 * @param courses
 	 * @param mentoringPrograms
 	 * @param card
+	 * @param profilePic 
 	 */
-	public Mentor(int id, String firstName, String lastName, String email, String password, String phoneNumber,Image profilePic, 
-			String location, String description, String field, int programsNumber,Date registerDate,List<Feedback> feedbacks,List<Course> courses, List<MentoringProgram> mentoringPrograms,Card card) {
+	public Mentor(int id, String firstName, String lastName, String email, String password, 
+			String phoneNumber, Image profilePic, String location, String description, String field, 
+			int programsNumber,Date registerDate,List<Feedback> feedbacks,List<Course> courses, 
+			List<MentoringProgram> mentoringPrograms,Card card) {
 		super(id, firstName, lastName, email, password, phoneNumber,courses,mentoringPrograms,profilePic);
+		
+		this.id = id;
 		this.location = location;
 		this.description = description;
 		this.field = field;
@@ -91,7 +109,6 @@ public class Mentor extends User {
 		this.registerDate = registerDate;
 		this.feedbacks = feedbacks;
 		this.card = card;
-		
 	}
 	
 	public String getDescription() {
@@ -107,10 +124,7 @@ public class Mentor extends User {
 	public void setField(String field) {
 		this.field = field;
 	}
-	
-	public int getProgramsNumber() {
-		return programsNumber;
-	}
+
 	public void setProgramsNumber(int programsNumber) {
 		this.programsNumber = programsNumber;
 	}

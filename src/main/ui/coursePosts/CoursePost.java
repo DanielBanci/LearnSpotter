@@ -28,82 +28,84 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
+
 //TO DO: implement constructors with parameters
 public class CoursePost extends RoundPanel {
-	//private JTextField tFCourseTitle;		//title of the course
-	private JLabel lblName;					//owner of the course
-	private TextAreaWithPreview tADescription;		//short description of the course; -> probably the first few lines from the description
-	private StarRatingBar ratingBar;		//the rating bar - needs to be non-editable for a post
-	private JLabel lblNrViewsRating;		//the number of the people who rated the course
-	private JTextField txtCoursePrice;		//price of the course
-	private JButton btnDetails;				//the button for opening the course panel
+	// private JTextField tFCourseTitle; //title of the course
+	private JLabel lblName; // owner of the course
+	private TextAreaWithPreview tADescription; // short description of the course; -> probably the first few lines from
+												// the description
+	private StarRatingBar ratingBar; // the rating bar - needs to be non-editable for a post
+	private JLabel lblNrViewsRating; // the number of the people who rated the course
+	private JTextField txtCoursePrice; // price of the course
+	private JButton btnDetails; // the button for opening the course panel
 	private JLabel lblCourseTitle;
 
-
-	public CoursePost(Course course,Boolean owned,User user) {
+	public CoursePost(Course course, Boolean owned, User user) {
 		this();
-		//display info
+		// display info
 		lblCourseTitle.setText(course.getName());
 		lblName.setText(course.getOwner().getFirstName() + " " + course.getOwner().getLastName());
 
-		if(course.getDescription().isEmpty()) {
+		if (course.getDescription().isEmpty()) {
 			tADescription.setTextBody("No description to display");
-		}else {
+		} else {
 			tADescription.setTextBody(course.getDescription());
 		}
 
-		//display the rating
+		// display the rating
 		Container parent = ratingBar.getParent();
 		int index = findComponentIndex(parent, ratingBar);
 		parent.remove(ratingBar);
-		ratingBar = new StarRatingBar(course.getRating(),1);
-		parent.add(ratingBar,index);
+		ratingBar = new StarRatingBar(course.getRating(), 1);
+		parent.add(ratingBar, index);
 
 		lblNrViewsRating.setText(String.valueOf(course.getNoViews()));
-		if(course.getPrice() == 0) {
+		if (course.getPrice() == 0) {
 			txtCoursePrice.setText("Free");
-		}else {
+		} else {
 			txtCoursePrice.setText(String.valueOf(course.getPrice()));
 		}
-		
-		btnDetails.addActionListener(makeDetailsActionListener(course,owned,user));
+
+		btnDetails.addActionListener(makeDetailsActionListener(course, owned, user));
 	}
-	
-	public CoursePost(Course course,User user) {
+
+	public CoursePost(Course course, User user) {
 		this();
-		//display info
+		// display info
 		lblCourseTitle.setText(course.getName());
 		lblName.setText(course.getOwner().getFirstName() + " " + course.getOwner().getLastName());
 
-		if(course.getDescription().isEmpty()) {
+		if (course.getDescription().isEmpty()) {
 			tADescription.setTextBody("No description to display");
-		}else {
+		} else {
 			tADescription.setTextBody(course.getDescription());
 		}
 
-		//display the rating
+		// display the rating
 		Container parent = ratingBar.getParent();
 		int index = findComponentIndex(parent, ratingBar);
 		parent.remove(ratingBar);
-		ratingBar = new StarRatingBar(course.getRating(),1);
-		parent.add(ratingBar,index);
+		ratingBar = new StarRatingBar(course.getRating(), 1);
+		parent.add(ratingBar, index);
 
 		lblNrViewsRating.setText(String.valueOf(course.getNoViews()));
-		if(course.getPrice() == 0) {
+		if (course.getPrice() == 0) {
 			txtCoursePrice.setText("Free");
-		}else {
+		} else {
 			txtCoursePrice.setText(String.valueOf(course.getPrice() + " RON"));
 		}
-		
-		btnDetails.addActionListener(makeDetailsActionListener(course,false,user));
+
+		btnDetails.addActionListener(makeDetailsActionListener(course, false, user));
 	}
 
 	/**
 	 * Method that search for a panel index inside the container.
+	 * 
 	 * @param target the panel in interest
 	 * @return the index of the panel, -1 if not found
 	 */
-	public int findComponentIndex(Container container,Object target) {
+	public int findComponentIndex(Container container, Object target) {
 		Component[] components = container.getComponents();
 		for (int i = 0; i < components.length; i++) {
 			if (components[i].equals(target)) {
@@ -113,22 +115,25 @@ public class CoursePost extends RoundPanel {
 		return -1; // Component not found
 	}
 
-	private ActionListener makeDetailsActionListener(Course course,Boolean owned,User user) {
+	private ActionListener makeDetailsActionListener(Course course, Boolean owned, User user) {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
-				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.Y_AXIS));
-				MainPanel.getInstance().getContent().add(new CoursePostDetails(course, MainPanel.getInstance().getContent(),user,owned));
+				MainPanel.getInstance().getContent()
+						.setLayout(new BoxLayout(MainPanel.getInstance().getContent(), BoxLayout.Y_AXIS));
+				MainPanel.getInstance().getContent()
+						.add(new CoursePostDetails(course, MainPanel.getInstance().getContent(), user, owned));
 				MainPanel.getInstance().getContent().revalidate();
 			}
 		};
 	}
+
 	/**
 	 * Create the panel(ui components)
 	 */
 	public CoursePost() {
 		setMaximumSize(new Dimension(400, 32767));
-		//ui
+		// ui
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -144,16 +149,15 @@ public class CoursePost extends RoundPanel {
 		lblCourseTitle = new JLabel("Course title:");
 		lblCourseTitle.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		titlePanel.add(lblCourseTitle);
-		
-		/*tFCourseTitle = new JTextField();
-		tFCourseTitle.setEditable(false);
-		tFCourseTitle.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tFCourseTitle.setOpaque(false);
-		tFCourseTitle.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		tFCourseTitle.setText("Inginerie Software");
-		tFCourseTitle.setMaximumSize(new Dimension(2147483647, 40));
-		titlePanel.add(tFCourseTitle);
-		tFCourseTitle.setColumns(10);*/
+
+		/*
+		 * tFCourseTitle = new JTextField(); tFCourseTitle.setEditable(false);
+		 * tFCourseTitle.setBorder(new EmptyBorder(0, 0, 0, 0));
+		 * tFCourseTitle.setOpaque(false); tFCourseTitle.setFont(new Font("Tahoma",
+		 * Font.PLAIN, 16)); tFCourseTitle.setText("Inginerie Software");
+		 * tFCourseTitle.setMaximumSize(new Dimension(2147483647, 40));
+		 * titlePanel.add(tFCourseTitle); tFCourseTitle.setColumns(10);
+		 */
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -190,7 +194,8 @@ public class CoursePost extends RoundPanel {
 		panel_1.add(tADescription, BorderLayout.CENTER);
 		tADescription.setFont(new Font("Monospaced", Font.PLAIN, 14));
 		tADescription.setOpaque(false);
-		tADescription.setTextBody("The course presents the fundamentals of crating a project plan.It has a creative and funny structure that will help you understand it very quickly and you'll finsh it before you know it.Have fun learning about Software Engineering.");
+		tADescription.setTextBody(
+				"The course presents the fundamentals of crating a project plan.It has a creative and funny structure that will help you understand it very quickly and you'll finsh it before you know it.Have fun learning about Software Engineering.");
 		tADescription.setBorder(new EmptyBorder(5, 10, 0, 10));
 		tADescription.setEditable(false);
 		tADescription.setMaximumSize(new Dimension(2147483647, 100));
@@ -204,10 +209,10 @@ public class CoursePost extends RoundPanel {
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_3.add(lblNewLabel_5);
 
-		ratingBar = new StarRatingBar(3,1);//new JPanel();
+		ratingBar = new StarRatingBar(3, 1);// new JPanel();
 		ratingBar.setMinimumSize(new Dimension(200, 30));
 		ratingBar.setMaximumSize(new Dimension(200, 30));
-		ratingBar.setBorder(new EmptyBorder(0,0,0,0));
+		ratingBar.setBorder(new EmptyBorder(0, 0, 0, 0));
 		panel_3.add(ratingBar);
 
 		lblNrViewsRating = new JLabel("(10 reviews)  ");
@@ -257,7 +262,6 @@ public class CoursePost extends RoundPanel {
 		btnDetails.setMinimumSize(new Dimension(100, 30));
 		btnDetails.setMaximumSize(new Dimension(100, 30));
 		btnDetails.setOpaque(false);
-
 
 	}
 
