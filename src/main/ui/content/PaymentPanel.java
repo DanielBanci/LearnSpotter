@@ -34,6 +34,7 @@ import javax.swing.border.EmptyBorder;
 
 import main.ui.coursePosts.CourseFilePanel;
 import main.ui.coursePosts.CoursePostDetails;
+import main.ui.coursePosts.FeedbackPanel;
 import main.ui.customComponents.ImagePanel;
 import main.ui.customComponents.RoundButton;
 import main.utility.*;
@@ -267,6 +268,12 @@ public class PaymentPanel extends JPanel {
 				                });
 				                timer.setRepeats(false);
 				                timer.start();
+				                
+				                //check if the label with the message is displayed and remove it
+				                if(aux.menuBar.reviewsPanel.getComponent(0) instanceof JLabel) 
+				                	aux.menuBar.reviewsPanel.removeAll();
+				                aux.menuBar.reviewsPanel.add(new FeedbackPanel(true,MainPanel.loggedUser,aux.getMentoringProgram()),0);
+				                
 				                
 				                aux.remove(aux.getPaymentPanel());
 				                aux.remove(aux.getButtonPanel());

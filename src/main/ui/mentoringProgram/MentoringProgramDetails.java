@@ -7,6 +7,7 @@ import main.ui.customComponents.RoundPanel;
 import main.classes.MentoringProgram;
 import main.classes.User;
 import main.ui.calendar.*;
+import main.ui.content.MainPanel;
 import main.ui.content.PaymentPanel;
 
 import javax.swing.BoxLayout;
@@ -34,7 +35,7 @@ public class MentoringProgramDetails extends MentoringProgramPost {
 		return buttonPanel;
 	}
 
-	private MenuBar menuBar;
+	public MenuBar menuBar;
 	private User user;
 	
 	public JPanel getPaymentPanel() {
@@ -99,6 +100,10 @@ public class MentoringProgramDetails extends MentoringProgramPost {
 		setPaymentStatus(owned);
 		if(owned) {
 			remove(buttonPanel);
+			panel.remove(menuBar);
+			//menuBar = new MenuBar(this,mentoringProgram,user);
+			menuBar = new MenuBar(this,mentoringProgram,MainPanel.loggedUser);
+			panel.add(menuBar);
 		}
 		contentPanel = new JPanel();
 		contentPanel.setOpaque(false);

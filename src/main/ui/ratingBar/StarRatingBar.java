@@ -236,10 +236,10 @@ public class StarRatingBar extends JPanel{
 	 * Set rating level to l.
 	 * @param l the rating value.
 	 */
-	/*public void setLevel(int l) {
-		clicked = l-1;
+	public void setLevel(int l) {
+		clicked = l;
 		repaintIcon(clicked);
-	}*/
+	}
 
 	/**
 	 * This method takes a Point object representing the location of a JLabel and returns the index of the selected icon.

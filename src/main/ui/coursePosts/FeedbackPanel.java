@@ -2,8 +2,11 @@ package main.ui.coursePosts;
 
 import javax.swing.JPanel;
 
+import main.app.App;
 import main.classes.Feedback;
+import main.classes.MentoringProgram;
 import main.classes.User;
+import main.ui.content.MainPanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
 import main.ui.customComponents.RoundPanel;
@@ -28,8 +31,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+
 import java.awt.FlowLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
 /**
  * Panel that display a feedback message.
@@ -49,10 +55,13 @@ public class FeedbackPanel extends JPanel {
 	private JPanel panel_7;
 	private JButton btnPostFeedback;
 	private User user; 
+	private MentoringProgram mentoringProgram;
 	
-	public FeedbackPanel(Boolean truePostInterface,User user) {
+	public FeedbackPanel(Boolean truePostInterface,User user,MentoringProgram mentoringProgram) {
 		this(truePostInterface);
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
+		this.user = user;
+		this.mentoringProgram = mentoringProgram;
 		
 		//display user data
 		lblName.setText(user.getFirstName() + " " + user.getLastName());
@@ -63,7 +72,18 @@ public class FeedbackPanel extends JPanel {
 		parent.remove(ratingBarPanel);
 		ratingBarPanel = new StarRatingBar(1);
 		parent.add(ratingBarPanel,index);
-		btnPostFeedback.addActionListener(postFeedbackActionListener());
+		
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				btnPostFeedback.addActionListener(postFeedbackActionListener());
+			}
+			
+		});
+		
+		
 	}
 	
 	public String formatDate(Date date) {
@@ -89,7 +109,24 @@ public class FeedbackPanel extends JPanel {
 						Date date = new Date(); 		//current date for new feddback post
 						int rating = ratingBarPanel.getClicked() + 1;
 						int id = 1;						//getLastFeedbackId() + 1;
-						Feedback feedback = new Feedback(id,user,feedbackMessage,rating,date);
+						Feedback feedback = new Feedback(id,FeedbackPanel.this.user,feedbackMessage,rating,date);
+						
+						mentoringProgram.getFeedbacks().add(feedback);
+						//TODO: store new feedback
+						
+						//TODO: get mentoring program from database and refresh the mentoringProgramDetails
+						
+						//display new feedback
+						JPanel parent = (JPanel) FeedbackPanel.this.getParent();
+						parent.add(new FeedbackPanel(feedback),1);
+						tAFeedbackMessage.setText(null);
+						
+						JPanel parentRatingBar = (JPanel) ratingBarPanel.getParent();
+						parentRatingBar.remove(ratingBarPanel);
+						ratingBarPanel = new StarRatingBar(1);
+						parentRatingBar.add(ratingBarPanel);
+						
+						
 					}
 				}
 			}
@@ -103,7 +140,7 @@ public class FeedbackPanel extends JPanel {
 	public FeedbackPanel(Feedback feedback) {
 		this();
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
-		lblName.setName(feedback.getUser().getFirstName() + " " + feedback.getUser().getLastName());
+		lblName.setText(feedback.getUser().getFirstName() + " " + feedback.getUser().getLastName());
 		tAFeedbackMessage.setText(feedback.getText());
 		lblDate.setText(formatDate(feedback.getDate()));
 		
@@ -113,6 +150,12 @@ public class FeedbackPanel extends JPanel {
 		parent.remove(ratingBarPanel);
 		ratingBarPanel = new StarRatingBar(feedback.getRating(),1);
 		parent.add(ratingBarPanel,index);
+		
+		//ratingBarPanel.repaintIcon(feedback.getRating());
+		ratingBarPanel.setLevel(feedback.getRating());			//functioneaza cu setLevel
+		
+		//update ui
+		invalidate();
 	}
 
 	/**

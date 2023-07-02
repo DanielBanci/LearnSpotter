@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import main.classes.MentoringProgram;
+import main.classes.User;
 
 
 public class MenuBar extends JMenuBar {
@@ -21,14 +22,27 @@ public class MenuBar extends JMenuBar {
 
 	private MentoringProgramDetails mentorProgramDetails;
 	private JPanel aboutPanel;
-	private ReviewsPanel reviewsPanel;
+	public ReviewsPanel reviewsPanel;
 	private CoursesPanel coursesPanel;
 	public CoursesPanel getCoursesPanel() {
 		return coursesPanel;
 	}
 
 	private SchedulePanelMentoringPrograms schedulePanel;
+	
+	//for user
+	public MenuBar(MentoringProgramDetails m,MentoringProgram mentoringProgram,User user) {
+		this();
+		mentorProgramDetails = m;
 
+		//create the panels with the required data 							TODO
+		aboutPanel = new AboutPanel(mentoringProgram);
+		reviewsPanel = new ReviewsPanel(mentoringProgram,user);
+		coursesPanel = new CoursesPanel(mentoringProgram,mentorProgramDetails);
+		schedulePanel = new SchedulePanelMentoringPrograms(mentoringProgram);
+	}
+
+	//for mentor
 	public MenuBar(MentoringProgramDetails m,MentoringProgram mentoringProgram) {
 		this();
 		mentorProgramDetails = m;
