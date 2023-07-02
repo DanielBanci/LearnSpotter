@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.sql.Connection;
 
 import javax.swing.JFrame;
+
+import main.classes.User;
 import main.db.*;
 import main.utility.*;
 import javax.net.ssl.SSLContext;
@@ -16,6 +18,8 @@ import javax.net.ssl.SSLContext;
 public class App {
 	private static App instance;
 	private JFrame frame;
+	
+	
 
 	public JFrame getFrame() {
 		return frame;

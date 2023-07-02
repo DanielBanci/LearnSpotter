@@ -103,7 +103,10 @@ public class MentorPost extends RoundPanel {
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.Y_AXIS));
-				MainPanel.getInstance().getContent().add(new MentorProfile(true,mentor));
+				if(mentor.equals(MainPanel.loggedUser))
+					MainPanel.getInstance().getContent().add(new MentorProfile(true,mentor));
+				else
+					MainPanel.getInstance().getContent().add(new MentorProfile(true,mentor,MainPanel.loggedUser));
 				MainPanel.getInstance().getContent().revalidate();
 				
 			}

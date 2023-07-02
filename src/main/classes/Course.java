@@ -100,7 +100,8 @@ public class Course {
 		this.price = price;
 		this.lastUpdate = lastUpdate;
 		this.feedback = feedback;
-		this.owner = setupOwner();
+		//this.owner = setupOwner();
+		this.owner = owner;
 		this.pdfFiles = pdfFiles;
 	}
 	
@@ -212,7 +213,8 @@ public class Course {
 		}
 		java.sql.Date sqlDate = new java.sql.Date(parsed.getTime());
 		Course mockup = new Course(0, "Software Engineering", 0, 0, "","ceva descriere cum o fi sa fie doar sa fie sa vedem "
-				+ "cum e ca de ce nu dor asa", 4, 0, 299.0d, new Date(), new ArrayList<Feedback>(),Mentor.createMockup(),new HashMap<>());
+				+ "cum e ca de ce nu dor asa", 4, 0, 299.0, new Date(), new ArrayList<Feedback>(),Mentor.createMockup(),
+				new HashMap<String,byte[]>());
 		return mockup;
 	}
 }

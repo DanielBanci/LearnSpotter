@@ -218,7 +218,7 @@ public class NewCoursePost extends JPanel {
 						    ResultSet result = lastIdStatement.executeQuery(sql);
 
 						    if (result.next()) {
-						        int lastId = result.getInt("id");
+						        int lastId = result.getInt("id")+1;
 						        
 						        for (Map.Entry<String, byte[]> entry : courses.entrySet()) {
 						        	sql = "INSERT INTO resources(id_course, id_mentoring_program, name, file) VALUES(?, ?, ?, ?)";

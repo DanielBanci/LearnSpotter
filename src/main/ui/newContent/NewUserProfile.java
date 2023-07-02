@@ -291,7 +291,7 @@ public class NewUserProfile extends JPanel {
 					return;
 				}
 				String email = tFEmail.getText();											//verify email to be write correctly
-				if(email.isBlank()) {
+				if(email.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "An email is required.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -300,7 +300,7 @@ public class NewUserProfile extends JPanel {
 					return;
 				}
 				String password = passwordField.getText();					//TODO verify if passwords match and make a chanck to be strong
-				if(password.isBlank()) {
+				if(password.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Setting a password is required.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -442,8 +442,8 @@ public class NewUserProfile extends JPanel {
                     passwordField.setEchoChar((char) 0); // Show password
                     passwordField_1.setEchoChar((char) 0);
                 } else {
-                    passwordField.setEchoChar('ï¿½'); // Hide password
-                    passwordField_1.setEchoChar('ï¿½');
+                    passwordField.setEchoChar('•'); // Hide password
+                    passwordField_1.setEchoChar('•');
                 }
 			}
 			

@@ -16,7 +16,7 @@ public class DbConnection {
 	{
 		String jdbcUrl = "jdbc:mysql://localhost:3306/proiectpc";
 	    String username = "root";
-	    String password = "";
+	    String password = "db2023";
 	    
 	    conn = DriverManager.getConnection(jdbcUrl, username, password);
 		

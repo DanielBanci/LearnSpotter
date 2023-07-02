@@ -52,6 +52,7 @@ public class MainPanel extends JScrollPane {
 	private JPanel leftPanel;
 	private JPanel content;
 	private static MainPanel instance;
+	public static User loggedUser;
 
 	public JPanel getTopPanel() {
 		return topPanel;
@@ -105,7 +106,8 @@ public class MainPanel extends JScrollPane {
 		topPanel.setPreferredSize(new Dimension(10, 100));
 		setColumnHeaderView(topPanel);
 
-		content.add(new HomePanel(true,Mentor.createMockup(),user));
+		//content.add(new HomePanel(true,Mentor.createMockup(),user));
+		content.add(new HomePanel(Mentor.createMockup(),user));
 		// content.add(new DisplayMentoringProgramsPanel());
 		// content.setLayout(new FlowLayout(FlowLayout.CENTER));
 		 //content.add(new NewMentorProfile(true));
@@ -145,6 +147,7 @@ public class MainPanel extends JScrollPane {
 		content = new JPanel();
 		setViewportView(content);
 		content.setLayout(new BoxLayout(content, BoxLayout.X_AXIS));
+		loggedUser = mentor;
 
 	}
 	/**
@@ -166,6 +169,7 @@ public class MainPanel extends JScrollPane {
 		content = new JPanel();
 		setViewportView(content);
 		content.setLayout(new BoxLayout(content, BoxLayout.X_AXIS));
+		loggedUser = user;
 
 	}
 

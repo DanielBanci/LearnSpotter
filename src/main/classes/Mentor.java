@@ -141,7 +141,7 @@ public class Mentor extends User {
 	 * @return an instance representing a mockup of the class for debugging purposes
 	 */
 	public static Mentor createMockup() {
-		Mentor mockup = new Mentor(0, "OBVIOUS", "FAKENAMINGTON", "obvious.fakenamington@fakemail.gov", "password", "555-93847",
+		Mentor mockup = new Mentor(-10, "OBVIOUS", "FAKENAMINGTON", "obvious.fakenamington@fakemail.gov", "password", "555-93847",
 				ImageLoader.getInstance().getUserIcon(),
 				"Boston", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
                 + "Sed ac risus vitae velit sodales bibendum quis eget dui. "
@@ -152,7 +152,7 @@ public class Mentor extends User {
                 + "Pellentesque in bibendum velit. Nullam consequat quam ut neque mollis, "
                 + "vitae porttitor sapien bibendum. Vivamus mollis purus in justo finibus, "
                 + "vel ultricies velit vestibulum. Duis pretium auctor ipsum, a commodo libero consectetur eget.", "garFIELD!!!", 0,new Date(),
-                new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),Card.createMockup());
+                new ArrayList<Feedback>(),new ArrayList<Course>(),new ArrayList<MentoringProgram>(),Card.createMockup());
 		return mockup;
 	}
 }

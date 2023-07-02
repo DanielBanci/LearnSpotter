@@ -188,7 +188,7 @@ public class User {
 	    mentoringPrograms.add(MentoringProgram.createMockup());
 	    
 	    // Create user mockup
-	    User mockup = new User(0, "John", "Doe", "johndoe@example.com", "password", "555-12345", courses, mentoringPrograms,
+	    User mockup = new User(-10, "John", "Doe", "johndoe@example.com", "password", "555-12345", courses, mentoringPrograms,
 	    		ImageLoader.getInstance().getUserIcon());
 
 	    return mockup;

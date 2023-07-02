@@ -102,28 +102,6 @@ public class MentoringProgram {
 	public void setMentor(Mentor mentor) {
 		this.mentor = mentor;
 	}
-
-	/**
-	 * Creates a new instance of the MentoringProgram class with the specified parameters.
-	 */
-	public MentoringProgram() {
-		id = 0;
-		name = null;
-		difficultyLevel = null;
-		description = null;
-		location = null;
-		schedule = new ArrayList<>();
-		duration = 0;
-		price = 0;
-		mentor = new Mentor();
-		rating = 0;
-		noViews = 0;
-		field = null;
-		feedbacks = new ArrayList<>();
-		files = new HashMap<>();
-		currency = null;
-		
-	}
 	
 	/**
 	 * Creates a new instance of the MentoringProgram class with the specified parameters.
@@ -249,8 +227,8 @@ public class MentoringProgram {
         // Create a mock mentor for the mentoring program
         Mentor mentor = Mentor.createMockup();
         MentoringProgram mockup = new MentoringProgram(0,0, "Sample Program", "Intermediate",
-                "Sample program description", "Sample location", new ArrayList<>(), 12, 100,"RON",
-                mentor, 4, 100, "Sample Field", new ArrayList<>(),new HashMap<>());
+                "Sample program description", "Sample location", new ArrayList<ScheduleData>(), 12, 100,"RON",
+                mentor, 4, 100, "Sample Field", new ArrayList<Feedback>(),new HashMap<String,byte[]>());
         return mockup;
     }
 }

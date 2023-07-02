@@ -348,7 +348,7 @@ public class NewMentorProfile extends JPanel {
 					JOptionPane.showMessageDialog(null, "Invalid phone number. Make sure the number is 10 digits long including the leading '0' and contains no spaces or dashes.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}											//verify email to be write correctly
-				if(email.isBlank()) {
+				if(email.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "An email is required.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -356,7 +356,7 @@ public class NewMentorProfile extends JPanel {
 					JOptionPane.showMessageDialog(null, "Invalid email format.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}				//TODO verify if passwords match and make a chanck to be strong
-				if(password.isBlank()) {
+				if(password.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Setting a password is required.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -519,8 +519,8 @@ public class NewMentorProfile extends JPanel {
                     passwordField.setEchoChar((char) 0); // Show password
                     passwordField_1.setEchoChar((char) 0);
                 } else {
-                    passwordField.setEchoChar('ï¿½'); // Hide password
-                    passwordField_1.setEchoChar('ï¿½');
+                    passwordField.setEchoChar('•'); // Hide password
+                    passwordField_1.setEchoChar('•');
                 }
 			}
 		};

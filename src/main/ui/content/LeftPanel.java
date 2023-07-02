@@ -78,7 +78,8 @@ public class LeftPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
-				MainPanel.getInstance().getContent().add(new DisplayCoursesPanel(user.getCourses(),user,true));
+				//getInstance().getContent().add(new DisplayCoursesPanel(user.getCourses(),user,true));
+				MainPanel.getInstance().getContent().add(new DisplayCoursesPanel(MainPanel.loggedUser.getCourses(),MainPanel.loggedUser,true));
 				MainPanel.getInstance().getContent().validate();
 			}
 			
@@ -219,7 +220,8 @@ public class LeftPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
-				MainPanel.getInstance().getContent().add(new HomePanel(true,mentor,user));
+				//MainPanel.getInstance().getContent().add(new HomePanel(true,mentor,user));
+				MainPanel.getInstance().getContent().add(new HomePanel(mentor,user));
 				MainPanel.getInstance().getContent().validate();
 			}
 			

@@ -9,11 +9,13 @@ import main.classes.Course;
 import main.classes.Mentor;
 import main.classes.MentoringProgram;
 import main.classes.User;
+import main.db.DBManager;
 import main.db.DbConnection;
 import main.ui.coursePosts.CoursePost;
 import main.ui.mentoringProgram.MentoringProgramPost;
 import main.ui.mentors.MentorPost;
 //import main.utility.temporaryDatabase.TDB;
+import temporaryDatabase.TDB;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -47,6 +49,62 @@ public class HomePanel extends JPanel {
 	private JPanel mentoringProgramP;
 	private JPanel panel;
 	private JLabel lblNewLabel;
+	
+	//last implemented
+	//do we really need the mentor here?								?
+	public HomePanel(Mentor mentor,User user) {
+		this();
+		List<Course> courses = DBManager.getNotAssignCourses(user);
+		List<Mentor> mentors = DBManager.getMentors(user);
+		List<MentoringProgram> mentoringPrograms = DBManager.getMentoringPrograms(user);
+		System.out.println(courses.size());
+		System.out.println(mentors.size());
+		System.out.println(mentoringPrograms.size());
+		
+		//data from db
+		for(int i = 0;i<courses.size();i++) {
+			coursesP.add(new CoursePost(courses.get(i),user));
+			System.out.println("Da courses");
+		}
+		for(int i = 0;i<mentors.size();i++) {
+			mentorsP.add(new MentorPost(mentors.get(i)));
+			System.out.println("Da mentors");
+		}
+		for(int i = 0;i<mentoringPrograms.size();i++) {
+			mentoringProgramP.add(new MentoringProgramPost(mentoringPrograms.get(i), true,mentor,false));  //do i relly need mentor in here?
+			System.out.println("Da mentoringPrograms");
+		}
+		
+		//data from temporary db
+		/*couses = TDB.courses;
+		mentors = TDB.mentors;
+		mentoringPrograms = TDB.mentoringProgramsStatic;
+		
+		for(int i = 0;i<couses.size();i++) {
+			coursesP.add(new CoursePost(couses.get(i),user));
+		}
+		for(int i = 0;i<mentors.size();i++) {
+			mentorsP.add(new MentorPost(mentors.get(i)));
+		}
+		for(int i = 0;i<mentoringPrograms.size();i++) {
+			mentoringProgramP.add(new MentoringProgramPost(mentoringPrograms.get(i), true,mentor,false));  //do i relly need mentor in here?
+		}*/
+		
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				//MainPanel.getInstance().setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				MainPanel.getInstance().getContent().setMaximumSize(new Dimension(1300,9000000));
+				MainPanel.getInstance().getContent().validate();
+				coursesPanel.getHorizontalScrollBar().setValue(0);
+				mentorsPanel.getHorizontalScrollBar().setValue(0);
+				mentoringProgramPanel.getHorizontalScrollBar().setValue(0);
+				
+			}
+			
+		});
+	}
 	
 	public HomePanel(Boolean TODO,Mentor mentor,User user) {
 		this();

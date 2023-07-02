@@ -73,7 +73,7 @@ public class SchedulePanel extends RoundPanel {
 		
 		panel_1.add(btnPrevious);
 		
-		JLabel lblMonthYear = new JLabel("New label");
+		final JLabel lblMonthYear = new JLabel("New label");
 		lblMonthYear.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblMonthYear.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblMonthYear);
@@ -91,7 +91,7 @@ public class SchedulePanel extends RoundPanel {
 		btnNext.setFocusable(false);
 		panel_2.add(btnNext);
 		
-		DateTable calendarPanel = new DateTable(49,70);
+		final DateTable calendarPanel = new DateTable(49,70);
 		calendarPanel.setMaximumSize(new Dimension(490, 160));
 		calendarPanel.setPreferredSize(new Dimension(490, 160));
 		GridBagConstraints gbc_calendarPanel = new GridBagConstraints();

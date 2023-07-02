@@ -133,6 +133,10 @@ public class LoginData extends RoundPanel {
 		btnLogin.addActionListener(loginButtonActionListener());
 		
 
+		tFEmail.setText("johndoe@example.com");
+		passwordField.setText("PassWord1@3");
+		//tFEmail.setText("janesmith@example.com");
+		//passwordField.setText("passWord!2");
 	}
 	
 	private MouseAdapter newAccounMouseAdapter() {
@@ -235,7 +239,7 @@ public class LoginData extends RoundPanel {
             	if (checkBox.isSelected()) {
                     passwordField.setEchoChar((char) 0); // Show password
                 } else {
-                    passwordField.setEchoChar('ï¿½'); // Hide password
+                    passwordField.setEchoChar('•'); // Hide password
                 }
             }
         };

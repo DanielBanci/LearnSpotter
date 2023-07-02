@@ -241,6 +241,7 @@ public class PaymentPanel extends JPanel {
 								
 								//add new mentoring program to user
 								user.getMentoringPrograms().add(aux.getMentoringProgram());
+								MainPanel.loggedUser.getMentoringPrograms().add(aux.getMentoringProgram());
 								
 								System.out.println(user.getCourses().size());
 								//inform user about change
