@@ -193,21 +193,53 @@ public class LoginData extends RoundPanel {
 		                prefs.put("id", String.valueOf(resultSet.getInt("id")));
 		                emailIfLoginSucceded = tFEmail.getText();
 		                if(resultSet.getString("type").equals("mentor")) {				//mentor
-		                	/*int id = resultSet.getInt("id");
-		                	String firsName = resultSet.getString("first_name");
-		                	String lastname = resultSet.getString("last_name");
+		                	int id = resultSet.getInt("id");
+		                	String firstName = resultSet.getString("first_name");
+		                	String lastName = resultSet.getString("last_name");
 		                	String email = resultSet.getString("email");
 		                	String password = resultSet.getString("password");
 		                	String phoneNumber = resultSet.getString("phone_number");
 		                	String description = resultSet.getString("description");
-		                	String field = resultSet.getString("Field");
-		                	int programNumbers = resultSet.getInt("program_number");*/
+		                	String field = resultSet.getString("field");
+		                	int programNumbers = resultSet.getInt("program_number");
+		                	String cardNumber = resultSet.getString("card_number");
+		                	int cvv = resultSet.getInt("cvv");
+		                	String cardHolderName = resultSet.getString("card_holder_name");
+		                	String expirationMonth = resultSet.getString("expiration_month");
+		                	String expirationYear = resultSet.getString("expiration_year");
+		                	int idRating = resultSet.getInt("id_rating");
+		                	byte[] profilePic = resultSet.getBytes("profile_pic");
+		                	String location = resultSet.getString("location");
+		                	
+		                	//TODO: implement method in DBManager for getting a mentor with all related data:
+		                	//user data,mentoring programs,courses,feedback and so on...
+		                	
+		                	/*MainPanel.loggedUser = new Mentor(id,firstName,lastName,email,password,phoneNumber,profilePic,location,description,field,
+		                			programsNumber,registerDate,feedbacks,courses,mentoringPrograms,card);*/
+		                	
 		                	//to be continued
 		                	//Open the app for the mentor
 			            	App.getInstance().getFrame().getContentPane().removeAll();
 			            	App.getInstance().getFrame().setContentPane(MainPanel.updateInstance(Mentor.createMockup()));
 		                	
 		                }else {															//user
+		                	int id = resultSet.getInt("id");
+		                	String firsName = resultSet.getString("first_name");
+		                	String lastname = resultSet.getString("last_name");
+		                	String email = resultSet.getString("email");
+		                	String password = resultSet.getString("password");
+		                	String phoneNumber = resultSet.getString("phone_number");
+		                	//String description = resultSet.getString("description");
+		                	//String field = resultSet.getString("Field");
+		                	//int programNumbers = resultSet.getInt("program_number");
+		                	//String cardNumber = resultSet.getString("card_number");
+		                	//int cvv = resultSet.getInt("cvv");
+		                	//String cardHolderName = resultSet.getString("card_holder_name");
+		                	//String expirationMonth = resultSet.getString("expiration_month");
+		                	//String expirationYear = resultSet.getString("expiration_year");
+		                	//int idRating = resultSet.getInt("id-rating");
+		                	byte[] progilePic = resultSet.getBytes("profile_pic");
+		                	//String location = resultSet.getString("location");
 		                	//Open the app for the user
 			            	App.getInstance().getFrame().getContentPane().removeAll();
 			            	App.getInstance().getFrame().setContentPane(MainPanel.updateInstance(User.createMockup()));
