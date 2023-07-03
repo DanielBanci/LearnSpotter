@@ -3,6 +3,7 @@ package main.ui.coursePosts;
 import javax.swing.JPanel;
 
 import main.app.App;
+import main.classes.Course;
 import main.classes.Feedback;
 import main.classes.MentoringProgram;
 import main.classes.User;
@@ -56,6 +57,36 @@ public class FeedbackPanel extends JPanel {
 	private JButton btnPostFeedback;
 	private User user; 
 	private MentoringProgram mentoringProgram;
+	private Course course;
+	
+	public FeedbackPanel(Boolean truePostInterface,User user,Course course) {
+		this(truePostInterface);
+		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
+		this.user = user;
+		this.course = course;
+		
+		//display user data
+		lblName.setText(user.getFirstName() + " " + user.getLastName());
+		lblDate.setText(formatDate(new Date()));
+		//display the rating
+		Container parent = ratingBarPanel.getParent();
+		int index = findComponentIndex(parent, ratingBarPanel);
+		parent.remove(ratingBarPanel);
+		ratingBarPanel = new StarRatingBar(1);
+		parent.add(ratingBarPanel,index);
+		
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				btnPostFeedback.addActionListener(postFeedbackActionListener());
+			}
+			
+		});
+		
+		
+	}
 	
 	public FeedbackPanel(Boolean truePostInterface,User user,MentoringProgram mentoringProgram) {
 		this(truePostInterface);
@@ -111,14 +142,26 @@ public class FeedbackPanel extends JPanel {
 						int id = 1;						//getLastFeedbackId() + 1;
 						Feedback feedback = new Feedback(id,FeedbackPanel.this.user,feedbackMessage,rating,date);
 						
-						mentoringProgram.getFeedbacks().add(feedback);
+						if(mentoringProgram != null)
+							mentoringProgram.getFeedbacks().add(0,feedback);
+						else 
+							course.getFeedback().add(0,feedback);
 						//TODO: store new feedback
 						
-						//TODO: get mentoring program from database and refresh the mentoringProgramDetails
+						//TODO: get course from database and refresh the CoursePostDetails
 						
 						//display new feedback
 						JPanel parent = (JPanel) FeedbackPanel.this.getParent();
-						parent.add(new FeedbackPanel(feedback),1);
+						if(mentoringProgram != null) {
+							if(parent.getComponent(0) instanceof JLabel)
+								parent.remove(parent.getComponent(0));
+							parent.add(new FeedbackPanel(feedback),1);
+						}
+						else {
+							if(((CoursePostDetails)parent.getParent()).messageLabel != null)
+								parent.remove(((CoursePostDetails)parent.getParent()).messageLabel);
+							parent.add(new FeedbackPanel(feedback),2);
+						}
 						tAFeedbackMessage.setText(null);
 						
 						JPanel parentRatingBar = (JPanel) ratingBarPanel.getParent();

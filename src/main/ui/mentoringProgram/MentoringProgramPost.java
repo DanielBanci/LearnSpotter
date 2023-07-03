@@ -108,6 +108,8 @@ public class MentoringProgramPost extends RoundPanel {
 		if(shortContent) {
 			makeShortContent();
 		}
+		
+		if(owned == true)System.out.println("e true...");
 	}
 	
 	/**

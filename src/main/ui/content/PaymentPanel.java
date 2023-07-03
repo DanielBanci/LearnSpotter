@@ -270,9 +270,12 @@ public class PaymentPanel extends JPanel {
 				                timer.start();
 				                
 				                //check if the label with the message is displayed and remove it
-				                if(aux.menuBar.reviewsPanel.getComponent(0) instanceof JLabel) 
-				                	aux.menuBar.reviewsPanel.removeAll();
-				                aux.menuBar.reviewsPanel.add(new FeedbackPanel(true,MainPanel.loggedUser,aux.getMentoringProgram()),0);
+				                if(aux.menuBar.reviewsPanel.getComponent(0) instanceof JLabel && aux.getMentoringProgram().getFeedbacks().size() != 0) { 
+				                	aux.menuBar.reviewsPanel.remove(aux.menuBar.reviewsPanel.getComponent(0));
+				                	aux.menuBar.reviewsPanel.add(new FeedbackPanel(true,MainPanel.loggedUser,aux.getMentoringProgram()),0);
+				                }else {
+				                	aux.menuBar.reviewsPanel.add(new FeedbackPanel(true,MainPanel.loggedUser,aux.getMentoringProgram()),1);
+				                }
 				                
 				                
 				                aux.remove(aux.getPaymentPanel());
@@ -368,6 +371,9 @@ public class PaymentPanel extends JPanel {
 								aux.revalidate();
 								
 								user.getCourses().add(aux.getCourse());
+								
+								//let the user give a feedback to the course
+								aux.getFeedbackPanel().add(new FeedbackPanel(true,user,aux.getCourse()),2);
 								System.out.println(user.getCourses().size());
 								return;//change this!!!
 								

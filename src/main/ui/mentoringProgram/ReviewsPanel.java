@@ -32,14 +32,17 @@ public class ReviewsPanel extends JPanel {
 	 */
 	public ReviewsPanel(MentoringProgram mentoringProgram,User user) {
 		this();
-		add(new FeedbackPanel(true,user,mentoringProgram));
+		
 		if(mentoringProgram.getFeedbacks().size() != 0) {
+			add(new FeedbackPanel(true,user,mentoringProgram));
 			for(int i=0;i<mentoringProgram.getFeedbacks().size();i++) {
 				add(new FeedbackPanel(mentoringProgram.getFeedbacks().get(i)));
 			}
 		}else {
 			add(new JLabel("No reviews to display."));
+			add(new FeedbackPanel(true,user,mentoringProgram));
 		}
+		
 	}
 	/**
 	 * Create the panel.

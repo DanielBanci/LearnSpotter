@@ -26,7 +26,7 @@ public class DisplayMentoringProgramsPanel extends JPanel {
 			add(new MentoringProgramPost(mentoringPrograms.get(i),true,User.createMockup(),owned));
 		}
 		}else {
-			JLabel label = new JLabel("No courses to be displayed. Once you joined to a mentoring program it will be displyed here.");
+			JLabel label = new JLabel("No mentoring programs to be displayed. Once you joined to a mentoring program it will be displyed here.");
 			label.setFont(new Font("Tharoma",Font.PLAIN,16));
 			
 			add(label);

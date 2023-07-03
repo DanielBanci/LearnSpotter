@@ -63,13 +63,14 @@ public class CoursePostDetails extends RoundPanel {
 	private JLabel lblPrice;				//the price of the course
 	private JTextArea tAFullDescription;	//full description of the course
 	private JPanel filePanel;				//the panel with course file and pay/download button
-	private JPanel feedbackPanel;			//feddback panel
+	private JPanel feedbackPanel;			//feedback panel
 	private JButton btnBuyCourse;			//button to buy the course
 	private JLabel lblPriceBuy;				//lbl to display the price near buy button
 	private JLabel lblLastUpdate;			//last date the course was updated
 	private PaymentPanel paymentPanel;
 	private User user;
 	private Course course;
+	public JLabel messageLabel;
 
 	public Course getCourse() {
 		return course;
@@ -135,8 +136,13 @@ public class CoursePostDetails extends RoundPanel {
 		this.add(filePanel,index);
 
 		//display the feedback
-		feedbackPanel.add(new FeedbackPanel(Feedback.createMockup()));
-		feedbackPanel.add(new FeedbackPanel(Feedback.createMockup()));
+		for(Feedback f : course.getFeedback()) {
+			feedbackPanel.add(new FeedbackPanel(f));
+		}
+		if(course.getFeedback().size() == 0) {
+			messageLabel = new JLabel("No feedback to display");
+			feedbackPanel.add(messageLabel);
+		}
 
 		//action for buy button
 		if(!owned) {
@@ -144,6 +150,10 @@ public class CoursePostDetails extends RoundPanel {
 		}else {
 			btnBuyCourse.getParent().getParent().remove(btnBuyCourse.getParent());
 			((CourseFilePanel)filePanel).setPayed(true);
+			if(course.getFeedback().size() == 0) 
+				feedbackPanel.add(new FeedbackPanel(true,user,course),2);
+			else
+				feedbackPanel.add(new FeedbackPanel(true,user,course),1);
 		}
 		
 
@@ -151,6 +161,16 @@ public class CoursePostDetails extends RoundPanel {
 		setMaximumSize(new Dimension(800,100000));
 		App.getInstance().getFrame().getContentPane().revalidate();
 	}
+
+	public JPanel getFeedbackPanel() {
+		return feedbackPanel;
+	}
+
+
+	public void setFeedbackPanel(JPanel feedbackPanel) {
+		this.feedbackPanel = feedbackPanel;
+	}
+
 
 	/**
 	 * Acrion listener for buy course button.
