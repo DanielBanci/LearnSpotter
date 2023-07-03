@@ -26,6 +26,7 @@ import main.ui.login.LoginPanel;
 import main.ui.mentors.MentorProfile;
 import main.ui.newContent.NewCoursePost;
 import main.ui.newContent.NewMentoringProgram;
+import main.ui.newContent.NewUserProfile;
 //import main.utility.temporaryDatabase.TDB;
 
 public class LeftPanel extends JPanel {
@@ -41,6 +42,7 @@ public class LeftPanel extends JPanel {
 	private JMenuItem mISearchMentors;
 	private JMenuItem mISearchMentoringPrograms;
 	private JMenuItem mILogOut;
+	private JMenuItem mIAccountSettings;
 	private JMenu mnNewMenu;
 	private JMenuItem mINewCourse;
 	private JMenuItem mINewMentoringProgram;
@@ -70,6 +72,19 @@ public class LeftPanel extends JPanel {
 		mIMentoringPrograms.addActionListener(actionMIMyMentoringPrograms());
 		
 		mILogOut.addActionListener(actionMILogOutS());
+		mIAccountSettings.addActionListener(actionMIAccountSettings());
+	}
+	
+	private ActionListener actionMIAccountSettings(){
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.getInstance().getContent().removeAll();
+				//getInstance().getContent().add(new DisplayCoursesPanel(user.getCourses(),user,true));
+				MainPanel.getInstance().getContent().add(new NewUserProfile(user));
+				MainPanel.getInstance().getContent().validate();
+			}
+		};
 	}
 	
 	private ActionListener actionMIMyCourses() {
@@ -324,8 +339,12 @@ public class LeftPanel extends JPanel {
 		mnNewMenu.add(mINewMentoringProgram);
 		menuBar.add(mSettings);
 
+		mIAccountSettings = new JMenuItem("Account settings");
+		mSettings.add(mIAccountSettings);
+		
 		mILogOut = new JMenuItem("Log out");
 		mSettings.add(mILogOut);
+		
 	}
 	public LeftPanel() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

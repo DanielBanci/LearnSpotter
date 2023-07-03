@@ -12,6 +12,7 @@ import main.ui.customComponents.ImagePanel;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
 import main.ui.customComponents.RoundPanel;
+import main.ui.customUI.CheckChangeDocListener;
 import main.ui.customUI.HintTextAreaUI;
 import main.ui.customUI.HintTextFieldUI;
 import main.ui.login.LoginData;
@@ -47,6 +48,8 @@ import java.util.List;
 import java.util.prefs.Preferences;
 import java.util.regex.Pattern;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
@@ -68,10 +71,72 @@ public class NewUserProfile extends JPanel {
 	private JButton btnRegister;									
 	private JTextField tFPhoneNumber;
 	
+	/**
+	 * Method that search for a panel index inside the container.
+	 * @param target the panel in interest
+	 * @return the index of the panel, -1 if not found
+	 */
+	public int findComponentIndex(Container container,Object target) {
+		Component[] components = container.getComponents();
+		for (int i = 0; i < components.length; i++) {
+			if (components[i].equals(target)) {
+				return i;
+			}
+		}
+		return -1; // Component not found
+	}
+	
+	/**
+	 * Constructor for chnaging profile settings
+	 * @param user logged user
+	 */
+	public NewUserProfile(User user) {
+		this();
+		int index = findComponentIndex(tFEmail.getParent().getParent(),tFEmail.getParent());
+		tFEmail.getParent().getParent().remove(index-1);
+		tFEmail.getParent().getParent().remove(tFEmail.getParent());
+		
+		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(220,200)));
+		try {
+			btnRegister.removeActionListener(btnRegister.getActionListeners()[0]);
+		}catch(Exception e) {
+			
+		}
+		btnRegister.setText("Save");
+		
+		//TODO: fill data with current information profile
+		
+		//TODO: complete action (check input, save data (locally until the database is done)
+		btnRegister.addActionListener(saveActionListener());
+		
+		//inform user there s changes to be saved
+		//profilePicPanel
+		tFFirstName.getDocument().addDocumentListener(new CheckChangeDocListener(btnRegister));
+		tFLastName.getDocument().addDocumentListener(new CheckChangeDocListener(btnRegister));
+		
+		passwordField.getDocument().addDocumentListener(new CheckChangeDocListener(btnRegister));
+		passwordField_1.getDocument().addDocumentListener(new CheckChangeDocListener(btnRegister));
+		tFPhoneNumber.getDocument().addDocumentListener(new CheckChangeDocListener(btnRegister));
+	}
+
+	private ActionListener saveActionListener() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO: check input, save data
+				
+				//inform user about the chnages
+				JOptionPane.showMessageDialog(null, "The data changed", "Dialog", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			
+		};
+	}
+	
 	public NewUserProfile(Boolean TODO) {
 		this();
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(220,200)));
-		
 		
 	}
 	/**
@@ -471,6 +536,7 @@ public class NewUserProfile extends JPanel {
 	                        profilePicPanel.removeAll();
 	                        profilePicPanel.add(new RoundImagePanel(profilePic,new Dimension(220,200)));
 	                        NewUserProfile.this.validate();
+	                        btnRegister.setBackground(Color.RED);
 	                        
 	                    } catch (IOException ex) {
 	                        ex.printStackTrace();
