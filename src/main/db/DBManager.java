@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.classes.Course;
+import main.classes.Feedback;
 import main.classes.Mentor;
 import main.classes.MentoringProgram;
 import main.classes.User;
@@ -25,7 +26,7 @@ public class DBManager {
 		
 		String sql = "SELECT * FROM mentoring_programs";
 		if(user instanceof Mentor) {
-			sql = "SELECT * FROM mentoring_programs WHERE id_mentor != " + user.getId();
+			sql += " WHERE id_mentor != " + user.getId();
 		}
 		
 		Statement statement;
@@ -60,6 +61,70 @@ public class DBManager {
 		}
 		
 		return mentoringPrograms;
+	}
+	
+	public static List<MentoringProgram> getMentoringPrograms(int id){
+		Connection conn = DbConnection.conn;
+		
+		List<MentoringProgram> mentoringPrograms = new ArrayList<>();
+		
+		String sql = "SELECT * FROM mentoring_programs WHERE id_mentor=" + id;
+		
+		Statement statement;
+		try {
+			statement = conn.createStatement();
+			ResultSet rs3 = statement.executeQuery(sql);
+
+			while(rs3.next())
+			{
+				String sql2 = "SELECT * FROM users WHERE type='mentor' AND id=" + rs3.getInt(2);
+				Statement statement2 = conn.createStatement();
+				ResultSet rs4 = statement2.executeQuery(sql2);
+				
+				if(rs4.next())
+				{
+					Mentor m = new Mentor(rs4.getInt(1), rs4.getString(2), rs4.getString(3), rs4.getString(4),
+							rs4.getString(5), rs4.getString(6), null, "", rs4.getString(7), 
+							rs4.getString(8), rs4.getInt(9), null, null, null, null, null);
+					MentoringProgram mp = new MentoringProgram(rs3.getInt(1), rs3.getInt(2), rs3.getString(3), rs3.getString(4), 
+							rs3.getString(5), rs3.getString(6), new ArrayList<>(), rs3.getInt(7), rs3.getInt(8), rs3.getString(9), m,
+							0, 0, rs3.getString(10), new ArrayList<>(), new HashMap<String, byte[]>());
+					
+					mentoringPrograms.add(mp);
+					
+					/*MentoringProgramPost mpp = new MentoringProgramPost(mp, true, m, false);
+					mentoringProgramP.add(mpp);*/
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mentoringPrograms;
+	}
+	
+	public static List<Feedback> getFeedback(int userId){
+		Connection conn = DbConnection.conn;
+		List<Feedback> feedbacks = new ArrayList<>();
+		
+		String sql = "SELECT * FROM feedback WHERE id_user=" + userId;
+		Statement statement;
+		try {
+			statement = conn.createStatement();
+			ResultSet rs3 = statement.executeQuery(sql);
+
+			while(rs3.next())
+			{	
+				Feedback feedback = new Feedback(rs3.getInt(1), getUser(userId), rs3.getString(3), rs3.getInt(4), null);	
+				feedbacks.add(feedback);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return feedbacks;
 	}
 
 	/**
@@ -112,6 +177,73 @@ public class DBManager {
 		}
 		
 		return mentors;
+	}
+	
+	public static Mentor getMentor(int id){
+		Connection conn = DbConnection.conn;
+		
+		String sql = "SELECT * FROM users WHERE type='mentor' AND id=" + id;
+		Statement statement;
+		
+		try {
+			statement = conn.createStatement();
+			ResultSet rs3 = statement.executeQuery(sql);
+
+			while(rs3.next())
+			{
+				String sqlCourses = "SELECT * FROM courses WHERE id_mentor=" + rs3.getInt(1) + " AND id_mentoring_program=-1";
+				Statement statementCourses = conn.createStatement();
+				ResultSet rsCourses = statementCourses.executeQuery(sqlCourses);
+				List<Course> courses = new ArrayList<>();
+				
+				while(rsCourses.next())
+				{
+					Course course = new Course(rsCourses.getInt(1), rsCourses.getString(4), 
+							rsCourses.getInt(2), rsCourses.getInt(3), "", rsCourses.getString(5), 
+							0, 0, rsCourses.getInt(6), null, new ArrayList<>(), 
+							new Mentor(), new HashMap<>());
+					courses.add(course);
+				}
+				
+				Mentor mentor1 = null;
+				mentor1 = new Mentor(rs3.getInt(1), rs3.getString(2), rs3.getString(3), rs3.getString(4),
+							rs3.getString(5), rs3.getString(6), null, "", rs3.getString(7), 
+							rs3.getString(8), rs3.getInt(9), new Date(61271392), new ArrayList<>(), courses, new ArrayList<>(), null);
+
+				return mentor1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public static User getUser(int id){
+		Connection conn = DbConnection.conn;
+		
+		String sql = "SELECT * FROM users WHERE type='user' AND id=" + id;
+		Statement statement;
+		
+		try {
+			statement = conn.createStatement();
+			ResultSet rs3 = statement.executeQuery(sql);
+
+			while(rs3.next())
+			{
+				User user = null;
+				user = new User(rs3.getInt(1), rs3.getString(2), rs3.getString(3), rs3.getString(4),
+							rs3.getString(5), rs3.getString(6), new ArrayList<>(), new ArrayList<>(), null);
+
+				return user;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	/**

@@ -13,6 +13,7 @@ import java.util.Objects;
 
 import javax.imageio.ImageIO;
 
+import main.db.DBManager;
 import main.db.DbConnection;
 import main.utility.ImageLoader;
 
@@ -81,37 +82,10 @@ public class User {
 		this.password = password;
 		this.phoneNumber = phoneNumber;
 		this.courses = courses;
-		this.mentoringPrograms = mentoringPrograms;
 		this.courses = courses;
 		this.mentoringPrograms = mentoringPrograms;
 		this.profilePic = profilePic;
-		this.mentoringPrograms = setupMentoringPrograms();
-	}
-	
-	private ArrayList<MentoringProgram> setupMentoringPrograms()
-	{
-		Connection conn = DbConnection.conn;
-		
-		String sql = "SELECT * FROM mentoring_programs WHERE id_mentor=" + this.id;
-		
-		List<MentoringProgram> mp = new ArrayList<>();
-		try {
-			Statement statement = conn.createStatement();
-			ResultSet rs3 = statement.executeQuery(sql);
-			
-			while(rs3.next())
-			{
-				MentoringProgram m = new MentoringProgram(rs3.getInt(1), rs3.getInt(2), rs3.getString(3), rs3.getString(4), 
-						rs3.getString(5), rs3.getString(6), new ArrayList<>(), rs3.getInt(7), rs3.getInt(8), rs3.getString(9), (Mentor) this,
-						0, 0, rs3.getString(10), new ArrayList<>(), new HashMap<String, byte[]>());
-				mp.add(m);
-			}
-			return (ArrayList<MentoringProgram>) mp;
-		} catch(Exception e) {
-			System.out.println(e);
-		}
-		
-		return new ArrayList<>();
+		this.mentoringPrograms = DBManager.getMentoringPrograms(this.id);
 	}
 	
 	public int getId() {
