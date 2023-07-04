@@ -108,8 +108,40 @@ public class NewUserProfile extends JPanel {
 		
 		//TODO: fill data with current information profile
 		
-		//TODO: complete action (check input, save data (locally until the database is done)
-		btnRegister.addActionListener(saveActionListener());
+		//TODO: verify if task was done correctly: "complete action (check input, save data (locally until the database is done)"
+
+		if(!isValidPhoneNumber(tFPhoneNumber.getText())) {
+			JOptionPane.showMessageDialog(null, "Invalid phone number. Make sure the number is 10 digits long including the leading '0' and contains no spaces or dashes.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		String email = tFEmail.getText();											//verify email to be write correctly
+		if(email.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "An email is required.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if(!isValidEmail(email) ) {
+			JOptionPane.showMessageDialog(null, "Invalid email format.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		String password = passwordField.getPassword().toString();
+		if(password.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Setting a password is required.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		String passwordVerify = passwordField_1.getPassword().toString();
+		if(password.compareTo(passwordVerify) != 0) {
+			JOptionPane.showMessageDialog(null, "The passwords do not match. Watch out for Caps Lock, NumLock or the Shift key.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		if(!isStrongPassword(password)) {
+			JOptionPane.showMessageDialog(null, "The password is too weak. It must contain at least one uppercase letter, one lowercase letter, one digit and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
+	        return;
+		}
+		
+		btnRegister.addActionListener(saveActionListener(user));
 		
 		//inform user there s changes to be saved
 		//profilePicPanel
@@ -121,11 +153,14 @@ public class NewUserProfile extends JPanel {
 		tFPhoneNumber.getDocument().addDocumentListener(new CheckChangeDocListener(btnRegister));
 	}
 
-	private ActionListener saveActionListener() {
+	private ActionListener saveActionListener(User user) {
 		return new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				user.setPhoneNumber(tFPhoneNumber.getText());
+				user.setEmail(tFEmail.getText());
+				user.setPassword(passwordField.getPassword().toString());
 				//TODO: check input, save data
 				
 				//inform user about the chnages
@@ -367,13 +402,13 @@ public class NewUserProfile extends JPanel {
 					JOptionPane.showMessageDialog(null, "Invalid email format.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				String password = passwordField.getText();					//TODO verify if passwords match and make a chanck to be strong
+				String password = passwordField.getPassword().toString();					//TODO verify if passwords match and make a chanck to be strong
 				if(password.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Setting a password is required.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 
-				String passwordVerify = passwordField_1.getText();
+				String passwordVerify = passwordField_1.getPassword().toString();
 				//TODO: remove password console print
 				System.out.println(password + " " + passwordVerify);
 				if(password.compareTo(passwordVerify) != 0) {

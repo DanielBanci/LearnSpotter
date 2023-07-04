@@ -172,7 +172,22 @@ public class LoginData extends RoundPanel {
             //@Override
             @SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {                        //TO DO: check input and login the users
-                //complete code here
+            	String inputEmail = tFEmail.getText();
+            	
+                if(inputEmail.isEmpty()) {
+                	JOptionPane.showMessageDialog(null, "An email is required to log in.", "Login Error", JOptionPane.ERROR_MESSAGE);
+                	return;
+                }
+                if(!NewUserProfile.isValidEmail(inputEmail)) {
+                	JOptionPane.showMessageDialog(null, "Invalid email format.", "Login Error", JOptionPane.ERROR_MESSAGE);
+                	return;
+                }
+                
+                if(passwordField.getPassword().toString().isEmpty()) {
+                	JOptionPane.showMessageDialog(null, "A password is required to log in.", "Login Error", JOptionPane.ERROR_MESSAGE);
+                	return;
+                }
+                
             	try {
 					Connection conn = DbConnection.conn;
 					
@@ -181,7 +196,7 @@ public class LoginData extends RoundPanel {
 					PreparedStatement statement = conn.prepareStatement(query);
 					
 					statement.setString(1, tFEmail.getText());
-		            statement.setString(2, passwordField.getText());
+		            statement.setString(2, passwordField.getPassword().toString());
 		            
 					ResultSet resultSet = statement.executeQuery();
 					
@@ -238,7 +253,7 @@ public class LoginData extends RoundPanel {
 		                	//String expirationMonth = resultSet.getString("expiration_month");
 		                	//String expirationYear = resultSet.getString("expiration_year");
 		                	//int idRating = resultSet.getInt("id-rating");
-		                	byte[] progilePic = resultSet.getBytes("profile_pic");
+		                	byte[] profilePic = resultSet.getBytes("profile_pic");
 		                	//String location = resultSet.getString("location");
 		                	//Open the app for the user
 			            	App.getInstance().getFrame().getContentPane().removeAll();
@@ -250,7 +265,7 @@ public class LoginData extends RoundPanel {
 		            	App.getInstance().getFrame().invalidate();
 		            	App.getInstance().getFrame().revalidate();
 		            } else {
-		            	JOptionPane.showMessageDialog(null,"Wrong email or password!\nLogin failed.","Eroare",JOptionPane.ERROR_MESSAGE);
+		            	JOptionPane.showMessageDialog(null,"Wrong email or password!\nLogin failed.","Eroare",JOptionPane.ERROR_MESSAGE); // TODO: Check title "Eroare" language consistency?
 		                System.out.println("Login failed");
 		            }
 		            
@@ -271,7 +286,7 @@ public class LoginData extends RoundPanel {
             	if (checkBox.isSelected()) {
                     passwordField.setEchoChar((char) 0); // Show password
                 } else {
-                    passwordField.setEchoChar('•'); // Hide password
+                    passwordField.setEchoChar('ï¿½'); // Hide password
                 }
             }
         };
