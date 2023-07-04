@@ -238,12 +238,12 @@ public class MentoringProgram {
 	}
 	/**
 	 * @deprecated
-	 */
+	 */	
 	public static MentoringProgram createMockup() {
         // Create a mock mentor for the mentoring program
         Mentor mentor = Mentor.createMockup();
         MentoringProgram mockup = new MentoringProgram(0, "Sample Program", "Intermediate",
-                "Sample program description", "Sample location", new ArrayList<ScheduleData>(), 12, 100,"RON",
+                "Sample program description", "Sample location", 12, 100,"RON",
                 mentor, 4, 100, "Sample Field", new ArrayList<Feedback>(),new HashMap<String,byte[]>());
         return mockup;
     }

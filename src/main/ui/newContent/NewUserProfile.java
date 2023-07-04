@@ -70,6 +70,8 @@ public class NewUserProfile extends JPanel {
 	private JCheckBox checkBShowPassword;
 	private JButton btnRegister;									
 	private JTextField tFPhoneNumber;
+	private char echoChar; //Saving default set echo character when unchecking show password
+	private char echoChar_1;
 	
 	/**
 	 * Method that search for a panel index inside the container.
@@ -91,7 +93,7 @@ public class NewUserProfile extends JPanel {
 	 * @param user logged user
 	 */
 	public NewUserProfile(User user) {
-		this();
+		this();		
 		int index = findComponentIndex(tFEmail.getParent().getParent(),tFEmail.getParent());
 		tFEmail.getParent().getParent().remove(index-1);
 		tFEmail.getParent().getParent().remove(tFEmail.getParent());
@@ -321,8 +323,9 @@ public class NewUserProfile extends JPanel {
 		checkBShowPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		checkBShowPassword.setOpaque(false);
 		panel_19.add(checkBShowPassword, BorderLayout.WEST);
-		
-		
+
+		echoChar = passwordField.getEchoChar();
+		echoChar_1 = passwordField_1.getEchoChar();
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setOpaque(false);
@@ -369,9 +372,18 @@ public class NewUserProfile extends JPanel {
 					JOptionPane.showMessageDialog(null, "Setting a password is required.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+
+				String passwordVerify = passwordField_1.getText();
+				//TODO: remove password console print
+				System.out.println(password + " " + passwordVerify);
+				if(password.compareTo(passwordVerify) != 0) {
+					JOptionPane.showMessageDialog(null, "The passwords do not match. Watch out for Caps Lock, NumLock or the Shift key.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
 				if(!isStrongPassword(password)) {
 					JOptionPane.showMessageDialog(null, "The password is too weak. It must contain at least one uppercase letter, one lowercase letter, one digit and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
-//			        return;
+			        return;
 				}
 //				if(!password.matches(".*[A-Z]+.*") || !password.matches(".*[a-z]+.*") ||
 //				        !password.matches(".*[0-9]+.*")) {
@@ -379,13 +391,6 @@ public class NewUserProfile extends JPanel {
 //					JOptionPane.showMessageDialog(null, "The password is too weak. It must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
 //				        return;
 //				}
-				String passwordVerify = passwordField_1.getText();
-				
-				System.out.println(password + " " + passwordVerify);
-				if(password.compareTo(passwordVerify) != 0) {
-					JOptionPane.showMessageDialog(null, "The passwords do not match. Watch out for Caps Lock, NumLock or the Shift key.", "Error", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
 				if(profilePic == null) {
 					profilePic = ImageLoader.getInstance().getUserIcon();
 				}
@@ -473,6 +478,8 @@ public class NewUserProfile extends JPanel {
 	 * @return true if password is strong enough
 	 */
 	public static boolean isStrongPassword(String password) {
+		return true; // TODO: remove line after finishing with debugging
+		
 	    // Define the criteria for a strong password
 	    String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 	    
@@ -507,8 +514,8 @@ public class NewUserProfile extends JPanel {
                     passwordField.setEchoChar((char) 0); // Show password
                     passwordField_1.setEchoChar((char) 0);
                 } else {
-                    passwordField.setEchoChar('•'); // Hide password
-                    passwordField_1.setEchoChar('•');
+                    passwordField.setEchoChar(echoChar); // Hide password
+                    passwordField_1.setEchoChar(echoChar_1);
                 }
 			}
 			
