@@ -99,6 +99,7 @@ public class User {
 			Statement statement = conn.createStatement();
 			ResultSet rs3 = statement.executeQuery(sql);
 			
+			//TODO: make database fields and class constructor parameters MATCH
 			while(rs3.next())
 			{
 				MentoringProgram m = new MentoringProgram(rs3.getInt(1), rs3.getInt(2), rs3.getString(3), rs3.getString(4), 
