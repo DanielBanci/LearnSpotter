@@ -13,7 +13,6 @@ import java.util.Objects;
 
 import javax.imageio.ImageIO;
 
-import main.db.DBManager;
 import main.db.DbConnection;
 import main.utility.ImageLoader;
 
@@ -72,6 +71,7 @@ public class User {
 	 * @param phoneNumber
 	 * @param courses
 	 * @param mentoringPrograms
+	 * @param profilePic
 	 */
 	public User(int id, String firstName, String lastName, String email, String password, String phoneNumber, 
 			List<Course> courses,List<MentoringProgram> mentoringPrograms,Image profilePic) {
@@ -82,10 +82,8 @@ public class User {
 		this.password = password;
 		this.phoneNumber = phoneNumber;
 		this.courses = courses;
-		this.courses = courses;
 		this.mentoringPrograms = mentoringPrograms;
 		this.profilePic = profilePic;
-		this.mentoringPrograms = DBManager.getMentoringPrograms(this.id);
 	}
 	
 	public int getId() {

@@ -24,7 +24,6 @@ public class Mentor extends User {
 	
 	private String description;
 	private String field;
-	private int programsNumber;
 	private Date registerDate;
 	private List<Feedback> feedbacks;
 	private Card card;
@@ -75,7 +74,6 @@ public class Mentor extends User {
 		super();
 		description = null;
 		field = null;
-		programsNumber = 0;
 		registerDate = null;
 		feedbacks = new ArrayList<Feedback>();
 		card = new Card();
@@ -110,7 +108,6 @@ public class Mentor extends User {
 		this.location = location;
 		this.description = description;
 		this.field = field;
-		this.programsNumber = programsNumber;
 		this.registerDate = registerDate;
 		this.feedbacks = feedbacks;
 		this.card = card;
@@ -128,10 +125,6 @@ public class Mentor extends User {
 	}
 	public void setField(String field) {
 		this.field = field;
-	}
-
-	public void setProgramsNumber(int programsNumber) {
-		this.programsNumber = programsNumber;
 	}
 	
 	public int getNoReviews() {
