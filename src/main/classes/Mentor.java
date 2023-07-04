@@ -24,6 +24,7 @@ public class Mentor extends User {
 	
 	private String description;
 	private String field;
+	private int programsNumber;
 	private Date registerDate;
 	private List<Feedback> feedbacks;
 	private Card card;
@@ -74,6 +75,7 @@ public class Mentor extends User {
 		super();
 		description = null;
 		field = null;
+		programsNumber = 0;
 		registerDate = null;
 		feedbacks = new ArrayList<Feedback>();
 		card = new Card();
@@ -82,13 +84,7 @@ public class Mentor extends User {
 	/**
 	 * Creates a new instance of the Mentor class with the specified parameters.
 	 * @param id
-	 * @param firstName
-	 * @param lastName
-	 * @param email
-	 * @param password
-	 * @param phoneNumber
-	 * @param profilePic
-	 * @param location
+	 * @param idUser
 	 * @param description
 	 * @param field
 	 * @param programsNumber
@@ -97,6 +93,7 @@ public class Mentor extends User {
 	 * @param courses
 	 * @param mentoringPrograms
 	 * @param card
+	 * @param profilePic 
 	 */
 	public Mentor(int id, String firstName, String lastName, String email, String password, 
 			String phoneNumber, Image profilePic, String location, String description, String field, 
@@ -108,6 +105,7 @@ public class Mentor extends User {
 		this.location = location;
 		this.description = description;
 		this.field = field;
+		this.programsNumber = programsNumber;
 		this.registerDate = registerDate;
 		this.feedbacks = feedbacks;
 		this.card = card;
@@ -125,6 +123,10 @@ public class Mentor extends User {
 	}
 	public void setField(String field) {
 		this.field = field;
+	}
+
+	public void setProgramsNumber(int programsNumber) {
+		this.programsNumber = programsNumber;
 	}
 	
 	public int getNoReviews() {

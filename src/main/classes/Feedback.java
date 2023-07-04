@@ -36,11 +36,6 @@ public class Feedback {
 	
 	/**
 	 * Creates a new instance of the Course class with the specified parameters.
-	 * @param id
-	 * @param user
-	 * @param text
-	 * @param rating
-	 * @param date
 	 */
 	public Feedback(int id, User user, String text, int rating,Date date) {
 		this.id = id;

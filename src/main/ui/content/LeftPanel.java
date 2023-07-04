@@ -198,6 +198,7 @@ public class LeftPanel extends JPanel {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().add(new DisplayMentoringProgramsPanel());
 				MainPanel.getInstance().getContent().validate();
+				LeftPanel.this.add(new SearchFiltersPanel());
 			}
 			
 		};
@@ -211,6 +212,7 @@ public class LeftPanel extends JPanel {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().add(new DisplayMentorsPanel());
 				MainPanel.getInstance().getContent().validate();
+				LeftPanel.this.add(new SearchFiltersPanel());
 			}
 			
 		};
@@ -224,6 +226,7 @@ public class LeftPanel extends JPanel {
 				if(user == null) user = mentor;
 				MainPanel.getInstance().getContent().add(new DisplayCoursesPanel());
 				MainPanel.getInstance().getContent().validate();
+				LeftPanel.this.add(new SearchFiltersPanel());
 			}
 			
 		};

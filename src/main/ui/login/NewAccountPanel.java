@@ -43,7 +43,7 @@ public class NewAccountPanel extends JPanel {
 		JPanel panel_1 = new JPanel();
 		panel_1.setMaximumSize(new Dimension(32767, 30));
 		add(panel_1);
-		message = "You can search and buy courses and mentors and you can join mentoring programs";
+		message = "You can search and buy courses and mentors and you can join mentoring prgrams";
 		lblInfo = new JLabel(message);
 		lblInfo.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_1.add(lblInfo);
