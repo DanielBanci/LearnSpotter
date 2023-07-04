@@ -84,7 +84,13 @@ public class Mentor extends User {
 	/**
 	 * Creates a new instance of the Mentor class with the specified parameters.
 	 * @param id
-	 * @param idUser
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @param password
+	 * @param phoneNumber
+	 * @param profilePic
+	 * @param location
 	 * @param description
 	 * @param field
 	 * @param programsNumber
@@ -93,7 +99,6 @@ public class Mentor extends User {
 	 * @param courses
 	 * @param mentoringPrograms
 	 * @param card
-	 * @param profilePic 
 	 */
 	public Mentor(int id, String firstName, String lastName, String email, String password, 
 			String phoneNumber, Image profilePic, String location, String description, String field, 

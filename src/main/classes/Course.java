@@ -27,7 +27,6 @@ public class Course {
 	private int idMentor;
 	private int idMentoringProgram;
 	private Map<String,byte[]> pdfFiles;
-	private String url;
 	private String description;
 	private int rating;
 	private int noViews;
@@ -61,7 +60,6 @@ public class Course {
 		idMentor = 0;
 		idMentoringProgram = 0;
 		pdfFiles = new HashMap<String, byte[]>();
-		url = null;
 		description = null;
 		rating = 0;
 		noViews = 0;
@@ -76,16 +74,16 @@ public class Course {
 	 * @param name
 	 * @param idMentor
 	 * @param idMentoringProgram
-	 * @param pdfFiles
-	 * @param url
 	 * @param description
 	 * @param rating
 	 * @param noViews
 	 * @param price
 	 * @param lastUpdate
 	 * @param feedback
+	 * @param owner
+	 * @param pdfFiles
 	 */
-	public Course(int id, String name, int idMentor, int idMentoringProgram, String url, String description, int rating, int noViews,
+	public Course(int id, String name, int idMentor, int idMentoringProgram, String description, int rating, int noViews,
 			double price, Date lastUpdate, List<Feedback> feedback,Mentor owner,Map<String,byte[]> pdfFiles) {
 
 		this.id = id;
@@ -93,7 +91,6 @@ public class Course {
 		this.idMentor = idMentor;
 		this.idMentoringProgram = idMentoringProgram;
 		this.pdfFiles = pdfFiles;
-//		this.url = url;
 		this.description = description;
 		this.rating = rating;
 		this.noViews = noViews;
@@ -212,7 +209,7 @@ public class Course {
 			e.printStackTrace();
 		}
 		java.sql.Date sqlDate = new java.sql.Date(parsed.getTime());
-		Course mockup = new Course(0, "Software Engineering", 0, 0, "","ceva descriere cum o fi sa fie doar sa fie sa vedem "
+		Course mockup = new Course(0, "Software Engineering", 0, 0,"ceva descriere cum o fi sa fie doar sa fie sa vedem "
 				+ "cum e ca de ce nu dor asa", 4, 0, 299.0, new Date(), new ArrayList<Feedback>(),Mentor.createMockup(),
 				new HashMap<String,byte[]>());
 		return mockup;
