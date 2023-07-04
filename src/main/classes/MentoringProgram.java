@@ -23,7 +23,6 @@ import main.ui.newContent.ScheduleData;
  */
 public class MentoringProgram {
 	private int id;
-	private int mentorId;
 	private String name;
 	private String difficultyLevel;
 	private String description;
@@ -38,6 +37,24 @@ public class MentoringProgram {
 	private List<Feedback> feedbacks;
 	private Map<String,byte[]> files;
 	private String currency;
+	
+	public MentoringProgram() {
+		id = 0;
+		name = null;
+		difficultyLevel = null;
+		description = null;
+		location = null;
+		schedule = new ArrayList<ScheduleData>();
+		duration = 0;
+		price = 0;
+		mentor = new Mentor();
+		rating = 0;
+		noViews = 0;
+		field = null;
+		feedbacks = new ArrayList<Feedback>();
+		files = new HashMap<String, byte[]>();
+		currency = null;
+	}
 	
 	public Map<String, byte[]> getFiles() {
 		return files;
@@ -113,19 +130,18 @@ public class MentoringProgram {
 	 * @param schedule
 	 * @param duration
 	 * @param price
+	 * @param currency
 	 * @param mentor
 	 * @param rating
 	 * @param noViews
 	 * @param field
 	 * @param feedbacks
 	 * @param files
-	 * @param currency
 	 */
-	public MentoringProgram(int id,int mentorId, String name, String difficultyLevel, String description, String location, 
-			List<ScheduleData> schedule, int duration, int price,String currency,Mentor mentor,
+	public MentoringProgram(int id, String name, String difficultyLevel, String description, String location, 
+			int duration, int price,String currency,Mentor mentor,
 			int rating,int noViews,String field, List<Feedback> feedbacks,Map<String,byte[]> files) {
 		this.id = id;
-		this.mentorId = mentorId;
 		this.name = name;
 		this.difficultyLevel = difficultyLevel;
 		this.description = description;
@@ -226,7 +242,7 @@ public class MentoringProgram {
 	public static MentoringProgram createMockup() {
         // Create a mock mentor for the mentoring program
         Mentor mentor = Mentor.createMockup();
-        MentoringProgram mockup = new MentoringProgram(0,0, "Sample Program", "Intermediate",
+        MentoringProgram mockup = new MentoringProgram(0, "Sample Program", "Intermediate",
                 "Sample program description", "Sample location", new ArrayList<ScheduleData>(), 12, 100,"RON",
                 mentor, 4, 100, "Sample Field", new ArrayList<Feedback>(),new HashMap<String,byte[]>());
         return mockup;
