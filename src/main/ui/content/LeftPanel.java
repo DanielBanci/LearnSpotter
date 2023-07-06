@@ -28,6 +28,7 @@ import main.ui.newContent.NewCoursePost;
 import main.ui.newContent.NewMentoringProgram;
 import main.ui.newContent.NewUserProfile;
 //import main.utility.temporaryDatabase.TDB;
+import main.ui.search.SearchFiltersPanel;
 
 public class LeftPanel extends JPanel {
 
@@ -53,6 +54,7 @@ public class LeftPanel extends JPanel {
 	private JMenu mnNewMenu_1;
 	private JMenuItem mIMyCourses;
 	private JMenuItem mIMentoringPrograms;
+	private JPanel filtersPanel = new JPanel();
 
 	//for user
 	public LeftPanel(Boolean TODO, Mentor mentor, User user) {
@@ -198,12 +200,21 @@ public class LeftPanel extends JPanel {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().add(new DisplayMentoringProgramsPanel());
 				MainPanel.getInstance().getContent().validate();
-				LeftPanel.this.add(new SearchFiltersPanel());
+				LeftPanel.this.remove(filtersPanel);
+				filtersPanel = new SearchFiltersPanel(true,SearchFiltersPanel.TYPE.MENTORINGPROGRAM);
+				LeftPanel.this.add(filtersPanel);
+				//LeftPanel.this.add(makeEmptyPanel());
+				LeftPanel.this.revalidate();
 			}
 			
 		};
 	}
-	
+	private JPanel makeEmptyPanel() {
+		JPanel p = new JPanel();
+		p.setOpaque(false);
+		p.setMaximumSize(new Dimension(999,999999999));
+		return p;
+	}
 	private ActionListener actionMISearchMentors() {
 		return new ActionListener() {
 
@@ -212,7 +223,11 @@ public class LeftPanel extends JPanel {
 				MainPanel.getInstance().getContent().removeAll();
 				MainPanel.getInstance().getContent().add(new DisplayMentorsPanel());
 				MainPanel.getInstance().getContent().validate();
-				LeftPanel.this.add(new SearchFiltersPanel());
+				LeftPanel.this.remove(filtersPanel);
+				filtersPanel = new SearchFiltersPanel(true,SearchFiltersPanel.TYPE.MENTOR);
+				LeftPanel.this.add(filtersPanel);
+				//LeftPanel.this.add(makeEmptyPanel());
+				LeftPanel.this.revalidate();
 			}
 			
 		};
@@ -226,7 +241,11 @@ public class LeftPanel extends JPanel {
 				if(user == null) user = mentor;
 				MainPanel.getInstance().getContent().add(new DisplayCoursesPanel());
 				MainPanel.getInstance().getContent().validate();
-				LeftPanel.this.add(new SearchFiltersPanel());
+				LeftPanel.this.remove(filtersPanel);
+				filtersPanel = new SearchFiltersPanel(true,SearchFiltersPanel.TYPE.COURSE);
+				LeftPanel.this.add(filtersPanel);
+				//LeftPanel.this.add(makeEmptyPanel());
+				LeftPanel.this.revalidate();
 			}
 			
 		};
@@ -428,6 +447,7 @@ public class LeftPanel extends JPanel {
 
 		mILogOut = new JMenuItem("Log out");
 		mSettings.add(mILogOut);
+		filtersPanel = new JPanel();
 	}
 
 

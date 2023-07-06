@@ -1,14 +1,20 @@
-package main.ui.content;
+package main.ui.search;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
 import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import main.ui.customComponents.ImagePanel;
+import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customComponents.RoundTextField;
+import main.utility.ImageLoader;
 
 /**
  * The class represents a search bar.
@@ -19,6 +25,7 @@ import main.ui.customComponents.RoundTextField;
 public class SearchBarPanel extends RoundPanel {
 	
 	private JPanel searchImagePanel;
+	private JLabel searchLbl;
 	private JTextField searchTextField;
 
 	/**
@@ -32,9 +39,11 @@ public class SearchBarPanel extends RoundPanel {
 		this.setMinimumSize(new Dimension(100,50));
 		
 		//search icon
-		searchImagePanel = new ImagePanel("res/search_icon.png",new Dimension(45,45));
-		searchImagePanel.setOpaque(false);
-		add(searchImagePanel);
+		
+		searchLbl = new JLabel();
+		searchLbl.setIcon(new ImageIcon(ImageLoader.getInstance().getSearchIcon24()));
+		searchLbl.setMaximumSize(new Dimension(24,24));
+		add(searchLbl);
 		
 		//search text field
 		searchTextField = new RoundTextField();

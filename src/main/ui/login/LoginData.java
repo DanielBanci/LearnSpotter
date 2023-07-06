@@ -136,8 +136,8 @@ public class LoginData extends RoundPanel {
 
 		tFEmail.setText("johndoe@example.com");
 		passwordField.setText("PassWord1@3");
-		//tFEmail.setText("janesmith@example.com");
-		//passwordField.setText("passWord!2");
+		tFEmail.setText("janesmith@example.com");
+		passwordField.setText("passWord!2");
 	}
 	
 	private MouseAdapter newAccounMouseAdapter() {
@@ -202,7 +202,7 @@ public class LoginData extends RoundPanel {
 		                	String phoneNumber = resultSet.getString("phone_number");
 		                	String description = resultSet.getString("description");
 		                	String field = resultSet.getString("field");
-		                	int programNumbers = resultSet.getInt("program_number");
+		                	int programNumbers = resultSet.getInt("programs_number");
 		                	String cardNumber = resultSet.getString("card_number");
 		                	int cvv = resultSet.getInt("cvv");
 		                	String cardHolderName = resultSet.getString("card_holder_name");

@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import javax.swing.border.EmptyBorder;
 
 import main.ui.customComponents.ImagePanel;
+import main.ui.search.SearchBarPanel;
 
 import javax.swing.BoxLayout;
 
