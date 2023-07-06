@@ -46,6 +46,28 @@ public class DisplayCoursesPanel extends JPanel {
 
 		});
 	}
+	
+	public DisplayCoursesPanel(List<Course> courses) {
+		this();
+
+		for(int i=0;i<courses.size();i++) {
+			add(new CoursePost(courses.get(i),MainPanel.loggedUser));
+		}
+		DisplayCoursesPanel f = this;
+
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				Dimension dim = MainPanel.getInstance().getViewport().getExtentSize();
+				f.setMaximumSize(new Dimension(1300,900000));
+				MainPanel.getInstance().getVerticalScrollBar().setValue(0);
+				MainPanel.getInstance().getHorizontalScrollBar().setValue(0);
+			}
+
+		});
+	}
+	
 	public DisplayCoursesPanel(Boolean TODO) {
 		this();
 

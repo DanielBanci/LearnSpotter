@@ -14,7 +14,7 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 
 public class TextFilter extends JPanel{
-	private JTextField textField;
+	public JTextField textField;
 	
 	public TextFilter(String hint) {
 		this();

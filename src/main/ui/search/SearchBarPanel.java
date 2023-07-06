@@ -25,7 +25,7 @@ import main.utility.ImageLoader;
 public class SearchBarPanel extends RoundPanel {
 	
 	private JPanel searchImagePanel;
-	private JLabel searchLbl;
+	public JLabel searchLbl;
 	private JTextField searchTextField;
 
 	/**
