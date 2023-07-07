@@ -19,6 +19,7 @@ import main.app.App;
 import main.classes.Course;
 import main.classes.Mentor;
 import main.classes.User;
+import main.ui.customComponents.ImagePanel;
 import main.ui.displayContent.DisplayCoursesPanel;
 import main.ui.displayContent.DisplayMentoringProgramsPanel;
 import main.ui.displayContent.DisplayMentorsPanel;
@@ -29,6 +30,7 @@ import main.ui.newContent.NewMentoringProgram;
 import main.ui.newContent.NewUserProfile;
 //import main.utility.temporaryDatabase.TDB;
 import main.ui.search.SearchFiltersPanel;
+import main.utility.ImageLoader;
 
 public class LeftPanel extends JPanel {
 
@@ -55,6 +57,7 @@ public class LeftPanel extends JPanel {
 	private JMenuItem mIMyCourses;
 	private JMenuItem mIMentoringPrograms;
 	private JPanel filtersPanel = new JPanel();
+	private ImagePanel logoPanel;
 
 	//for user
 	public LeftPanel(Boolean TODO, Mentor mentor, User user) {
@@ -284,10 +287,14 @@ public class LeftPanel extends JPanel {
 	public LeftPanel(User user) {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+		logoPanel = new ImagePanel(ImageLoader.getInstance().getLogo(), new Dimension(200, 100));
+		logoPanel.setMaximumSize(new Dimension(200,100));
+		logoPanel.setPreferredSize(new Dimension(200,100));
+		//add(logoPanel);
 		menuPanel = new JPanel();
 		menuPanel.setOpaque(false);
+		menuPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
 		add(menuPanel);
-
 		menuBar = new JMenuBar();
 		menuBar.setLayout(new BoxLayout(menuBar, BoxLayout.Y_AXIS));
 		menuBar.setPreferredSize(new Dimension(180, 200));
@@ -371,9 +378,15 @@ public class LeftPanel extends JPanel {
 	public LeftPanel() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+		logoPanel = new ImagePanel(ImageLoader.getInstance().getLogo(), new Dimension(200, 100));
+		//add(logoPanel);
 		menuPanel = new JPanel();
+		menuPanel.setMinimumSize(new Dimension(180, 300));
+		menuPanel.setMaximumSize(new Dimension(180, 300));
+		menuPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
 		menuPanel.setOpaque(false);
 		add(menuPanel);
+		menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.X_AXIS));
 
 		menuBar = new JMenuBar();
 		menuBar.setLayout(new BoxLayout(menuBar, BoxLayout.Y_AXIS));

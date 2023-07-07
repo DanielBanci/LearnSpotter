@@ -88,7 +88,7 @@ public class MainPanel extends JScrollPane {
 		setCorner(JScrollPane.UPPER_LEFT_CORNER, logoPanel);
 		topPanel = new TopPanel();
 		topPanel.setPreferredSize(new Dimension(10, 100));
-		setColumnHeaderView(topPanel);
+		//setColumnHeaderView(topPanel);
 
 		content.add(new HomePanel(true,mentor));
 		// content.add(new DisplayMentoringProgramsPanel());
@@ -104,7 +104,7 @@ public class MainPanel extends JScrollPane {
 		setCorner(JScrollPane.UPPER_LEFT_CORNER, logoPanel);
 		topPanel = new TopPanel();
 		topPanel.setPreferredSize(new Dimension(10, 100));
-		setColumnHeaderView(topPanel);
+		//setColumnHeaderView(topPanel);
 
 		//content.add(new HomePanel(true,Mentor.createMockup(),user));
 		content.add(new HomePanel(Mentor.createMockup(),user));
@@ -137,9 +137,10 @@ public class MainPanel extends JScrollPane {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		topPanel = new JPanel();
 		topPanel.setPreferredSize(new Dimension(10, 100));
-		setColumnHeaderView(topPanel);
+		//setColumnHeaderView(topPanel);
 
 		leftPanel = new LeftPanel(true,mentor);
+		leftPanel = new LeftSidePanel(Mentor.createMockup());
 		leftPanel.setBackground(new Color(128, 128, 128));
 		leftPanel.setPreferredSize(new Dimension(250, 10));
 		setRowHeaderView(leftPanel);
@@ -149,6 +150,7 @@ public class MainPanel extends JScrollPane {
 		content.setLayout(new BoxLayout(content, BoxLayout.X_AXIS));
 		loggedUser = mentor;
 
+		setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	}
 	/**
 	 * Create the panel.
@@ -159,9 +161,10 @@ public class MainPanel extends JScrollPane {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		topPanel = new JPanel();
 		topPanel.setPreferredSize(new Dimension(10, 100));
-		setColumnHeaderView(topPanel);
+		//setColumnHeaderView(topPanel);
 
 		leftPanel = new LeftPanel(true,Mentor.createMockup(),user);
+		leftPanel = new LeftSidePanel(user,Mentor.createMockup());
 		leftPanel.setBackground(new Color(128, 128, 128));
 		leftPanel.setPreferredSize(new Dimension(250, 10));
 		setRowHeaderView(leftPanel);
@@ -170,7 +173,8 @@ public class MainPanel extends JScrollPane {
 		setViewportView(content);
 		content.setLayout(new BoxLayout(content, BoxLayout.X_AXIS));
 		loggedUser = user;
-
+		
+		setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	}
 
 	/*

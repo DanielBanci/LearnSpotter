@@ -381,6 +381,7 @@ public class SearchFiltersPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public SearchFiltersPanel() {
+		setBorder(new EmptyBorder(5, 0, 0, 0));
 		setOpaque(false);
 		setMaximumSize(new Dimension(210, 1000));
 		setPreferredSize(new Dimension(220, 500));

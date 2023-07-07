@@ -15,6 +15,8 @@ public class ReviewsPanel extends JPanel {
 	public ReviewsPanel(Mentor mentor) {
 		this();
 		//feedbacks.sort();												//TODO sort the feedback after posting date
+		mentor.getFeedbacks().add(Feedback.createMockup());
+		mentor.getFeedbacks().add(Feedback.createMockup());
 		for(int i = 0;i < mentor.getFeedbacks().size();i++) {
 			
 			add(new FeedbackPanel(mentor.getFeedbacks().get(i)));									//TODO construct the feedbacks with content  
@@ -27,7 +29,7 @@ public class ReviewsPanel extends JPanel {
 	 */
 	public ReviewsPanel() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+		setOpaque(false);
 	}
 
 }

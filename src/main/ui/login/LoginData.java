@@ -15,6 +15,7 @@ import main.ui.customComponents.RoundPanel;
 import main.ui.customComponents.RoundPasswordField;
 import main.ui.customComponents.RoundTextField;
 import main.ui.newContent.NewUserProfile;
+import main.utility.StaticUtilities;
 import main.db.*;
 
 import javax.swing.JLabel;
@@ -196,7 +197,7 @@ public class LoginData extends RoundPanel {
 					PreparedStatement statement = conn.prepareStatement(query);
 					
 					statement.setString(1, tFEmail.getText());
-		            statement.setString(2, passwordField.getPassword().toString());
+		            statement.setString(2, passwordField.getText());
 		            
 					ResultSet resultSet = statement.executeQuery();
 					
@@ -286,7 +287,7 @@ public class LoginData extends RoundPanel {
             	if (checkBox.isSelected()) {
                     passwordField.setEchoChar((char) 0); // Show password
                 } else {
-                    passwordField.setEchoChar('�'); // Hide password
+                    passwordField.setEchoChar(StaticUtilities.bullet); // Hide password
                 }
             }
         };

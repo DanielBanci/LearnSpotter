@@ -89,7 +89,6 @@ public class HomePanel extends JPanel {
 		for(int i = 0;i<mentoringPrograms.size();i++) {
 			mentoringProgramP.add(new MentoringProgramPost(mentoringPrograms.get(i), true,mentor,false));  //do i relly need mentor in here?
 		}*/
-		
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
@@ -212,7 +211,6 @@ public class HomePanel extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
@@ -276,7 +274,6 @@ public class HomePanel extends JPanel {
 				coursesPanel.getHorizontalScrollBar().setValue(0);
 				mentorsPanel.getHorizontalScrollBar().setValue(0);
 				mentoringProgramPanel.getHorizontalScrollBar().setValue(0);
-				
 			}
 			
 		});
