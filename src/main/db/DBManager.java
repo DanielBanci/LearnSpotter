@@ -2,6 +2,7 @@ package main.db;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -261,5 +262,104 @@ public class DBManager {
 		}
 		
 		return courses;
+	}
+	
+	public static void updateUser(User updatedUser) throws SQLException {
+		Connection conn = DbConnection.conn;
+
+		String sql = "UPDATE users SET first_name=?, last_name=?, email=?, password=?, phone_number=? WHERE id = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        
+        statement.setString(1, updatedUser.getFirstName());
+        statement.setString(2, updatedUser.getLastName());
+        statement.setString(3, updatedUser.getEmail());
+        statement.setString(4, updatedUser.getPassword());
+        statement.setString(5, updatedUser.getPhoneNumber());
+        statement.setInt(6, updatedUser.getId());
+        
+        int rowsUpdated = statement.executeUpdate();
+        
+        if (rowsUpdated > 0) {
+            System.out.println("Record updated successfully.");
+        } else {
+            System.out.println("No records were updated.");
+        }
+	}
+	
+	public static void updateMentor(Mentor updatedMentor) throws SQLException {
+		Connection conn = DbConnection.conn;
+
+		String sql = "UPDATE users SET first_name=?, last_name=?, email=?, password=?, phone_number=?, description=?, field=?,"
+				+ "programs_number=?, card_number=?, cvv=?, card_holder_name=?, expiration_month=?, expiration_year=?, "
+				+ "profile_pic=? WHERE id = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        
+        statement.setString(1, updatedMentor.getFirstName());
+        statement.setString(2, updatedMentor.getLastName());
+        statement.setString(3, updatedMentor.getEmail());
+        statement.setString(4, updatedMentor.getPassword());
+        statement.setString(5, updatedMentor.getPhoneNumber());
+        statement.setString(6, updatedMentor.getDescription());
+        statement.setString(7, updatedMentor.getField());
+        statement.setInt(8, updatedMentor.getProgramsNumber());
+        statement.setString(9, updatedMentor.getCard().getCardNumber());
+        statement.setString(10, updatedMentor.getCard().getCvvCvc());
+        statement.setString(11, updatedMentor.getCard().getCardHolderName());
+        statement.setString(12, updatedMentor.getCard().getExpirationMonth());
+        statement.setString(13, updatedMentor.getCard().getExpirationYear());
+        statement.setInt(14, updatedMentor.getId());
+        
+        int rowsUpdated = statement.executeUpdate();
+        
+        if (rowsUpdated > 0) {
+            System.out.println("Record updated successfully.");
+        } else {
+            System.out.println("No records were updated.");
+        }
+	}
+	
+	public static void updateCourse(Course updatedCourse) throws SQLException {
+		Connection conn = DbConnection.conn;
+
+		String sql = "UPDATE courses SET name=?, description=?, price=? WHERE id = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        
+        statement.setString(1, updatedCourse.getName());
+        statement.setString(2, updatedCourse.getDescription());
+        statement.setDouble(3, updatedCourse.getPrice());
+        statement.setInt(4, updatedCourse.getId());
+        
+        int rowsUpdated = statement.executeUpdate();
+        
+        if (rowsUpdated > 0) {
+            System.out.println("Record updated successfully.");
+        } else {
+            System.out.println("No records were updated.");
+        }
+	}
+	
+	public static void updateMentoringProgram(MentoringProgram updatedMentoringProgram) throws SQLException {
+		Connection conn = DbConnection.conn;
+
+		String sql = "UPDATE mentoring_programs SET name=?, difficulty_level=?, description=?, location=?, duration=?, price=?, currency=?, field=? WHERE id = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        
+        statement.setString(1, updatedMentoringProgram.getName());
+        statement.setString(2, updatedMentoringProgram.getDifficultyLevel());
+        statement.setString(3, updatedMentoringProgram.getDescription());
+        statement.setString(4, updatedMentoringProgram.getLocation());
+        statement.setDouble(5, updatedMentoringProgram.getDuration());
+        statement.setDouble(6, updatedMentoringProgram.getPrice());
+        statement.setString(7, updatedMentoringProgram.getCurrency());
+        statement.setString(8, updatedMentoringProgram.getField());
+        statement.setInt(9, updatedMentoringProgram.getId());
+        
+        int rowsUpdated = statement.executeUpdate();
+        
+        if (rowsUpdated > 0) {
+            System.out.println("Record updated successfully.");
+        } else {
+            System.out.println("No records were updated.");
+        }
 	}
 }
