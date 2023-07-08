@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.awt.Color;
 import java.awt.Component;
 
 public class HomePanel extends JPanel {
@@ -138,9 +139,9 @@ public class HomePanel extends JPanel {
 							rs3.getString(8), rs3.getInt(9), null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null);
 
 					coursesP.add(new CoursePost(new Course(rs.getInt(1), rs.getString(4), 
-							rs.getInt(2), rs.getInt(3), "", rs.getString(5), 
-							0, 0, rs.getInt(6), null, new ArrayList<>(), 
-							mentor1, files),user));
+							rs.getInt(2), rs.getInt(3), rs.getString(8), rs.getString(5), 
+							0, 0, rs.getDouble(6), null, new ArrayList<>(), 
+							mentor1, files,rs.getString(7)),user));
 				}
 			}
 		} catch (SQLException e) {
@@ -164,9 +165,9 @@ public class HomePanel extends JPanel {
 				while(rsCourses.next())
 				{
 					Course course = new Course(rsCourses.getInt(1), rsCourses.getString(4), 
-							rsCourses.getInt(2), rsCourses.getInt(3), "", rsCourses.getString(5), 
-							0, 0, rsCourses.getInt(6), null, new ArrayList<>(), 
-							new Mentor(), new HashMap<>());
+							rsCourses.getInt(2), rsCourses.getInt(3), rsCourses.getString(8), rsCourses.getString(5), 
+							0, 0, rsCourses.getDouble(6), null, new ArrayList<>(), 
+							new Mentor(), new HashMap<>(),rsCourses.getString(7));
 					courses.add(course);
 				}
 				
@@ -200,7 +201,7 @@ public class HomePanel extends JPanel {
 							rs4.getString(5), rs4.getString(6), null, "", rs4.getString(7), 
 							rs4.getString(8), rs4.getInt(9), null, null, null, null, null);
 					MentoringProgram mp = new MentoringProgram(rs3.getInt(1), rs3.getInt(2), rs3.getString(3), rs3.getString(4), 
-							rs3.getString(5), rs3.getString(6), new ArrayList<>(), rs3.getInt(7), rs3.getInt(8), rs3.getString(9), m,
+							rs3.getString(5), rs3.getString(6), new ArrayList<>(), rs3.getInt(7), rs3.getDouble(8), rs3.getString(9), m,
 							0, 0, rs3.getString(10), new ArrayList<>(), new HashMap<String, byte[]>());
 					
 					MentoringProgramPost mpp = new MentoringProgramPost(mp, true, m, false);
@@ -264,14 +265,21 @@ public class HomePanel extends JPanel {
 		for(int i = 0;i<5;i++) {
 			mentoringProgramP.add(new MentoringProgramPost(MentoringProgram.createMockup(), true,mentor,false));
 		}
+		coursesP.setOpaque(false);
+		setOpaque(false);
+		
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
 				//MainPanel.getInstance().setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 				MainPanel.getInstance().getContent().setMaximumSize(new Dimension(1300,9000000));
+				//MainPanel.getInstance().getContent().setBackground(Color.blue);
+				//MainPanel.getInstance().getViewport().setMaximumSize(new Dimension(1300,2000));
+				//HomePanel.this.setMaximumSize(new Dimension(1300,2000));
 				MainPanel.getInstance().getContent().validate();
 				coursesPanel.getHorizontalScrollBar().setValue(0);
+				coursesPanel.setOpaque(false);
 				mentorsPanel.getHorizontalScrollBar().setValue(0);
 				mentoringProgramPanel.getHorizontalScrollBar().setValue(0);
 			}
@@ -364,6 +372,7 @@ public class HomePanel extends JPanel {
 			@Override
 			public void run() {
 				pane.setMaximumSize(MainPanel.getInstance().getViewport().getExtentSize());
+				System.out.println(MainPanel.getInstance().getViewport().getExtentSize());
 				//setMaximumSize(MainPanel.getInstance().getViewport().getExtentSize());
 				MainPanel.getInstance().getContent().setMaximumSize(new Dimension(400,200));
 				MainPanel.getInstance().getContent().invalidate();

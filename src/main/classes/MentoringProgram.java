@@ -30,7 +30,7 @@ public class MentoringProgram {
 	private String location;
 	private List<ScheduleData> schedule;
 	private int duration; //in weeks
-	private int price;
+	private Double price;
 	private Mentor mentor;
 	private int rating;
 	private int noViews;
@@ -122,7 +122,7 @@ public class MentoringProgram {
 	 * @param currency
 	 */
 	public MentoringProgram(int id,int mentorId, String name, String difficultyLevel, String description, String location, 
-			List<ScheduleData> schedule, int duration, int price,String currency,Mentor mentor,
+			List<ScheduleData> schedule, int duration, Double price,String currency,Mentor mentor,
 			int rating,int noViews,String field, List<Feedback> feedbacks,Map<String,byte[]> files) {
 		this.id = id;
 		this.mentorId = mentorId;
@@ -214,10 +214,10 @@ public class MentoringProgram {
 		this.duration = duration;
 	}
 	
-	public int getPrice() {
+	public Double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	/**
@@ -227,7 +227,7 @@ public class MentoringProgram {
         // Create a mock mentor for the mentoring program
         Mentor mentor = Mentor.createMockup();
         MentoringProgram mockup = new MentoringProgram(0,0, "Sample Program", "Intermediate",
-                "Sample program description", "Sample location", new ArrayList<ScheduleData>(), 12, 100,"RON",
+                "Sample program description", "Sample location", new ArrayList<ScheduleData>(), 12, 100.0,"RON",
                 mentor, 4, 100, "Sample Field", new ArrayList<Feedback>(),new HashMap<String,byte[]>());
         return mockup;
     }

@@ -63,9 +63,10 @@ public class DbConnection {
  		  			 				   " description VARCHAR(255), " +
  		  			 				   " location VARCHAR(255), " +
  		  			 				   " duration VARCHAR(5), " +
- 		  			 				   " price INTEGER, " +
+ 		  			 				   " price DOUBLE, " +
  		  			 				   " currency VARCHAR(4), " +
  		  			 				   " field VARCHAR(50), " +
+ 		  			 				   " teaching_type VARCHAR(25), " +
  		  			 				   " PRIMARY KEY ( id ))";
 	        
 	        String schedule = "CREATE TABLE IF NOT EXISTS schedule " +
@@ -83,8 +84,9 @@ public class DbConnection {
 	        				 "id_mentoring_program INTEGER, " + 
 	        				 "name VARCHAR(50), " + 
 	        				 "description VARCHAR(255), " +
-	        				 "price INTEGER, " + 
+	        				 "price DOUBLE, " + 
 	        				 "currency VARCHAR(4), " +
+	        				 "field VARCHAR(25), " +
 	        				 "PRIMARY KEY (id))";
 	        
 	        String resources = "CREATE TABLE IF NOT EXISTS resources " +

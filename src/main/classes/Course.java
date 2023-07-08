@@ -27,14 +27,15 @@ public class Course {
 	private int idMentor;
 	private int idMentoringProgram;
 	private Map<String,byte[]> pdfFiles;
-	private String url;
+	private String field;
 	private String description;
 	private int rating;
 	private int noViews;
-	private double price;
+	private Double price;
 	private Date lastUpdate;
 	private List<Feedback> feedback;
 	private Mentor owner;
+	private String currency;
 	
 	public Map<String, byte[]> getPdfFiles() {
 		return pdfFiles;
@@ -61,11 +62,11 @@ public class Course {
 		idMentor = 0;
 		idMentoringProgram = 0;
 		pdfFiles = new HashMap<String, byte[]>();
-		url = null;
+		field = null;
 		description = null;
 		rating = 0;
 		noViews = 0;
-		price = 0.0f;
+		price = 0.0;
 		lastUpdate = null;
 		feedback = new ArrayList<Feedback>();
 	}
@@ -85,15 +86,15 @@ public class Course {
 	 * @param lastUpdate
 	 * @param feedback
 	 */
-	public Course(int id, String name, int idMentor, int idMentoringProgram, String url, String description, int rating, int noViews,
-			double price, Date lastUpdate, List<Feedback> feedback,Mentor owner,Map<String,byte[]> pdfFiles) {
+	public Course(int id, String name, int idMentor, int idMentoringProgram, String field, String description, int rating, int noViews,
+			Double price, Date lastUpdate, List<Feedback> feedback,Mentor owner,Map<String,byte[]> pdfFiles,String currency) {
 
 		this.id = id;
 		this.name = name;
 		this.idMentor = idMentor;
 		this.idMentoringProgram = idMentoringProgram;
 		this.pdfFiles = pdfFiles;
-//		this.url = url;
+		this.field = field;
 		this.description = description;
 		this.rating = rating;
 		this.noViews = noViews;
@@ -103,6 +104,7 @@ public class Course {
 		//this.owner = setupOwner();
 		this.owner = owner;
 		this.pdfFiles = pdfFiles;
+		this.currency = currency;
 	}
 	
 	private Mentor setupOwner()
@@ -204,17 +206,17 @@ public class Course {
 	static public Course createMockup() {
 		String dateString = "09/12/2021";
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		java.util.Date parsed = null;
+		/*java.util.Date parsed = null;
 		try {
 			parsed = format.parse(dateString);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		java.sql.Date sqlDate = new java.sql.Date(parsed.getTime());
-		Course mockup = new Course(0, "Software Engineering", 0, 0, "","ceva descriere cum o fi sa fie doar sa fie sa vedem "
+		}*/
+		//java.sql.Date sqlDate = new java.sql.Date(parsed.getTime());
+		Course mockup = new Course(0, "Software Engineering", 0, 0, "field","ceva descriere cum o fi sa fie doar sa fie sa vedem "
 				+ "cum e ca de ce nu dor asa", 4, 0, 299.0, new Date(), new ArrayList<Feedback>(),Mentor.createMockup(),
-				new HashMap<String,byte[]>());
+				new HashMap<String,byte[]>(),"currency");
 		return mockup;
 	}
 }

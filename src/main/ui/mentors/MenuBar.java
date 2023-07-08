@@ -1,5 +1,6 @@
 package main.ui.mentors;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,9 +8,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import main.classes.Mentor;
 import main.classes.User;
+import main.ui.content.MainPanel;
 
 public class MenuBar extends JMenuBar {
 
@@ -75,6 +78,17 @@ public class MenuBar extends JMenuBar {
 		menuItemMentoringPrograms.addActionListener(mentoringProgramsActionListener());
 		menuItemCourses.addActionListener(coursesActionListener());
 		menuItemReview.addActionListener(reviewsActionListener());
+		
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				//MainPanel.getInstance().setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				MainPanel.getInstance().getContent().setMaximumSize(new Dimension(1300,9000000));
+				MainPanel.getInstance().getContent().validate();
+			}
+			
+		});
 	}
 	
 	private ActionListener coursesActionListener() {

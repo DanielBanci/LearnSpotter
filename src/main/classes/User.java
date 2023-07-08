@@ -102,7 +102,7 @@ public class User {
 			while(rs3.next())
 			{
 				MentoringProgram m = new MentoringProgram(rs3.getInt(1), rs3.getInt(2), rs3.getString(3), rs3.getString(4), 
-						rs3.getString(5), rs3.getString(6), new ArrayList<>(), rs3.getInt(7), rs3.getInt(8), rs3.getString(9), (Mentor) this,
+						rs3.getString(5), rs3.getString(6), new ArrayList<>(), rs3.getInt(7), rs3.getDouble(8), rs3.getString(9), (Mentor) this,
 						0, 0, rs3.getString(10), new ArrayList<>(), new HashMap<String, byte[]>());
 				mp.add(m);
 			}

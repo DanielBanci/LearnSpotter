@@ -228,6 +228,7 @@ public class NewCoursePost extends JPanel {
 						            pstmt.setString(3, entry.getKey());
 						            pstmt.setBytes(4, entry.getValue());
 						            pstmt.executeUpdate();
+						            lastId++;
 						        }
 						    }
 						}

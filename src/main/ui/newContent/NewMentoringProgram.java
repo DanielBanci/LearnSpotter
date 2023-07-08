@@ -239,7 +239,7 @@ public class NewMentoringProgram extends JPanel {
 
 				int id = 1;//getLastCourseId() + 1;
 				int duration = 1;
-				int price = 0;
+				Double price = 0.0;
 
 				Preferences prefs = Preferences.userNodeForPackage(main.ui.login.LoginData.class);
 				int mentorId = Integer.parseInt(prefs.get("id", "-1"));
@@ -269,7 +269,7 @@ public class NewMentoringProgram extends JPanel {
 					return;
 				}
 				try {
-					price = Integer.valueOf(tFCoursePrice.getText());//integer?
+					price = Double.valueOf(tFCoursePrice.getText());//integer?
 				} catch(NumberFormatException _) {
 					JOptionPane.showMessageDialog(null, tFCoursePrice.getText() + " is not a integer.", "Error", JOptionPane.ERROR_MESSAGE); //My class says double but if you say so, I'm ready to oblige
 					return;
@@ -317,7 +317,7 @@ public class NewMentoringProgram extends JPanel {
 					pstmt.setString(4, description);
 					pstmt.setString(5, location);
 					pstmt.setInt(6, duration);
-					pstmt.setInt(7, price);
+					pstmt.setDouble(7, price);
 					pstmt.setString(8, currency);
 					pstmt.setString(9, field);
 
@@ -354,7 +354,7 @@ public class NewMentoringProgram extends JPanel {
 						statement.setInt(2, mentoringProgramId);
 						statement.setString(3, key);
 						statement.setString(4, "");
-						statement.setInt(5, price);
+						statement.setDouble(5, price);
 						statement.setString(6, currency);
 						
 

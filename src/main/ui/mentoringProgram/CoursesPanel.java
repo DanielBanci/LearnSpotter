@@ -46,9 +46,9 @@ public class CoursesPanel extends JPanel {
 					files.put(rs2.getString(3), rs2.getBytes(4));
 		
 				Course c = new Course(rs4.getInt(1), rs4.getString(4), 
-						rs4.getInt(2), rs4.getInt(3), "", rs4.getString(5), 
-						0, 0, rs4.getInt(6), null, new ArrayList<>(), 
-						new Mentor(), files);
+						rs4.getInt(2), rs4.getInt(3), rs4.getString(8), rs4.getString(5), 
+						0, 0, rs4.getDouble(6), null, new ArrayList<>(), 
+						new Mentor(), files,rs4.getString(7));
 				
 				add(new CourseFilePanel(mentoringProgramDetails, c));
 			}	

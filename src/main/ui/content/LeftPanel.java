@@ -141,6 +141,7 @@ public class LeftPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
+				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.Y_AXIS));
 				MainPanel.getInstance().getContent().add(new MentorProfile(true,mentor));
 				MainPanel.getInstance().getContent().repaint();
 				MainPanel.getInstance().getContent().validate();
