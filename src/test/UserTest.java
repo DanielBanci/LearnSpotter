@@ -37,7 +37,7 @@ public class UserTest {
 	
 	@Test
 	public void fullConstructorTest() {
-		User user = new User(1, "success", "success2", "success3", "success4", "success5", new ArrayList<Course>(), new ArrayList<MentoringProgram>());
+		User user = new User(1, "success", "success2", "success3", "success4", "success5", new ArrayList<Course>(), new ArrayList<MentoringProgram>(), null);
 		
 		int id = user.getId();
 		String firstName = user.getFirstName();
@@ -60,7 +60,7 @@ public class UserTest {
 	
 	@Test
 	public void settersAndGettersTest() {
-		User user = new User(-1, "fail", "fail2", "fail3", "fail4", "fail5", new ArrayList<Course>(), new ArrayList<MentoringProgram>());
+		User user = new User(-1, "fail", "fail2", "fail3", "fail4", "fail5", new ArrayList<Course>(), new ArrayList<MentoringProgram>(), null);
 		
 		user.setId(1);
 		user.setFirstName("success");
