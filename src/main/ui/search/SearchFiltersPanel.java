@@ -1,11 +1,14 @@
 package main.ui.search;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
@@ -21,7 +24,9 @@ import java.awt.Font;
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
 
+import main.classes.Course;
 import main.classes.Mentor;
+import main.classes.MentoringProgram;
 import main.classes.User;
 import main.ui.content.MainPanel;
 import main.ui.customComponents.ImagePanel;
@@ -39,6 +44,8 @@ public class SearchFiltersPanel extends JPanel {
 	private FilterPanel locationPanel;
 	private FilterPanel difficultyPanel;
 	private FilterPanel teachingTypePanel;
+	private JScrollPane scrollPane;
+	public JPanel content;
 
 	private String fieldFilter;
 	private String teacherFilter;
@@ -52,6 +59,12 @@ public class SearchFiltersPanel extends JPanel {
 	private ComboFilter difficultyP;
 	private ComboFilter teachingTypeP;
 	private ComboFilter fieldP;
+	
+	private List<Course> courses;
+	private List<Mentor> mentors;
+	private List<MentoringProgram> mentoringPrograms;
+	
+	private SortPanel sortPanel;
 
 	private TYPE currentType;
 
@@ -60,12 +73,17 @@ public class SearchFiltersPanel extends JPanel {
 		MENTOR,
 		MENTORINGPROGRAM
 	}
-
+	
 	public SearchFiltersPanel(Boolean TODO,TYPE type) {
 		this();
+		//TODO: initialize data (Ciprian)
+		//courses = 
+		//mentors
+		//mentoringPrograms
 		currentType = type;
 		//get proper values for filters combos, available from data from database(field availables,types avaiblables etc.)
 		String[] model = new String[] {"type 1","type 2","type 3"};
+		
 
 		switch(type) {
 		case COURSE:
@@ -74,8 +92,8 @@ public class SearchFiltersPanel extends JPanel {
 			add(searchBarPanel,0);
 			fieldPanel = new FilterPanel("Field");
 			pricePanel = new FilterPanel("Teacher");
-			add(fieldPanel);
-			add(pricePanel);
+			content.add(fieldPanel);
+			content.add(pricePanel);
 			fieldPanel.plusPBField.addActionListener(fieldFilterActionListener(model));
 			pricePanel.plusPBField.addActionListener(teacherFilterActionListener());
 			break;
@@ -85,8 +103,8 @@ public class SearchFiltersPanel extends JPanel {
 			add(searchBarPanel,0);
 			fieldPanel = new FilterPanel("Field");
 			locationPanel = new FilterPanel("Location");
-			add(fieldPanel);
-			add(locationPanel);
+			content.add(fieldPanel);
+			content.add(locationPanel);
 			fieldPanel.plusPBField.addActionListener(fieldFilterActionListener(model));
 			locationPanel.plusPBField.addActionListener(locationFilterActionListener());
 			break;
@@ -98,16 +116,28 @@ public class SearchFiltersPanel extends JPanel {
 			pricePanel = new FilterPanel("Teacher");
 			difficultyPanel = new FilterPanel("Difficulty");
 			teachingTypePanel = new FilterPanel("Teaching type");
-			add(fieldPanel);
-			add(pricePanel);
-			add(difficultyPanel);
-			add(teachingTypePanel);
+			content.add(fieldPanel);
+			content.add(pricePanel);
+			content.add(difficultyPanel);
+			content.add(teachingTypePanel);
 			fieldPanel.plusPBField.addActionListener(fieldFilterActionListener(model));
 			difficultyPanel.plusPBField.addActionListener(difficultyFilterActionListener(model));
 			teachingTypePanel.plusPBField.addActionListener(teachingTypeFilterActionListener(model));
 			pricePanel.plusPBField.addActionListener(teacherMPFilterActionListener());
+			
 			break;
 		}
+		
+		sortPanel = new SortPanel(true);
+		content.add(sortPanel);
+		scrollPane.setViewportView(content);
+		scrollPane.setPreferredSize(new Dimension(180,300));
+		scrollPane.setMinimumSize(new Dimension(180,300));
+		scrollPane.setOpaque(false);
+		scrollPane.setBorder(new EmptyBorder(0,0,0,0));
+		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		searchBarPanel.searchLbl.addMouseListener(searchAction());
 
 	}
@@ -117,6 +147,8 @@ public class SearchFiltersPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				//filters
 				if(fieldPanel != null) {
 					try {
 						fieldFilter = (String) fieldP.comboBox.getSelectedItem();
@@ -158,6 +190,26 @@ public class SearchFiltersPanel extends JPanel {
 					}catch(Exception e1) {
 
 					}
+				}
+				
+				//sort type
+				switch(sortPanel.sortedType) {
+				case PRICEASC:
+					//TODO: sort after price ascending
+					
+					break;
+				case PRICEDESC:
+					//TODO: sort after price descending
+					
+					break;
+				case BESTFEEDBACK:
+					//TODO: sort after feedback(best first)
+					
+					break;
+				case NOTSELECTED:
+					//nothing to do
+					break;
+					
 				}
 				//TODO: you need to check if the filters are != null, if null it doesn t count as a filter (no error message displayed)
 				switch(currentType) {
@@ -385,7 +437,7 @@ public class SearchFiltersPanel extends JPanel {
 		setOpaque(false);
 		setMaximumSize(new Dimension(210, 1000));
 		setPreferredSize(new Dimension(220, 500));
-		setBackground(new Color(213, 215, 213));
+		//setBackground(new Color(213, 215, 213));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		searchBarPanel = new SearchBarPanel();
@@ -393,12 +445,17 @@ public class SearchFiltersPanel extends JPanel {
 		searchBarPanel.setMaximumSize(new Dimension(32767, 70));
 		add(searchBarPanel);
 
+		scrollPane = new JScrollPane();
+		content = new JPanel();
+		content.setLayout(new BoxLayout(content,BoxLayout.Y_AXIS));
+		content.setOpaque(false);
+		
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel.setMaximumSize(new Dimension(32767, 30));
-		add(panel);
+		content.add(panel);
 
 		JLabel lblNewLabel = new JLabel("Filters");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -406,9 +463,10 @@ public class SearchFiltersPanel extends JPanel {
 
 		filtersPanel = new JPanel();
 		filtersPanel.setOpaque(false);
-		add(filtersPanel);
+		content.add(filtersPanel);
 		filtersPanel.setLayout(new BoxLayout(filtersPanel, BoxLayout.Y_AXIS));
 
-
+		
+		add(scrollPane);
 	}
 }

@@ -30,6 +30,7 @@ import main.ui.newContent.NewMentoringProgram;
 import main.ui.newContent.NewUserProfile;
 //import main.utility.temporaryDatabase.TDB;
 import main.ui.search.SearchFiltersPanel;
+import main.ui.search.SortPanel;
 import main.utility.ImageLoader;
 
 public class LeftPanel extends JPanel {
@@ -56,7 +57,7 @@ public class LeftPanel extends JPanel {
 	private JMenu mnNewMenu_1;
 	private JMenuItem mIMyCourses;
 	private JMenuItem mIMentoringPrograms;
-	private JPanel filtersPanel = new JPanel();
+	private SearchFiltersPanel filtersPanel = new SearchFiltersPanel();
 	private ImagePanel logoPanel;
 
 	//for user
@@ -206,6 +207,8 @@ public class LeftPanel extends JPanel {
 				LeftPanel.this.remove(filtersPanel);
 				filtersPanel = new SearchFiltersPanel(true,SearchFiltersPanel.TYPE.MENTORINGPROGRAM);
 				LeftPanel.this.add(filtersPanel);
+				//filtersPanel.content.add(new SortPanel());
+				//LeftPanel.this.add(new SortPanel());
 				//LeftPanel.this.add(makeEmptyPanel());
 				LeftPanel.this.revalidate();
 			}
@@ -229,6 +232,8 @@ public class LeftPanel extends JPanel {
 				LeftPanel.this.remove(filtersPanel);
 				filtersPanel = new SearchFiltersPanel(true,SearchFiltersPanel.TYPE.MENTOR);
 				LeftPanel.this.add(filtersPanel);
+				//filtersPanel.content.add(new SortPanel());
+				//LeftPanel.this.add(new SortPanel());
 				//LeftPanel.this.add(makeEmptyPanel());
 				LeftPanel.this.revalidate();
 			}
@@ -247,6 +252,8 @@ public class LeftPanel extends JPanel {
 				LeftPanel.this.remove(filtersPanel);
 				filtersPanel = new SearchFiltersPanel(true,SearchFiltersPanel.TYPE.COURSE);
 				LeftPanel.this.add(filtersPanel);
+				//filtersPanel.content.add(new SortPanel());
+				//LeftPanel.this.add(new SortPanel());
 				//LeftPanel.this.add(makeEmptyPanel());
 				LeftPanel.this.revalidate();
 			}
@@ -460,7 +467,7 @@ public class LeftPanel extends JPanel {
 
 		mILogOut = new JMenuItem("Log out");
 		mSettings.add(mILogOut);
-		filtersPanel = new JPanel();
+		filtersPanel = new SearchFiltersPanel();
 	}
 
 
