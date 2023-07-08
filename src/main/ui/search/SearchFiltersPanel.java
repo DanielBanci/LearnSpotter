@@ -192,30 +192,36 @@ public class SearchFiltersPanel extends JPanel {
 					}
 				}
 				
-				//sort type
-				switch(sortPanel.sortedType) {
-				case PRICEASC:
-					//TODO: sort after price ascending
-					
-					break;
-				case PRICEDESC:
-					//TODO: sort after price descending
-					
-					break;
-				case BESTFEEDBACK:
-					//TODO: sort after feedback(best first)
-					
-					break;
-				case NOTSELECTED:
-					//nothing to do
-					break;
-					
-				}
+				/*
+				 * Descriere task:
+				 * cauti cursurile, mentorii sau programele de mentorat dupa filtrele selectate(prima data pui alea ce le au pe toate, apoi ce au
+				 * cu 1 mai putin si tot asta dar tii cont si de tipul de sortare selectat de user.
+				 * Practic conditia va fi (filtre_selectate) && tip_sortare_selectat
+				 */
 				//TODO: you need to check if the filters are != null, if null it doesn t count as a filter (no error message displayed)
 				switch(currentType) {
 				case COURSE:
 					//TODO:search related courses
 
+					//sort type
+					switch(sortPanel.sortedType) {
+					case PRICEASC:
+						//TODO: sort after price ascending
+						
+						break;
+					case PRICEDESC:
+						//TODO: sort after price descending
+						
+						break;
+					case BESTFEEDBACK:
+						//TODO: sort after feedback(best first)
+						
+						break;
+					case NOTSELECTED:
+						//nothing to do
+						break;
+						
+					}
 					//refresh UI
 					MainPanel.getInstance().getContent().removeAll();
 					MainPanel.getInstance().getContent().add(new DisplayCoursesPanel());
@@ -224,6 +230,25 @@ public class SearchFiltersPanel extends JPanel {
 				case MENTOR:
 					//TODO:search related mentors
 
+					//sort type
+					switch(sortPanel.sortedType) {
+					case PRICEASC:
+						//TODO: sort after price ascending
+						
+						break;
+					case PRICEDESC:
+						//TODO: sort after price descending
+						
+						break;
+					case BESTFEEDBACK:
+						//TODO: sort after feedback(best first)
+						
+						break;
+					case NOTSELECTED:
+						//nothing to do
+						break;
+						
+					}
 					//refresh UI
 					MainPanel.getInstance().getContent().removeAll();
 					MainPanel.getInstance().getContent().add(new DisplayMentorsPanel());
@@ -232,6 +257,25 @@ public class SearchFiltersPanel extends JPanel {
 				case MENTORINGPROGRAM:
 					//TODO:search related mentoring program
 
+					//sort type
+					switch(sortPanel.sortedType) {
+					case PRICEASC:
+						//TODO: sort after price ascending
+						
+						break;
+					case PRICEDESC:
+						//TODO: sort after price descending
+						
+						break;
+					case BESTFEEDBACK:
+						//TODO: sort after feedback(best first)
+						
+						break;
+					case NOTSELECTED:
+						//nothing to do
+						break;
+						
+					}
 					//refresh UI
 					MainPanel.getInstance().getContent().removeAll();
 					MainPanel.getInstance().getContent().add(new DisplayMentoringProgramsPanel());
