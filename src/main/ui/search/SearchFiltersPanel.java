@@ -25,6 +25,7 @@ import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
 
 import main.classes.Course;
+import main.classes.Feedback;
 import main.classes.Mentor;
 import main.classes.MentoringProgram;
 import main.classes.User;
@@ -34,6 +35,11 @@ import main.ui.displayContent.DisplayCoursesPanel;
 import main.ui.displayContent.DisplayMentoringProgramsPanel;
 import main.ui.displayContent.DisplayMentorsPanel;
 import main.utility.ImageLoader;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.stream.Collectors;
+import org.icepdf.core.pobjects.Stream;
 
 public class SearchFiltersPanel extends JPanel {
 
@@ -198,37 +204,74 @@ public class SearchFiltersPanel extends JPanel {
 				 * cu 1 mai putin si tot asta dar tii cont si de tipul de sortare selectat de user.
 				 * Practic conditia va fi (filtre_selectate) && tip_sortare_selectat
 				 */
+				
 				//TODO: you need to check if the filters are != null, if null it doesn t count as a filter (no error message displayed)
 				switch(currentType) {
-				case COURSE:
+				case COURSE:{
 					//TODO:search related courses
-
+					java.util.stream.Stream<Course> s = courses.stream();
+					
+					if(fieldFilter != null)
+						s = s.filter(course -> course.getField().equals(fieldFilter));
+					
+					if(teacherFilter != null) 
+						s = s.filter(course -> mentors.stream().anyMatch(
+								mentor -> course.getIdMentor() == mentor.getId() && (mentor.getFirstName() + " " 
+						+ mentor.getLastName()).contains(teacherFilter)));
+						courses = s.collect(Collectors.toList());
 					//sort type
-					switch(sortPanel.sortedType) {
-					case PRICEASC:
-						//TODO: sort after price ascending
-						
-						break;
-					case PRICEDESC:
-						//TODO: sort after price descending
-						
-						break;
-					case BESTFEEDBACK:
-						//TODO: sort after feedback(best first)
-						
-						break;
-					case NOTSELECTED:
-						//nothing to do
-						break;
-						
-					}
+						switch(sortPanel.sortedType) {
+						case PRICEASC:
+							Collections.sort(courses, new Comparator<Course>() {
+					            @Override
+					            public int compare(Course o1, Course o2) {
+					                return Double.compare(o1.getPrice(), o2.getPrice());
+					            }
+				        	});
+
+							break;
+						case PRICEDESC:
+							Collections.sort(courses, new Comparator<Course>() {
+					            @Override
+					            public int compare(Course o1, Course o2) {
+					                return 1 - Double.compare(o1.getPrice(), o2.getPrice());
+					            }
+				        	});
+
+							break;
+						case BESTFEEDBACK:
+							Collections.sort(courses, new Comparator<Course>() {
+					            @Override
+					            public int compare(Course o1, Course o2) {
+					            	double avgRating1 = Feedback.calcAvgRating(o1.getFeedback());
+					                double avgRating2 = Feedback.calcAvgRating(o2.getFeedback());
+
+					                return Double.compare(avgRating1, avgRating2);
+					            }
+				        	});
+							break;
+
+						case NOTSELECTED:
+							//nothing to do
+							break;
+						}
 					//refresh UI
 					MainPanel.getInstance().getContent().removeAll();
 					MainPanel.getInstance().getContent().add(new DisplayCoursesPanel());
 					MainPanel.getInstance().getContent().validate();
 					break;
-				case MENTOR:
+					}
+				case MENTOR:{
 					//TODO:search related mentors
+					java.util.stream.Stream<Mentor> s = mentors.stream();
+
+					if(fieldFilter != null)
+						s.filter(mentor -> mentor.getField().equals(fieldFilter));
+
+					if(locationFilter != null)
+						s.filter(mentor -> mentor.getLocation().contains(locationFilter));
+
+					mentors = s.collect(Collectors.toList());
 
 					//sort type
 					switch(sortPanel.sortedType) {
@@ -242,6 +285,15 @@ public class SearchFiltersPanel extends JPanel {
 						break;
 					case BESTFEEDBACK:
 						//TODO: sort after feedback(best first)
+						Collections.sort(mentors, new Comparator<Mentor>() {
+				            @Override
+				            public int compare(Mentor o1, Mentor o2) {
+				            	double avgRating1 = Feedback.calcAvgRating(o1.getFeedbacks());
+				                double avgRating2 = Feedback.calcAvgRating(o2.getFeedbacks());
+
+				                return Double.compare(avgRating1, avgRating2);
+				            }
+			        	});
 						
 						break;
 					case NOTSELECTED:
@@ -254,21 +306,58 @@ public class SearchFiltersPanel extends JPanel {
 					MainPanel.getInstance().getContent().add(new DisplayMentorsPanel());
 					MainPanel.getInstance().getContent().validate();
 					break;
-				case MENTORINGPROGRAM:
+				}
+				case MENTORINGPROGRAM:{
 					//TODO:search related mentoring program
+					java.util.stream.Stream<MentoringProgram> s = mentoringPrograms.stream();
+
+					if(fieldFilter != null)
+						s.filter(mentoringProgram -> mentoringProgram.getField().equals(fieldFilter));
+
+					if(teacherFilter != null)
+						s.filter(mentoringProgram -> (mentoringProgram.getMentor().getFirstName() + " " +
+						mentoringProgram.getMentor().getLastName()).contains(teacherFilter));
+
+					if(difficultyFilter != null)
+						s.filter(mentoringProgram -> mentoringProgram.getDifficultyLevel().equals(difficultyFilter));
+
+					mentoringPrograms = s.collect(Collectors.toList());
+
 
 					//sort type
 					switch(sortPanel.sortedType) {
 					case PRICEASC:
 						//TODO: sort after price ascending
+						Collections.sort(mentoringPrograms, new Comparator<MentoringProgram>() {
+				            @Override
+				            public int compare(MentoringProgram o1, MentoringProgram o2) {
+				                return Double.compare(o1.getPrice(), o2.getPrice());
+				            }
+			        	});
 						
 						break;
 					case PRICEDESC:
 						//TODO: sort after price descending
+						Collections.sort(mentoringPrograms, new Comparator<MentoringProgram>() {
+				            @Override
+				            public int compare(MentoringProgram o1, MentoringProgram o2) {
+				                return 1 - Double.compare(o1.getPrice(), o2.getPrice());
+				            }
+			        	});
+
 						
 						break;
 					case BESTFEEDBACK:
 						//TODO: sort after feedback(best first)
+						Collections.sort(mentoringPrograms, new Comparator<MentoringProgram>() {
+				            @Override
+				            public int compare(MentoringProgram o1, MentoringProgram o2) {
+				            	double avgRating1 = Feedback.calcAvgRating(o1.getFeedbacks());
+				                double avgRating2 = Feedback.calcAvgRating(o2.getFeedbacks());
+
+				                return Double.compare(avgRating1, avgRating2);
+				            }
+			        	});
 						
 						break;
 					case NOTSELECTED:
@@ -281,6 +370,7 @@ public class SearchFiltersPanel extends JPanel {
 					MainPanel.getInstance().getContent().add(new DisplayMentoringProgramsPanel());
 					MainPanel.getInstance().getContent().validate();
 					break;
+				}
 				}
 				/*private String fieldFilter;
 			    private String teacherFilter;
@@ -315,6 +405,7 @@ public class SearchFiltersPanel extends JPanel {
 
 		};
 	}
+	
 
 	private ActionListener teacherMPFilterActionListener() {
 		return new ActionListener() {

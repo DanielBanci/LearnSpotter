@@ -198,6 +198,13 @@ public class Course {
 	public void setFeedback(List<Feedback> feedback) {
 		this.feedback = feedback;
 	}
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
 	
 	/**
 	 * @deprecated This method is only used for debugging

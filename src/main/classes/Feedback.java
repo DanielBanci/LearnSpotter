@@ -1,6 +1,7 @@
 package main.classes;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -100,4 +101,15 @@ public class Feedback {
 	           && Objects.equals(this.text, otherFeedback.text) 
 	           && (this.rating == otherFeedback.rating);
 	}
+	
+	static public double calcAvgRating(List<Feedback> feedback) {
+        if(feedback.isEmpty()) {
+            return 0.0;
+        }
+
+        double sum = 0.0;
+        for(Feedback f : feedback)
+            sum += f.getRating();
+        return sum / feedback.size();
+    }
 }
