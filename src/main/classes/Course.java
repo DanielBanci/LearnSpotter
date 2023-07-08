@@ -37,6 +37,14 @@ public class Course {
 	private Mentor owner;
 	private String currency;
 	
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
 	public Map<String, byte[]> getPdfFiles() {
 		return pdfFiles;
 	}

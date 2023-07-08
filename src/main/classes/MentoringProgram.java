@@ -38,6 +38,14 @@ public class MentoringProgram {
 	private List<Feedback> feedbacks;
 	private Map<String,byte[]> files;
 	private String currency;
+
+	public int getMentorId() {
+		return mentorId;
+	}
+
+	public void setMentorId(int mentorId) {
+		this.mentorId = mentorId;
+	}
 	
 	public Map<String, byte[]> getFiles() {
 		return files;
