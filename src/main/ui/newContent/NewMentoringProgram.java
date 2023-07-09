@@ -15,8 +15,11 @@ import main.ui.customUI.HintTextFieldUI;
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -53,6 +56,108 @@ public class NewMentoringProgram extends JPanel {
 	private JComboBox<String> comboBoxLocation;
 	private Mentor mentor;
 
+	/**
+	 * for edit
+	 * @param mentor
+	 * @param m
+	 */
+	public NewMentoringProgram(Mentor mentor,MentoringProgram m) {
+		this();
+		this.mentor = mentor;
+		tFTitle.setText(m.getName());
+		tFField.setText(m.getField());
+		tFLessonDuration.setText(String.valueOf(m.getDuration()));
+		tFCoursePrice.setText(String.valueOf(m.getPrice()));
+		tADescription.setText(m.getDescription());
+		cBDifficulty.setSelectedItem(m.getDifficultyLevel());
+		comboBoxCurrency.setSelectedItem(m.getCurrency());
+		comboBoxLocation.setSelectedItem(m.getLocation());
+		
+		int index = findComponentIndex(scheduleChooserPanel.getParent(), scheduleChooserPanel);
+		JPanel parent = (JPanel) scheduleChooserPanel.getParent();
+		parent.remove(scheduleChooserPanel);
+		scheduleChooserPanel = new ScheduleChooserPanel(m);
+		parent.add(scheduleChooserPanel,index);
+		
+		index = findComponentIndex(coursesPanel.getParent(), coursesPanel);
+		parent = (JPanel) coursesPanel.getParent();
+		parent.remove(coursesPanel);
+		coursesPanel = new FileUploadPanel(m);
+		parent.add(coursesPanel,index);
+		
+		coursesPanel.revalidate();
+		
+		btnPost.setText("Save");
+		btnPost.removeActionListener(btnPost.getActionListeners()[0]);
+		btnPost.addActionListener(saveActionListener(m));
+		/*SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				int index = findComponentIndex(scheduleChooserPanel.getParent(), scheduleChooserPanel);
+				JPanel parent = (JPanel) scheduleChooserPanel.getParent();
+				parent.remove(scheduleChooserPanel);
+				parent.add(new ScheduleChooserPanel(m),index);
+				
+				
+				scheduleChooserPanel.revalidate();
+			}
+			
+		});*/
+		
+	}
+	
+	private ActionListener saveActionListener(MentoringProgram m) {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				//get new data
+				String newField = tFField.getText();
+				String newLessonDuration = tFLessonDuration.getText();
+				String newPrice = tFCoursePrice.getText();
+				String newDescription = tADescription.getText();
+				//no check need
+				String newDifficulty = cBDifficulty.getSelectedItem().toString();
+				String newCurrency = comboBoxCurrency.getSelectedItem().toString();
+				String newTeachingType = comboBoxLocation.getSelectedItem().toString();
+				Map newCourses = coursesPanel.uploadedFiles;
+				List<ScheduleData> newSchedule = new ArrayList<>();
+				
+				//new schedule data
+				for(Object key : scheduleChooserPanel.scheduledData.keySet()) {
+					newSchedule.add(scheduleChooserPanel.scheduledData.get(key));
+				}
+				
+				//TODO: check if new String values are different from the one currently stored in MentoringProgram m and 
+				//if true: check to be correct and save new data (in app(object) and in database (by calling the method from DBManager))
+				//else: no need to check, no need to update
+				
+				//for the map and list values just store the new values in class and store them in object and database
+				
+			}
+			
+		};
+	}
+	
+	/**
+	 * Method that search for a panel index inside the container.
+	 * @param target the panel in interest
+	 * @return the index of the panel, -1 if not found
+	 */
+	public int findComponentIndex(Container container,Object target) {
+		Component[] components = container.getComponents();
+		for (int i = 0; i < components.length; i++) {
+			if (components[i].equals(target)) {
+				return i;
+			}
+		}
+		return -1; // Component not found
+	}
+	
 	public NewMentoringProgram(Mentor mentor) {
 		this();
 		this.mentor = mentor;
@@ -271,7 +376,7 @@ public class NewMentoringProgram extends JPanel {
 				try {
 					price = Double.valueOf(tFCoursePrice.getText());//integer?
 				} catch(NumberFormatException _) {
-					JOptionPane.showMessageDialog(null, tFCoursePrice.getText() + " is not a integer.", "Error", JOptionPane.ERROR_MESSAGE); //My class says double but if you say so, I'm ready to oblige
+					JOptionPane.showMessageDialog(null, tFCoursePrice.getText() + " is not a number.", "Error", JOptionPane.ERROR_MESSAGE); //My class says double but if you say so, I'm ready to oblige
 					return;
 				}
 				String description = tADescription.getText();//not empty

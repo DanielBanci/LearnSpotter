@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DateTimePicker;
 
+import main.classes.MentoringProgram;
+import main.classes.Schedule;
 import main.ui.customComponents.RoundButton;
 
 import javax.swing.BoxLayout;
@@ -40,6 +42,39 @@ public class ScheduleChooserPanel extends JPanel {
 	private JLabel lblUntil;
 	public Map<NewScheduleDatePanel,ScheduleData> scheduledData;
 	private JPanel panel_4;
+	
+	/**
+	 * for edit
+	 */
+	public ScheduleChooserPanel(MentoringProgram m) {
+		this();
+		m=MentoringProgram.createMockup();
+		m.getSchedule().add(new ScheduleData(LocalDate.now(),LocalTime.now(),LocalDate.now(),"1 week",true, null));
+		m.getSchedule().add(new ScheduleData(LocalDate.now(),LocalTime.now(),LocalDate.now(),"1 week",false, null));
+		System.out.println(m.getSchedule().size()+"futo masa");
+		
+		for(ScheduleData s : m.getSchedule()) {
+			if(!areDisplayedScheduledDates) {							
+				lblSchedules.setVisible(true);							
+				areDisplayedScheduledDates = true;
+			}
+			String scheduledDate = s.startDate + " from " +
+					s.startTime ;
+			if(s.repeat) {
+				scheduledDate += ", repeate " + s.atEvery;
+			}
+			s.parent = new NewScheduleDatePanel(scheduledDate, this);
+			schedulesPanel.add(s.parent);
+			
+			scheduledData.put(s.parent, s);
+			
+			dateTimeChooser.getDatePicker().setDate(null);
+			dateTimeChooser.getTimePicker().setTime(null);
+			
+			schedulesPanel.revalidate();
+		}
+		
+	}
 	
 	
 	/**

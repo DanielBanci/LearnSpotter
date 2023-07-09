@@ -26,12 +26,14 @@ import main.ui.displayContent.DisplayMentorsPanel;
 import main.ui.login.LoginPanel;
 import main.ui.mentors.MentorProfile;
 import main.ui.newContent.NewCoursePost;
+import main.ui.newContent.NewMentorProfile;
 import main.ui.newContent.NewMentoringProgram;
 import main.ui.newContent.NewUserProfile;
 //import main.utility.temporaryDatabase.TDB;
 import main.ui.search.SearchFiltersPanel;
 import main.ui.search.SortPanel;
 import main.utility.ImageLoader;
+import temporaryDatabase.DELETE;
 
 public class LeftPanel extends JPanel {
 
@@ -81,14 +83,40 @@ public class LeftPanel extends JPanel {
 		mIAccountSettings.addActionListener(actionMIAccountSettings());
 	}
 	
+	private ActionListener actionMIAccountSettingsMentor(Mentor mentor){
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainPanel.getInstance().getContent().removeAll();
+				//getInstance().getContent().add(new DisplayCoursesPanel(user.getCourses(),user,true));
+				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.X_AXIS));
+				//MainPanel.getInstance().getContent().setMaximumSize(new Dimension(1300,90000000));
+				//MainPanel.getInstance().getContent().setPreferredSize(new Dimension(1300,90000000));
+				NewMentorProfile p = new NewMentorProfile(mentor);
+				p.setMaximumSize(new Dimension(1300,900));
+				MainPanel.getInstance().getContent().add(p);
+				
+				MainPanel.getInstance().getContent().revalidate();
+				MainPanel.getInstance().getContent().repaint();
+			}
+		};
+	}
+	
 	private ActionListener actionMIAccountSettings(){
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainPanel.getInstance().getContent().removeAll();
 				//getInstance().getContent().add(new DisplayCoursesPanel(user.getCourses(),user,true));
-				MainPanel.getInstance().getContent().add(new NewUserProfile(user));
-				MainPanel.getInstance().getContent().validate();
+				MainPanel.getInstance().getContent().setLayout(new BoxLayout(MainPanel.getInstance().getContent(),BoxLayout.X_AXIS));
+				//MainPanel.getInstance().getContent().setMaximumSize(new Dimension(1300,90000000));
+				//MainPanel.getInstance().getContent().setPreferredSize(new Dimension(1300,90000000));
+				NewUserProfile p = new NewUserProfile(user);
+				p.setMaximumSize(new Dimension(1300,500));
+				MainPanel.getInstance().getContent().add(p);
+				
+				MainPanel.getInstance().getContent().revalidate();
+				MainPanel.getInstance().getContent().repaint();
 			}
 		};
 	}
@@ -133,6 +161,7 @@ public class LeftPanel extends JPanel {
 		mIMyProfile.addActionListener(actionMIMyProfile());
 		
 		mILogOut.addActionListener(actionMILogOutS());
+		mIAccountSettings.addActionListener(actionMIAccountSettingsMentor(mentor));
 	}
 	
 	private ActionListener actionMIMyProfile() {
@@ -465,6 +494,9 @@ public class LeftPanel extends JPanel {
 		mINewMentoringProgram = new JMenuItem("New mentoring program");
 		mnNewMenu.add(mINewMentoringProgram);
 		menuBar.add(mSettings);
+		
+		mIAccountSettings = new JMenuItem("Account settings");
+		mSettings.add(mIAccountSettings);
 
 		mILogOut = new JMenuItem("Log out");
 		mSettings.add(mILogOut);

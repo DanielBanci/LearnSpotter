@@ -51,6 +51,67 @@ public class MentoringProgramDetails extends MentoringProgramPost {
 	public void setPaymentStatus(Boolean status) {
 		menuBar.getCoursesPanel().setPaymentStatus(status);
 	}
+	
+	public MentoringProgramDetails(MentoringProgram mentoringProgram,Boolean shortPanel,User user,Boolean owned,Boolean edit) {
+		super(mentoringProgram,shortPanel,user,owned,edit);
+		this.mentoringProgram = mentoringProgram;
+		this.user = user;
+		/*JPanel panel = new JPanel();
+		panel.setMaximumSize(new Dimension(32767, 50));
+		panel.setOpaque(false);
+		panel.setBorder(new EmptyBorder(10, 0, 0, 0));
+		add(panel);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JMenuBar menuBar = new MenuBar(this,mentoringProgram);
+		panel.add(menuBar);
+		
+		contentPanel = new JPanel();
+		contentPanel.setOpaque(false);
+		add(contentPanel);
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+		setMaximumSize(new Dimension(1000,10000));*/
+		
+		buttonPanel = new JPanel();
+		buttonPanel.setOpaque(false);
+		buttonPanel.setMaximumSize(new Dimension(32767, 40));
+		FlowLayout flowLayout = (FlowLayout) buttonPanel.getLayout();
+		flowLayout.setAlignment(FlowLayout.RIGHT);
+		add(buttonPanel);
+		
+		JButton btnJoin = new RoundButton("Join");
+		btnJoin.setForeground(new Color(255, 255, 255));
+		btnJoin.setBackground(new Color(0, 128, 0));
+		btnJoin.setPreferredSize(new Dimension(100, 30));
+		btnJoin.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		buttonPanel.add(btnJoin);
+		
+		btnJoin.addActionListener(joinAction());
+		
+		JPanel panel = new JPanel();
+		panel.setMaximumSize(new Dimension(32767, 50));
+		panel.setOpaque(false);
+		panel.setBorder(new EmptyBorder(10, 0, 0, 0));
+		add(panel);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		menuBar = new MenuBar(this,mentoringProgram);
+		panel.add(menuBar);
+		
+		setPaymentStatus(owned);
+		if(owned) {
+			remove(buttonPanel);
+			panel.remove(menuBar);
+			//menuBar = new MenuBar(this,mentoringProgram,user);
+			menuBar = new MenuBar(this,mentoringProgram,MainPanel.loggedUser);
+			panel.add(menuBar);
+		}
+		contentPanel = new JPanel();
+		contentPanel.setOpaque(false);
+		add(contentPanel);
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+	}
+	
 	public MentoringProgramDetails(MentoringProgram mentoringProgram,Boolean shortPanel,User user,Boolean owned) {
 		super(mentoringProgram,shortPanel,user,owned);
 		this.mentoringProgram = mentoringProgram;

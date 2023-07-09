@@ -1,5 +1,7 @@
 package main.ui.newContent;
 
+import main.classes.Course;
+import main.classes.MentoringProgram;
 import main.ui.customComponents.RoundButton;
 
 import javax.swing.*;
@@ -26,6 +28,103 @@ public class FileUploadPanel extends JPanel {
 	public Map<String,JPanel> coursesPanels;
 	public JPanel uploadedCoursesPanel;
 
+	/**
+	 * for edit mentoring program
+	 */
+	
+	public FileUploadPanel(MentoringProgram m) {
+		setOpaque(false);
+		uploadedFiles = new HashMap<>();
+		coursesPanels = new HashMap<>();
+		FlowLayout flowLayout = (FlowLayout) getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		JButton uploadButton = new RoundButton("Upload PDF");
+		uploadButton.setFocusable(false);
+		uploadButton.setBackground(new Color(128, 128, 128));
+		uploadButton.setOpaque(false);
+		uploadButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		uploadButton.addActionListener(uploadAction());
+
+		add(uploadButton);
+
+		uploadedCoursesPanel = new JPanel();
+		uploadedCoursesPanel.setOpaque(false);
+		add(uploadedCoursesPanel);
+		uploadedCoursesPanel.setLayout(new BoxLayout(uploadedCoursesPanel, BoxLayout.Y_AXIS));
+
+		JLabel lblCourseName = new JLabel("Course name");
+		//uploadedCoursesPanel.add(lblCourseName);
+		lblCourseName.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		System.out.println("DADADADADADADADADADADADADADADAD");
+		System.out.println(m.getCourses().size());
+		
+		for(String key : m.getCourses().keySet()) {
+				uploadedFile = m.getCourses().get(key);
+				uploadedFiles.put(key, uploadedFile);
+
+				//display new uploaded course
+				NewCoursePanel p = new NewCoursePanel(key,FileUploadPanel.this);
+
+				//store the JPanel
+				coursesPanels.put(key, p);
+
+				uploadedCoursesPanel.add(p);
+				FileUploadPanel.this.validate();
+				FileUploadPanel.this.revalidate();
+				System.out.println("File uploaded successfully.");
+			}
+		}
+	
+	/**
+	 * for edit course post
+	 * @param course
+	 */
+	public FileUploadPanel(Course course) {
+		setOpaque(false);
+		uploadedFiles = new HashMap<>();
+		coursesPanels = new HashMap<>();
+		FlowLayout flowLayout = (FlowLayout) getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		JButton uploadButton = new RoundButton("Upload PDF");
+		uploadButton.setFocusable(false);
+		uploadButton.setBackground(new Color(128, 128, 128));
+		uploadButton.setOpaque(false);
+		uploadButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		uploadButton.addActionListener(uploadAction());
+
+		add(uploadButton);
+
+		uploadedCoursesPanel = new JPanel();
+		uploadedCoursesPanel.setOpaque(false);
+		add(uploadedCoursesPanel);
+		uploadedCoursesPanel.setLayout(new BoxLayout(uploadedCoursesPanel, BoxLayout.Y_AXIS));
+
+		JLabel lblCourseName = new JLabel("Course name");
+		//uploadedCoursesPanel.add(lblCourseName);
+		lblCourseName.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		System.out.println("DADADADADADADADADADADADADADADAD");
+		System.out.println(course.getPdfFiles().size());
+		
+		for(String key : course.getPdfFiles().keySet()) {
+				uploadedFile = course.getPdfFiles().get(key);
+				uploadedFiles.put(course.getName(), uploadedFile);
+
+				//display new uploaded course
+				NewCoursePanel p = new NewCoursePanel(course.getName(),FileUploadPanel.this);
+
+				//store the JPanel
+				coursesPanels.put(course.getName(), p);
+
+				uploadedCoursesPanel.add(p);
+				FileUploadPanel.this.validate();
+				FileUploadPanel.this.revalidate();
+				System.out.println("File uploaded successfully.");
+			}
+		}
+	
+	
 	public FileUploadPanel() {
 		setOpaque(false);
 		uploadedFiles = new HashMap<>();
@@ -49,6 +148,7 @@ public class FileUploadPanel extends JPanel {
 		JLabel lblCourseName = new JLabel("Course name");
 		//uploadedCoursesPanel.add(lblCourseName);
 		lblCourseName.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
 	}
 
 	private ActionListener uploadAction() {

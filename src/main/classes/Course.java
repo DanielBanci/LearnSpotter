@@ -1,6 +1,9 @@
 package main.classes;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,6 +40,14 @@ public class Course {
 	private Mentor owner;
 	private String currency;
 	
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
 	public Map<String, byte[]> getPdfFiles() {
 		return pdfFiles;
 	}
@@ -220,10 +231,25 @@ public class Course {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
+		Map<String, byte[]> map = new HashMap<String,byte[]>();
+		File file = new File("res/PHOTOGRAPHY.pdf");
+        FileInputStream fis;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+			fis = new FileInputStream(file);
+			byte[] buf = new byte[1024];
+			for (int readNum; (readNum = fis.read(buf)) != -1;) {
+				   bos.write(buf, 0, readNum);
+			}
+			byte[] pdfBytes = bos.toByteArray();
+			map.put("course_example", pdfBytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		//java.sql.Date sqlDate = new java.sql.Date(parsed.getTime());
 		Course mockup = new Course(0, "Software Engineering", 0, 0, "field","ceva descriere cum o fi sa fie doar sa fie sa vedem "
 				+ "cum e ca de ce nu dor asa", 4, 0, 299.0, new Date(), new ArrayList<Feedback>(),Mentor.createMockup(),
-				new HashMap<String,byte[]>(),"currency");
+				map,"currency");
 		return mockup;
 	}
 }

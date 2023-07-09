@@ -11,11 +11,15 @@ import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundImagePanel;
 import main.ui.customComponents.RoundPanel;
 import main.ui.customComponents.TextAreaWithPreview;
+import main.ui.newContent.NewCoursePost;
+import main.ui.newContent.NewMentoringProgram;
 import main.ui.ratingBar.StarRatingBar;
 import main.utility.ImageLoader;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JLabel;
@@ -25,6 +29,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.FlowLayout;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -59,6 +65,75 @@ public class MentoringProgramPost extends RoundPanel {
 	
 	//aux
 	private JPanel panel_4;
+	private JPanel panel;
+	
+	//for edit
+	public MentoringProgramPost(MentoringProgram mentoringProgram,Boolean shortContent,User user,Boolean owned,Boolean edit) {
+		this();
+		this.user = user;
+		this.owned = owned;
+		this.mentoringProgram = mentoringProgram;
+		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
+		panelAboutLbl = new JPanel();
+		panelAboutLbl.setBorder(new EmptyBorder(0, 5, 0, 0));
+		panelAboutLbl.setOpaque(false);
+		FlowLayout fl_panelAbout = (FlowLayout) panelAboutLbl.getLayout();
+		fl_panelAbout.setAlignment(FlowLayout.LEFT);
+		
+		JLabel lblNewLabel_2 = new JLabel("About: ");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 16));
+		panelAboutLbl.add(lblNewLabel_2);
+		
+		panelTextArea = new RoundPanel();
+		panelTextArea.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panelTextArea.setBackground(new Color(255, 255, 255));
+		panelTextArea.setLayout(new BorderLayout(0, 0));
+		
+		tADescription = new TextAreaWithPreview();
+		panelTextArea.add(tADescription, BorderLayout.CENTER);
+		
+		//display info
+		lblMentorName.setText(mentoringProgram.getMentor().getFirstName() + " " + mentoringProgram.getMentor().getLastName());
+		lblProgramTitle.setText(mentoringProgram.getName());
+		lblReviewsNumber.setText(String.valueOf(mentoringProgram.getNoViews()));
+		lblField.setText(mentoringProgram.getField());
+		lblDifficulty.setText(mentoringProgram.getDifficultyLevel());
+		lblDuration.setText(String.valueOf(mentoringProgram.getDuration()));
+		lblPrice.setText(String.valueOf(mentoringProgram.getPrice() + " " + mentoringProgram.getCurrency()));
+		tADescription.setTextBody(mentoringProgram.getDescription());
+		
+		
+		//rating
+		Container parent = ratingBarPanel.getParent();
+		int index = findComponentIndex(parent, ratingBarPanel);
+		parent.remove(ratingBarPanel);
+		ratingBarPanel = new StarRatingBar(mentoringProgram.getRating(),1);
+		parent.add(ratingBarPanel,index);
+		parent.revalidate();
+		revalidate();
+		invalidate();
+		validate();
+		if(shortContent) {
+			makeShortContent();
+		}else {
+		
+		if(owned == true)System.out.println("e true...");
+			JPanel panel_1 = new JPanel();
+			panel_1.setOpaque(false);
+			panel.add(panel_1);
+			
+			JLabel lblbButEdit = new JLabel("");
+			lblbButEdit.setIcon(new ImageIcon(ImageLoader.getInstance().getEditIcon()));
+			lblbButEdit.setPreferredSize(new Dimension(24, 24));
+			panel_1.add(lblbButEdit);
+			
+			JLabel lblButDelete = new JLabel("");
+			lblButDelete.setPreferredSize(new Dimension(24, 24));
+			lblButDelete.setIcon(new ImageIcon(ImageLoader.getInstance().getDeleteIconRed()));
+			panel_1.add(lblButDelete);
+		}
+		
+	}
 	
 	public MentoringProgramPost(MentoringProgram mentoringProgram,Boolean shortContent,User user,Boolean owned) {
 		this();
@@ -107,9 +182,89 @@ public class MentoringProgramPost extends RoundPanel {
 		validate();
 		if(shortContent) {
 			makeShortContent();
-		}
+		}else {
 		
 		if(owned == true)System.out.println("e true...");
+		if(user.equals(MainPanel.loggedUser) || true) {
+			JPanel panel_1 = new JPanel();
+			panel_1.setOpaque(false);
+			panel_1.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			panel.add(panel_1);
+			
+			JLabel lblbButEdit = new JLabel("");
+			lblbButEdit.setIcon(new ImageIcon(ImageLoader.getInstance().getEditIcon()));
+			lblbButEdit.setPreferredSize(new Dimension(24, 24));
+			lblbButEdit.addMouseListener(editAction());
+			panel_1.add(lblbButEdit);
+			
+			JLabel lblButDelete = new JLabel("");
+			lblButDelete.setPreferredSize(new Dimension(24, 24));
+			lblButDelete.setIcon(new ImageIcon(ImageLoader.getInstance().getDeleteIconRed()));
+			panel_1.add(lblButDelete);
+		}
+		}
+	}
+	//edit action
+	private MouseListener editAction() {
+		return new MouseListener() {
+			private JPanel parent;
+			private Boolean editDisplayed = false;
+			private JPanel editPanel = new NewMentoringProgram(Mentor.createMockup(),MentoringProgram.createMockup());
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(parent == null) {
+					parent = (JPanel) MentoringProgramPost.this.getParent();
+				}if(!editDisplayed) {
+					int index = findComponentIndex(parent,MentoringProgramPost.this);
+					parent.remove(MentoringProgramPost.this);
+					parent.add(editPanel,index);
+					
+					parent.revalidate();
+				}else {
+					int index = findComponentIndex(parent,MentoringProgramPost.this);	//TODO change this
+					parent.remove(editPanel);
+					parent.add(MentoringProgramPost.this);
+					
+					parent.revalidate();
+				}
+				//name, couse title, last update and description
+				/*tFCourseName.setEditable(true);
+				tFPrice.setEditable(true);
+				
+				lblName.setText(course.getOwner().getFirstName() + " " + course.getOwner().getLastName());
+				lblCourseName.setText(course.getName());
+				lblPrice.setText(String.format("(%.2f) RON", course.getPrice()));
+				lblPriceBuy.setText(String.format("(%.2f) RON", course.getPrice()));
+				tAFullDescription.setText(course.getDescription());*/
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
 	}
 	
 	/**
@@ -161,7 +316,7 @@ public class MentoringProgramPost extends RoundPanel {
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		JPanel panel = new JPanel();
+		 panel = new JPanel();
 		panel.setMaximumSize(new Dimension(32767, 220));
 		panel.setOpaque(false);
 		add(panel);
@@ -318,6 +473,8 @@ public class MentoringProgramPost extends RoundPanel {
 		horizontalStrut.setPreferredSize(new Dimension(150, 0));
 		horizontalStrut.setMaximumSize(new Dimension(200, 10));
 		panel_4.add(horizontalStrut);
+		
+		
 		
 		
 		
