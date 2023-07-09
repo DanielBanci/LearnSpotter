@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import main.classes.Course;
 import main.classes.Mentor;
+import main.db.DBManager;
 import main.db.DbConnection;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
@@ -159,11 +160,11 @@ public class NewCoursePost extends JPanel {
 		tFPrice.setText(String.valueOf(course.getPrice()));
 		tACourseDescription.setText(course.getDescription());
 		tFCourseTitle.setText(course.getName());
-		btnPost.addActionListener(saveAction());
+		btnPost.addActionListener(saveAction(course));
 
 	}
 	
-	private ActionListener saveAction() {
+	private ActionListener saveAction(Course course) {
 		return new ActionListener() {
 
 			@Override
@@ -172,9 +173,8 @@ public class NewCoursePost extends JPanel {
 				//get new data
 				String newTitle = tFCourseTitle.getText();
 				String newDescription = tACourseDescription.getText();
-				Double newPrice;
-				String newCurrency;
-				
+				Double newPrice = 0.0;
+				String newCurrency = "";
 				
 				if(!checkBoxFree.isSelected()) {
 					try {
@@ -182,11 +182,50 @@ public class NewCoursePost extends JPanel {
 					}catch(Exception e2) {
 						JOptionPane.showMessageDialog(null,"The price has to be a number.",
 								"Eroare",JOptionPane.ERROR_MESSAGE);
+						return;
 					}
 					newCurrency = comboBoxMoney.getSelectedItem().toString();
 				}
-				
-				//TODO: check if new String values are different from the one and if true check if correct and store new values
+
+				//check if new String values are different from the one and if true check if correct and store new values
+				if(!newTitle.equals(course.getName()) ||
+						!newDescription.equals(course.getDescription()) ||
+						newPrice != course.getPrice() ||
+						!newCurrency.equals(course.getCurrency())) {
+					if(newTitle.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "A non-blank title is required.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(newDescription.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "A non-blank description is required.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(newPrice < 0) {
+						JOptionPane.showMessageDialog(null, "The price has to be a positive number.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					Course updatedCourse = new Course(
+						course.getId(),
+						newTitle,
+						course.getIdMentor(),
+						course.getIdMentoringProgram(),
+						course.getField(),
+						newDescription,
+						course.getRating(),
+						course.getNoViews(),
+						newPrice,
+						course.getLastUpdate(),
+						course.getFeedback(),
+						course.getOwner(),
+						course.getPdfFiles(),
+						newCurrency);
+					try {
+						DBManager.updateCourse(updatedCourse);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 				
 				//get new courses
 				Map newCourses = new HashMap<>();
@@ -325,6 +364,7 @@ public class NewCoursePost extends JPanel {
 					String courseTitle = tFCourseTitle.getText();
 					String courseDescription = tACourseDescription.getText();
 					boolean free = checkBoxFree.isSelected();
+					String currency = "";
 					
 					Double price = 0.0;
 					if(!free)
@@ -335,9 +375,8 @@ public class NewCoursePost extends JPanel {
 							JOptionPane.showMessageDialog(null,"The price has to be a number.",
 									"Eroare",JOptionPane.ERROR_MESSAGE);
 						}
+						currency = (String) comboBoxMoney.getSelectedItem();
 					}
-						
-					String currency = (String) comboBoxMoney.getSelectedItem();
 					
 					Connection conn = DbConnection.conn;
 					

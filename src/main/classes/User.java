@@ -88,9 +88,6 @@ public class User {
 		this.password = password;
 		this.phoneNumber = phoneNumber;
 		this.courses = courses;
-		this.mentoringPrograms = mentoringPrograms;
-		this.courses = courses;
-		this.mentoringPrograms = mentoringPrograms;
 		this.profilePic = profilePic;
 		this.mentoringPrograms = setupMentoringPrograms();
 	}

@@ -185,6 +185,7 @@ public class FeedbackPanel extends JPanel {
 		profilePicPanel.add(new RoundImagePanel(ImageLoader.getInstance().getUserIcon(),new Dimension(150,150)));
 		lblName.setText(feedback.getUser().getFirstName() + " " + feedback.getUser().getLastName());
 		tAFeedbackMessage.setText(feedback.getText());
+		tAFeedbackMessage.setEnabled(false);
 		lblDate.setText(formatDate(feedback.getDate()));
 		
 		//display the rating

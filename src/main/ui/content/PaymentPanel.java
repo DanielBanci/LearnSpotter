@@ -198,7 +198,7 @@ public class PaymentPanel extends JPanel {
 		this.user = user;
 		//set the sum on the button
 		totalSum = Math.round(totalSum*100)/100.0;
-		btnCompletePayment.setText("Complete payment (Total $" + totalSum + ")");
+		btnCompletePayment.setText("Complete payment (Total " + totalSum + " " + program.getCurrency() + ")");
 		
 		//load card icon
 		//ImagePanel img = new ImagePanel(ImageLoader.getInstance().getCardIcon(),new Dimension(250,120));
@@ -318,7 +318,7 @@ public class PaymentPanel extends JPanel {
 		this.user = user;
 		//set the sum on the button
 		totalSum = Math.round(totalSum*100)/100.0;
-		btnCompletePayment.setText("Complete payment (Total $" + totalSum + ")");
+		btnCompletePayment.setText("Complete payment (Total" + totalSum + " RON)");
 		
 		//load card icon
 		//ImagePanel img = new ImagePanel(ImageLoader.getInstance().getCardIcon(),new Dimension(250,120));
@@ -637,7 +637,7 @@ public class PaymentPanel extends JPanel {
 		panel_14.setMaximumSize(new Dimension(32767, 50));
 		panel_1.add(panel_14);
 		
-		btnCompletePayment = new RoundButton("Complete payment (Total $200)");
+		btnCompletePayment = new RoundButton("Complete payment (Total $200)"); //Gets overwritten
 		btnCompletePayment.setBackground(new Color(128, 128, 128));
 		btnCompletePayment.setPreferredSize(new Dimension(300, 30));
 		btnCompletePayment.setOpaque(false);

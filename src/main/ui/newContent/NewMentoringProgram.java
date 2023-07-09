@@ -6,6 +6,7 @@ import java.util.prefs.Preferences;
 import main.classes.Feedback;
 import main.classes.Mentor;
 import main.classes.MentoringProgram;
+import main.db.DBManager;
 import main.db.DbConnection;
 import main.ui.customComponents.RoundButton;
 import main.ui.customComponents.RoundPanel;
@@ -116,6 +117,7 @@ public class NewMentoringProgram extends JPanel {
 				// TODO Auto-generated method stub
 				
 				//get new data
+				String newTitle = tFTitle.getText();
 				String newField = tFField.getText();
 				String newLessonDuration = tFLessonDuration.getText();
 				String newPrice = tFCoursePrice.getText();
@@ -123,8 +125,8 @@ public class NewMentoringProgram extends JPanel {
 				//no check need
 				String newDifficulty = cBDifficulty.getSelectedItem().toString();
 				String newCurrency = comboBoxCurrency.getSelectedItem().toString();
-				String newTeachingType = comboBoxLocation.getSelectedItem().toString();
-				Map newCourses = coursesPanel.uploadedFiles;
+				String newLocation = comboBoxLocation.getSelectedItem().toString();
+				Map<String, byte[]> newCourses = coursesPanel.uploadedFiles;
 				List<ScheduleData> newSchedule = new ArrayList<>();
 				
 				//new schedule data
@@ -132,8 +134,86 @@ public class NewMentoringProgram extends JPanel {
 					newSchedule.add(scheduleChooserPanel.scheduledData.get(key));
 				}
 				
-				//TODO: check if new String values are different from the one currently stored in MentoringProgram m and 
-				//if true: check to be correct and save new data (in app(object) and in database (by calling the method from DBManager))
+				//validate new input
+				
+				int parsedDuration;
+				Double parsedPrice;
+				try {
+					parsedDuration = Integer.valueOf(newLessonDuration);//integer
+				} catch(NumberFormatException _) {
+					JOptionPane.showMessageDialog(null, newLessonDuration + " is not a integer.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				try {
+					parsedPrice = Double.valueOf(newPrice);//integer?
+				} catch(NumberFormatException _) {
+					JOptionPane.showMessageDialog(null, newPrice + " is not a number.", "Error", JOptionPane.ERROR_MESSAGE); //My class says double but if you say so, I'm ready to oblige
+					return;
+				}
+				
+				//check if new String values are different from the one currently stored in MentoringProgram m and...
+				if(!newField.equals(m.getField()) ||
+					parsedDuration != m.getDuration() ||
+					parsedPrice != m.getPrice() ||
+					!newDescription.equals(m.getDescription()) ||
+					!newDifficulty.equals(m.getDifficultyLevel()) ||
+					!newCurrency.equals(m.getCurrency()) ||
+					!newLocation.equals(m.getLocation())) {
+					//if true: check to be correct and save new data (in app(object) and in database (by calling the method from DBManager))
+					if(newTitle.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "A non-blank title is required.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(newField.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "At least one field is required.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(newLessonDuration.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Setting a duration is required.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(parsedDuration <= 0) {
+						JOptionPane.showMessageDialog(null, "The duration must be a positive non-zero number.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(newPrice.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Setting a price is required.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(parsedPrice < 0) {
+						JOptionPane.showMessageDialog(null, "The price has to be a positive number.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(newDescription.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "A non-blank description is required.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					
+				MentoringProgram updatedMentoringProgram = new MentoringProgram(
+					m.getId(),
+					m.getMentorId(),
+					m.getName(),
+					newDifficulty,
+					newDescription,
+					m.getLocation(),
+					newSchedule,
+					parsedDuration,
+					parsedPrice,
+					newCurrency,
+					m.getMentor(),
+					m.getRating(),
+					m.getNoViews(),
+					newField,
+					m.getFeedbacks(),
+					newCourses
+					);
+					try {
+						DBManager.updateMentoringProgram(updatedMentoringProgram);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 				//else: no need to check, no need to update
 				
 				//for the map and list values just store the new values in class and store them in object and database
@@ -365,6 +445,10 @@ public class NewMentoringProgram extends JPanel {
 				}
 				try {
 					duration = Integer.valueOf(tFLessonDuration.getText());//integer
+					if(duration <= 0) {
+						JOptionPane.showMessageDialog(null, "The duration must be a positive non-zero number.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 				} catch(NumberFormatException _) {
 					JOptionPane.showMessageDialog(null, tFLessonDuration.getText() + " is not a integer.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -375,6 +459,10 @@ public class NewMentoringProgram extends JPanel {
 				}
 				try {
 					price = Double.valueOf(tFCoursePrice.getText());//integer?
+					if(price < 0) {
+						JOptionPane.showMessageDialog(null, "The price has to be a positive number.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 				} catch(NumberFormatException _) {
 					JOptionPane.showMessageDialog(null, tFCoursePrice.getText() + " is not a number.", "Error", JOptionPane.ERROR_MESSAGE); //My class says double but if you say so, I'm ready to oblige
 					return;

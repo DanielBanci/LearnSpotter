@@ -33,7 +33,7 @@ public class FeedbackTest {
 	
 	@Test
 	public void fullConstructorTest() {
-		Feedback feedback = new Feedback(1, new User(1, "success", "success2", "success3", "success4", "success5", new ArrayList<Course>(), new ArrayList<MentoringProgram>()), "success", 2, new java.util.Date(3));
+		Feedback feedback = new Feedback(1, new User(1, "success", "success2", "success3", "success4", "success5", new ArrayList<Course>(), new ArrayList<MentoringProgram>(), null), "success", 2, new java.util.Date(3));
 		
 		int id = feedback.getId();
 		User user = feedback.getUser();
@@ -42,7 +42,7 @@ public class FeedbackTest {
 		java.util.Date date = feedback.getDate();
 
 		assertEquals(1, id);
-		assertEquals(new User(1, "success", "success2", "success3", "success4", "success5", new ArrayList<Course>(), new ArrayList<MentoringProgram>()), user);
+		assertEquals(new User(1, "success", "success2", "success3", "success4", "success5", new ArrayList<Course>(), new ArrayList<MentoringProgram>(), null), user);
 		assertEquals("success", text);
 		assertEquals(2, rating);
 		assertEquals(new java.util.Date(3), date);
@@ -50,10 +50,10 @@ public class FeedbackTest {
 	
 	@Test
 	public void settersAndGettersTest() {
-		Feedback feedback = new Feedback(-1, new User(-1, "fail", "fail2", "fail3", "fail4", "fail5", new ArrayList<Course>(), new ArrayList<MentoringProgram>()), "fail", -2, new java.util.Date(-3));
+		Feedback feedback = new Feedback(-1, new User(-1, "fail", "fail2", "fail3", "fail4", "fail5", new ArrayList<Course>(), new ArrayList<MentoringProgram>(), null), "fail", -2, new java.util.Date(-3));
 		
 		feedback.setId(1);
-		feedback.setUser(new User(1, "success", "success2", "success3", "success4", "success5", new ArrayList<Course>(), new ArrayList<MentoringProgram>()));
+		feedback.setUser(new User(1, "success", "success2", "success3", "success4", "success5", new ArrayList<Course>(), new ArrayList<MentoringProgram>(), null));
 		feedback.setText("success");
 		feedback.setRating(2);
 		feedback.setDate(new java.util.Date(3));
@@ -65,7 +65,7 @@ public class FeedbackTest {
 		java.util.Date date = feedback.getDate();
 		
 		assertEquals(1, id);
-		assertEquals(new User(1, "success", "success2", "success3", "success4", "success5", new ArrayList<Course>(), new ArrayList<MentoringProgram>()), user);
+		assertEquals(new User(1, "success", "success2", "success3", "success4", "success5", new ArrayList<Course>(), new ArrayList<MentoringProgram>(), null), user);
 		assertEquals("success", text);
 		assertEquals(2, rating);
 		assertEquals(new java.util.Date(3), date);
