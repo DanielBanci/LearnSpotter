@@ -136,8 +136,8 @@ public class LoginData extends RoundPanel {
 
 		tFEmail.setText("johndoe@example.com");
 		passwordField.setText("PassWord1@3");
-		//tFEmail.setText("janesmith@example.com");
-		//passwordField.setText("passWord!2");
+		tFEmail.setText("janesmith@example.com");
+		passwordField.setText("passWord!2");
 	}
 	
 	private MouseAdapter newAccounMouseAdapter() {

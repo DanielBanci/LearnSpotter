@@ -234,9 +234,13 @@ public class MentoringProgram {
 	public static MentoringProgram createMockup() {
         // Create a mock mentor for the mentoring program
         Mentor mentor = Mentor.createMockup();
+        List<ScheduleData> l = new ArrayList<ScheduleData>();
+        l.add(new ScheduleData(LocalDate.now(),LocalTime.now(),LocalDate.now(),"1 week",true, null));
+        Map<String, byte[]> map = new HashMap<String,byte[]>();
+        map.put("sample_course",Course.createMockup().getPdfFiles().get(Course.createMockup().getPdfFiles().keySet()));
         MentoringProgram mockup = new MentoringProgram(0,0, "Sample Program", "Intermediate",
-                "Sample program description", "Sample location", new ArrayList<ScheduleData>(), 12, 100.0,"RON",
-                mentor, 4, 100, "Sample Field", new ArrayList<Feedback>(),new HashMap<String,byte[]>());
+                "Sample program description", "Sample location", l, 12, 100.0,"RON",
+                mentor, 4, 100, "Sample Field", new ArrayList<Feedback>(),map);
         return mockup;
     }
 }

@@ -2,6 +2,7 @@ package main.ui.newContent;
 
 import javax.swing.JPanel;
 
+import main.classes.Course;
 import main.classes.Mentor;
 import main.db.DbConnection;
 import main.ui.customComponents.RoundButton;
@@ -22,7 +23,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
@@ -50,6 +53,150 @@ public class NewCoursePost extends JPanel {
 	private JButton btnPost;
 	private JPanel panel_4;
 	private Mentor mentor;
+
+	/**
+	 * Create the panel.
+	 */
+	public NewCoursePost(Course course) {
+		setOpaque(false);
+		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		
+		panel_4 = new RoundPanel();
+		panel_4.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panel_4.setOpaque(false);
+		panel_4.setMinimumSize(new Dimension(50, 50));
+		add(panel_4);
+		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.Y_AXIS));
+		
+		JPanel panel = new JPanel();
+		panel_4.add(panel);
+		panel.setPreferredSize(new Dimension(700, 30));
+		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panel.setOpaque(false);
+		
+		tFCourseTitle = new JTextField();
+		panel.add(tFCourseTitle);
+		tFCourseTitle.setUI(new HintTextFieldUI("Course title",true,Color.GRAY));
+		tFCourseTitle.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tFCourseTitle.setOpaque(false);
+		tFCourseTitle.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		tFCourseTitle.setColumns(10);
+		
+		tACourseDescription = new JTextArea();
+		panel_4.add(tACourseDescription);
+		tACourseDescription.setFont(new Font("Monospaced", Font.PLAIN, 16));
+		tACourseDescription.setLineWrap(true);
+		tACourseDescription.setWrapStyleWord(true);
+		tACourseDescription.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		tACourseDescription.setOpaque(false);
+		tACourseDescription.setUI(new HintTextAreaUI("Write a description about the course...",true,Color.GRAY));
+		
+		JPanel panel_2 = new JPanel();
+		panel_4.add(panel_2);
+		panel_2.setOpaque(false);
+		FlowLayout flowLayout_1 = (FlowLayout) panel_2.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		
+		tFPrice = new JTextField();
+		tFPrice.setUI(new HintTextFieldUI("Add a price", true, Color.GRAY));
+		tFPrice.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tFPrice.setOpaque(false);
+		tFPrice.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		panel_2.add(tFPrice);
+		tFPrice.setColumns(10);
+		
+		comboBoxMoney = new JComboBox<>();
+		comboBoxMoney.setFocusable(false);
+		comboBoxMoney.addItem("RON");
+		comboBoxMoney.addItem("EURO");
+		comboBoxMoney.addItem("USD");
+		panel_2.add(comboBoxMoney);
+		
+		checkBoxFree = new JCheckBox("Free");
+		checkBoxFree.setFocusable(false);
+		checkBoxFree.setOpaque(false);
+		checkBoxFree.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_2.add(checkBoxFree);
+		
+		checkBoxFree.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (checkBoxFree.isSelected()) {
+                    tFPrice.setText("Free");
+                    tFPrice.setVisible(false);
+                    comboBoxMoney.setVisible(false);
+                } else {
+                    tFPrice.setText(String.valueOf(course.getPrice()));
+                    tFPrice.setVisible(true);
+                    comboBoxMoney.setVisible(true);
+                }
+            }
+        });
+		
+		//upload current courses
+		uploadCoursePanel = new FileUploadPanel(course);
+		panel_4.add(uploadCoursePanel);
+		uploadCoursePanel.setOpaque(false);
+		
+		JPanel panel_3 = new JPanel();
+		panel_4.add(panel_3);
+		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.RIGHT);
+		panel_3.setOpaque(false);
+		
+		btnPost = new RoundButton("Save");
+		btnPost.setFocusable(false);
+		btnPost.setForeground(new Color(255, 255, 255));
+		btnPost.setBackground(new Color(35, 146, 16));
+		btnPost.setPreferredSize(new Dimension(100, 30));
+		panel_3.add(btnPost);
+		
+		//fill data
+		checkBoxFree.setSelected(course.getPrice() == 0);
+		comboBoxMoney.setSelectedItem(course.getCurrency());
+		tFPrice.setText(String.valueOf(course.getPrice()));
+		tACourseDescription.setText(course.getDescription());
+		tFCourseTitle.setText(course.getName());
+		btnPost.addActionListener(saveAction());
+
+	}
+	
+	private ActionListener saveAction() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				//get new data
+				String newTitle = tFCourseTitle.getText();
+				String newDescription = tACourseDescription.getText();
+				Double newPrice;
+				String newCurrency;
+				
+				
+				if(!checkBoxFree.isSelected()) {
+					try {
+					newPrice = Double.valueOf(tFPrice.getText());
+					}catch(Exception e2) {
+						JOptionPane.showMessageDialog(null,"The price has to be a number.",
+								"Eroare",JOptionPane.ERROR_MESSAGE);
+					}
+					newCurrency = comboBoxMoney.getSelectedItem().toString();
+				}
+				
+				//TODO: check if new String values are different from the one and if true check if correct and store new values
+				
+				//get new courses
+				Map newCourses = new HashMap<>();
+				newCourses = uploadCoursePanel.uploadedFiles;
+				
+				//TODO: update user in app and database
+			}
+			
+		};
+	}
 
 	/**
 	 * Create the panel.
@@ -120,11 +267,13 @@ public class NewCoursePost extends JPanel {
 		checkBoxFree.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (checkBoxFree.isSelected()) {
+            	if (checkBoxFree.isSelected()) {
                     tFPrice.setText("Free");
+                    tFPrice.setVisible(false);
                     comboBoxMoney.setVisible(false);
                 } else {
                     tFPrice.setText(null);
+                    tFPrice.setVisible(true);
                     comboBoxMoney.setVisible(true);
                 }
             }
@@ -177,11 +326,11 @@ public class NewCoursePost extends JPanel {
 					String courseDescription = tACourseDescription.getText();
 					boolean free = checkBoxFree.isSelected();
 					
-					int price = 0;
+					Double price = 0.0;
 					if(!free)
 					{
 						try {
-							price = Integer.parseInt(tFPrice.getText());
+							price = Double.parseDouble(tFPrice.getText());
 						} catch(Exception exc) {
 							JOptionPane.showMessageDialog(null,"The price has to be a number.",
 									"Eroare",JOptionPane.ERROR_MESSAGE);
@@ -204,7 +353,7 @@ public class NewCoursePost extends JPanel {
 						statement.setInt(2, mentoringProgramId);
 						statement.setString(3, courseTitle);
 						statement.setString(4, courseDescription);
-						statement.setInt(5, price);
+						statement.setDouble(5, price);
 						statement.setString(6, currency);
 						
 						int rowsInserted = statement.executeUpdate();

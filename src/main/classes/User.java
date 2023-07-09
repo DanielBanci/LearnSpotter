@@ -29,6 +29,13 @@ public class User {
 	private String password;
 	private String phoneNumber;
 	protected Image profilePic;
+	public Image getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(Image profilePic) {
+		this.profilePic = profilePic;
+	}
 	private List<Course> courses;									//payed or owned courses
 	private List<MentoringProgram> mentoringPrograms;				//joined or owned mentoring programs
 	

@@ -85,6 +85,9 @@ public class ImageLoader {
 			//search_icon_24
 			img = ImageIO.read(new File("res/search_icon_24.png"));
 			images.put("search_icon_24", img);
+			//edit_icon
+			img = ImageIO.read(new File("res/edit_icon.png"));
+			images.put("edit_icon", img);
 		}catch(IOException e){
 			e.printStackTrace();makeMissingImage();
 
@@ -108,6 +111,7 @@ public class ImageLoader {
 	public Image getPlusIcon16() {return images.get("plus_icon_16");}
 	public Image getSearchIcon() {return images.get("search_icon");}
 	public Image getSearchIcon24() {return images.get("search_icon_24");}
+	public Image getEditIcon() {return images.get("edit_icon");}
 
 
 	/**
